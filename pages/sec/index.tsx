@@ -1,6 +1,7 @@
-import {Alert, Card, Col, Container, Nav, Navbar, Row} from "react-bootstrap";
+import {Alert, Card, Col, Container, Nav, Navbar, Row,} from "react-bootstrap";
 import * as Icon from "react-bootstrap-icons";
 import AccuracyWidget from "../../src/components/AccuracyWidget";
+import {generateCustomPlaceholderURL} from 'react-placeholder-image';
 
 function AuthLayout({children}) {
     return <Container>{children}</Container>;
@@ -64,42 +65,71 @@ interface Portfolio {
 
 const port1: Portfolio = {
     accuracy: 0.9,
-    totalHoldings: [{
-        amount: 5,
-        currency: "USD",
-    }]
-}
+    totalHoldings: [
+        {
+            amount: 5,
+            currency: "USD",
+        },
+    ],
+};
 const accuracy = port1.accuracy;
 const amount = port1.totalHoldings.at(0).amount;
 const currency = port1.totalHoldings.at(0).currency;
 
-function CardAccuracy() {
-    return (
-        <Card>
-            <Card.Header><h1>Accuracy</h1></Card.Header>
-            <Card.Body>
-                <h5>{AccuracyWidget(accuracy)}</h5>
-            </Card.Body>
-        </Card>
-    )
-}
-
 function CardHoldings() {
     return (
-        <Card>
-            <Card.Header><h1>Holdings</h1></Card.Header>
-            <Card.Body>
-                <h5>{amount}<small className="fw-light">${currency}</small></h5>
-            </Card.Body>
-        </Card>
-    )
+        <Container className="p-3 mx-auto text-center">
+            <Card className="card border-light mb-3">
+                <Card.Body>
+                    <Card.Title>
+                        <h5 className="fw-bold">TOTAL HOLDIGNS</h5>
+                    </Card.Title>
+                    <Card.Text>
+                        <h5>
+                            {amount}
+                            <small className="fw-light">${currency}</small>
+                        </h5>
+                    </Card.Text>
+                </Card.Body>
+            </Card>
+        </Container>
+    );
 }
+
+const otherPlaceholderImageURL = generateCustomPlaceholderURL(200, 100, {
+    backgroundColor: '#123456',
+    textColor: '#ffffff',
+    text: 'Graphic',
+});
 
 function CardPortfolio() {
     return (
-        <Card>
-            <Card.Body>body</Card.Body>
-        </Card>
+        <Container className="p-3 text-center">
+            <Col>
+                <Card className="card border-0 mb-3">
+                    <Card.Img variant="top" src={otherPlaceholderImageURL}/>
+                    <Card.Body>
+                        <Card.Title>
+                            <h5 className="fw-normal">
+                                A graph with total holdings last x months
+                            </h5>
+                        </Card.Title>
+                    </Card.Body>
+                </Card>
+            </Col>
+            <Col>
+                <Card className="card border-0 mb-3">
+                    <Card.Body>
+                        <Card.Title>
+                            <h5 className="fw-normal">Accuracy</h5>
+                        </Card.Title>
+                        <Card.Text className="">
+                            <p>{AccuracyWidget(accuracy)}</p>
+                        </Card.Text>
+                    </Card.Body>
+                </Card>
+            </Col>
+        </Container>
     );
 }
 
@@ -109,9 +139,8 @@ export default function Index() {
             <AuthLayout>
                 <StockNavBar/>
                 <WarningHeader/>
-                <CardPortfolio/>
-                <CardAccuracy/>
                 <CardHoldings/>
+                <CardPortfolio/>
             </AuthLayout>
         </>
     );

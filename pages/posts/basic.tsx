@@ -79,9 +79,9 @@ export default function Basic(staticProps) {
                                 <div className="card-header"><h1>   {accuracy}<small className="fw-light">%</small></h1>
                                     <div className="card-body">
                                         <h5 className="card-title">Title</h5>
-                                        <p className="card-text">Some quick example text to build on the card title and
+                                        <p className="card-text">AS quick example text to build on the card title and
                                             make up the bulk
-                                            of the cards content.</p>
+                                            of the A content.</p>
                                     </div>
                                 </div>
                             </div>

@@ -108,9 +108,7 @@ export default function Index() {
         <>
             <AuthLayout>
                 <StockNavBar/>
-
                 <WarningHeader/>
-                <CardHoldings/>
                 <CardPortfolio/>
             </AuthLayout>
         </>

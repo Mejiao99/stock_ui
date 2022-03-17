@@ -398,6 +398,11 @@
     "inherits" "^2.0.4"
     "readable-stream" "^3.4.0"
 
+"bootstrap-icons@^1.8.1":
+  "integrity" "sha512-IXUqislddPJfwq6H+2nTkHyr9epO9h6u1AG0OZCx616w+TgzeoCjfmI3qJMQqt1J586gN2IxzB4M99Ip4sTZ1w=="
+  "resolved" "https://registry.npmjs.org/bootstrap-icons/-/bootstrap-icons-1.8.1.tgz"
+  "version" "1.8.1"
+
 "bootstrap@^5.1.3":
   "integrity" "sha512-fcQztozJ8jToQWXxVuEyXWW+dSo8AiXWKwiSSrKWsRB/Qt+Ewwza+JWoLKiTuQLaEPhdNAJ7+Dosc9DOIqNy7Q=="
   "resolved" "https://registry.npmjs.org/bootstrap/-/bootstrap-5.1.3.tgz"
@@ -2114,6 +2119,13 @@
     "minimist" "^1.2.0"
     "strip-json-comments" "~2.0.1"
 
+"react-bootstrap-icons@^1.7.2":
+  "integrity" "sha512-FaXk5iHjd6eltoPHUo+onIkcN/xcCEbaEnTeRacibwVlPagEzujFYtUJ0C2+DlvfkWwy5N+b347tSTbtWqBSEg=="
+  "resolved" "https://registry.npmjs.org/react-bootstrap-icons/-/react-bootstrap-icons-1.7.2.tgz"
+  "version" "1.7.2"
+  dependencies:
+    "prop-types" "^15.7.2"
+
 "react-bootstrap@^2.2.1":
   "integrity" "sha512-x8lpVQflsbevphuWbTnTNCatcbKyPJNrP2WyQ1MJYmFEcVjbTbai1yZhdlXr0QUxLQLxA8g5hQWb5TwJtaZoCA=="
   "resolved" "https://registry.npmjs.org/react-bootstrap/-/react-bootstrap-2.2.1.tgz"
@@ -2165,7 +2177,7 @@
     "loose-envify" "^1.4.0"
     "prop-types" "^15.6.2"
 
-"react@^16.8.0 || ^17.0.0", "react@^16.8.0 || ^17.0.0-rc.1", "react@^17.0.2 || ^18.0.0-0", "react@>= 16.8.0 || 17.x.x || 18.x.x", "react@>=0.14.0", "react@>=15.0.0", "react@>=16.14.0", "react@>=16.6.0", "react@>=16.8.0", "react@17.0.2":
+"react@^16.8.0 || ^17.0.0", "react@^16.8.0 || ^17.0.0-rc.1", "react@^16.8.6 || ^17", "react@^17.0.2 || ^18.0.0-0", "react@>= 16.8.0 || 17.x.x || 18.x.x", "react@>=0.14.0", "react@>=15.0.0", "react@>=16.14.0", "react@>=16.6.0", "react@>=16.8.0", "react@17.0.2":
   "integrity" "sha512-gnhPt75i/dq/z3/6q/0asP78D0u592D5L1pd7M8P+dck6Fu/jJeL6iVVK23fptSUZj8Vjf++7wXA8UNclGQcbA=="
   "resolved" "https://registry.npmjs.org/react/-/react-17.0.2.tgz"
   "version" "17.0.2"

@@ -59,67 +59,45 @@ interface Money {
 }
 
 interface Portfolio {
-    name?: string
-    accuracy?: number;
-    totalHoldings?: Money[];
+    name: string;
+    accuracy: number;
+    totalHoldings: Money;
 }
 
 const port1: Portfolio = {
     name: 'Portfolio1',
     accuracy: 0.9,
-    totalHoldings: [
+    totalHoldings:
         {
             amount: 5,
             currency: "USD",
         },
-    ],
 };
 
-function CardHoldings() {
-    return (
-        <Card className="card border-light mb-3 text-center">
-            <Card.Body>
-                <Card.Title>
-                    <h5 className="fw-bold">Total holdings</h5>
-                </Card.Title>
-                <Card.Text>
-                    <h5>
-                        {port1.totalHoldings.at(0).amount}
-                        <small className="fw-light">${port1.totalHoldings.at(0).currency}</small>
-                    </h5>
-                </Card.Text>
-            </Card.Body>
-        </Card>
-    );
-}
 
-const otherPlaceholderImageURL = generateCustomPlaceholderURL(200, 100, {
+const otherPlaceholderImageURL = generateCustomPlaceholderURL(100, 25, {
     backgroundColor: '#123456',
     textColor: '#ffffff',
     text: 'Graphic',
 });
 
-function CardPortfolio() {
+function CardPortfolio({portfolio}) {
+
+    const name = portfolio.name
+    const accuracy = portfolio.accuracy;
+    const amount = portfolio.totalHoldings.amount;
+    const currency = portfolio.totalHoldings.currency;
+
+
     return (
-        <Col>
-            <Card className="card border-0 mb-3 text-center">
-                <Card.Title>{port1.name}</Card.Title>
+        <Card className="m-3 ">
+            <Card.Header className="text-center">{name}</Card.Header>
+            <Card.Body>
                 <Card.Img variant="bottom" src={otherPlaceholderImageURL}/>
-                <Card.Body>
-                    <Card.Subtitle>
-                        <h2 className="fw-normal">
-                            A graph with total holdings last x months
-                        </h2>
-                    </Card.Subtitle>
-                    <Card.Subtitle>
-                        <h4 className="fw-normal">Accuracy</h4>
-                    </Card.Subtitle>
-                    <Card.Subtitle>
-                        <p>{AccuracyWidget(port1.accuracy)}</p>
-                    </Card.Subtitle>
-                </Card.Body>
-            </Card>
-        </Col>
+                <Card.Text>Accuracy {AccuracyWidget(accuracy)}</Card.Text>
+                <Card.Text>Total holdings: {amount} ${currency}</Card.Text>
+            </Card.Body>
+        </Card>
     );
 }
 
@@ -129,8 +107,7 @@ export default function Index() {
             <AuthLayout>
                 <StockNavBar/>
                 <WarningHeader/>
-                <CardHoldings/>
-                <CardPortfolio/>
+                <CardPortfolio portfolio={port1}/>
             </AuthLayout>
         </>
     );

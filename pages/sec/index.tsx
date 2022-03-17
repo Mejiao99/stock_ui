@@ -1,6 +1,8 @@
-import {Alert, Card, CardGroup, Col, Container, Nav, Navbar, Row} from 'react-bootstrap';
+import Head from 'next/head'
+import {getSortedPostsData} from "lib/posts";
+import utilStyles from 'styles/utils.module.css'
+import { Alert, Card, Col, Container, Nav, Navbar, NavDropdown, Row } from 'react-bootstrap';
 import * as Icon from 'react-bootstrap-icons';
-import AccuracyWidget from "../../src/components/AccuracyWidget";
 
 
 function AuthLayout({children}) {
@@ -14,20 +16,29 @@ function AuthLayout({children}) {
 function StockNavBar() {
     return (
         <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-            <div className="container">
-                <Navbar.Brand href="#home">Portfolio</Navbar.Brand>
-                <Navbar.Toggle aria-controls="responsive-navbar-nav"/>
+            <Container>
+                <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
+                <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="me-auto">
-                        <Nav.Link href="#dashboard">Dashboard</Nav.Link>
-                        <Nav.Link href="#portfolios">Portfolios</Nav.Link>
-                        <Nav.Link href="#settings">Settings</Nav.Link>
+                        <Nav.Link href="#features">Features</Nav.Link>
+                        <Nav.Link href="#pricing">Pricing</Nav.Link>
+                        <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
+                            <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
+                            <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
+                            <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+                            <NavDropdown.Divider />
+                            <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
+                        </NavDropdown>
                     </Nav>
                     <Nav>
-                        <Nav.Link href="#deets">Logout</Nav.Link>
+                        <Nav.Link href="#deets">More deets</Nav.Link>
+                        <Nav.Link eventKey={2} href="#memes">
+                            Dank memes
+                        </Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
-            </div>
+            </Container>
         </Navbar>
     )
 }
@@ -35,12 +46,12 @@ function StockNavBar() {
 function WarningHeader() {
     return (
         // Marging m-3: https://getbootstrap.com/docs/5.1/utilities/spacing/#margin-and-padding
-        <Row className="m-3">
+        <Row  className="m-3">
             <Col>
                 <Alert variant="warning">
 
                     <Alert.Heading>
-                        <Icon.ExclamationTriangleFill className="flex-shrink-0 me-2"/>
+                        <Icon.ExclamationTriangleFill className="flex-shrink-0 me-2" />
                         Hey, nice to see you
                     </Alert.Heading>
                     <p>
@@ -61,62 +72,33 @@ function WarningHeader() {
 
 function CardPortfolio() {
     return (
-        <Container className="mb-5">
-            <header>
-                <div className="text-center">
-                    <h1>PortfolioName</h1>
-                </div>
-            </header>
-            <CardGroup>
-                <CardAccuracy/>
-                <CardHoldings/>
-            </CardGroup>
-        </Container>
-    )
-}
-
-function CardAccuracy() {
-    return (
         <Card>
-            <Card.Header><h1>Accuracy</h1></Card.Header>
             <Card.Body>
-                <h5>{AccuracyWidget(0.1)}</h5>
+                body
             </Card.Body>
         </Card>
     )
 }
 
-function CardHoldings() {
-    return (
-        <Card>
-            <Card.Header><h1>Holdings</h1></Card.Header>
-            <Card.Body>
-                <h5>1 <small className="fw-light">$USD</small></h5>
-            </Card.Body>
-        </Card>
-    )
-}
 
 export default function Index() {
     return (
         <>
             <AuthLayout>
-                <StockNavBar/>
+                <StockNavBar />
 
-                <WarningHeader/>
-                <CardGroup>
-                    <CardPortfolio/>
-                </CardGroup>
+                <WarningHeader />
 
+                <CardPortfolio />
             </AuthLayout>
         </>
     )
 }
 
-
-
 export async function getStaticProps() {
     return {
-        props: {}
+        props: {
+
+        }
     }
 }

@@ -1,6 +1,6 @@
 import {Alert, Card, Col, Container, Nav, Navbar, Row,} from "react-bootstrap";
 import * as Icon from "react-bootstrap-icons";
-import AccuracyWidget from "../../src/components/AccuracyWidget";
+import AccuracyWidget from "components/AccuracyWidget";
 import {generateCustomPlaceholderURL} from 'react-placeholder-image';
 
 function AuthLayout({children}) {
@@ -59,11 +59,13 @@ interface Money {
 }
 
 interface Portfolio {
+    name?: string
     accuracy?: number;
     totalHoldings?: Money[];
 }
 
 const port1: Portfolio = {
+    name: 'Portfolio1',
     accuracy: 0.9,
     totalHoldings: [
         {
@@ -72,27 +74,22 @@ const port1: Portfolio = {
         },
     ],
 };
-const accuracy = port1.accuracy;
-const amount = port1.totalHoldings.at(0).amount;
-const currency = port1.totalHoldings.at(0).currency;
 
 function CardHoldings() {
     return (
-        <Container className="p-3 mx-auto text-center">
-            <Card className="card border-light mb-3">
-                <Card.Body>
-                    <Card.Title>
-                        <h5 className="fw-bold">TOTAL HOLDIGNS</h5>
-                    </Card.Title>
-                    <Card.Text>
-                        <h5>
-                            {amount}
-                            <small className="fw-light">${currency}</small>
-                        </h5>
-                    </Card.Text>
-                </Card.Body>
-            </Card>
-        </Container>
+        <Card className="card border-light mb-3 text-center">
+            <Card.Body>
+                <Card.Title>
+                    <h5 className="fw-bold">Total holdings</h5>
+                </Card.Title>
+                <Card.Text>
+                    <h5>
+                        {port1.totalHoldings.at(0).amount}
+                        <small className="fw-light">${port1.totalHoldings.at(0).currency}</small>
+                    </h5>
+                </Card.Text>
+            </Card.Body>
+        </Card>
     );
 }
 
@@ -104,32 +101,25 @@ const otherPlaceholderImageURL = generateCustomPlaceholderURL(200, 100, {
 
 function CardPortfolio() {
     return (
-        <Container className="p-3 text-center">
-            <Col>
-                <Card className="card border-0 mb-3">
-                    <Card.Img variant="top" src={otherPlaceholderImageURL}/>
-                    <Card.Body>
-                        <Card.Title>
-                            <h5 className="fw-normal">
-                                A graph with total holdings last x months
-                            </h5>
-                        </Card.Title>
-                    </Card.Body>
-                </Card>
-            </Col>
-            <Col>
-                <Card className="card border-0 mb-3">
-                    <Card.Body>
-                        <Card.Title>
-                            <h5 className="fw-normal">Accuracy</h5>
-                        </Card.Title>
-                        <Card.Text className="">
-                            <p>{AccuracyWidget(accuracy)}</p>
-                        </Card.Text>
-                    </Card.Body>
-                </Card>
-            </Col>
-        </Container>
+        <Col>
+            <Card className="card border-0 mb-3 text-center">
+                <Card.Title>{port1.name}</Card.Title>
+                <Card.Img variant="bottom" src={otherPlaceholderImageURL}/>
+                <Card.Body>
+                    <Card.Subtitle>
+                        <h2 className="fw-normal">
+                            A graph with total holdings last x months
+                        </h2>
+                    </Card.Subtitle>
+                    <Card.Subtitle>
+                        <h4 className="fw-normal">Accuracy</h4>
+                    </Card.Subtitle>
+                    <Card.Subtitle>
+                        <p>{AccuracyWidget(port1.accuracy)}</p>
+                    </Card.Subtitle>
+                </Card.Body>
+            </Card>
+        </Col>
     );
 }
 

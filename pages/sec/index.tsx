@@ -1,7 +1,4 @@
-import Head from 'next/head'
-import {getSortedPostsData} from "lib/posts";
-import utilStyles from 'styles/utils.module.css'
-import { Alert, Card, Col, Container, Nav, Navbar, NavDropdown, Row } from 'react-bootstrap';
+import {Alert, Card, Col, Container, Nav, Navbar, Row} from 'react-bootstrap';
 import * as Icon from 'react-bootstrap-icons';
 
 
@@ -17,25 +14,16 @@ function StockNavBar() {
     return (
         <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
             <Container>
-                <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
-                <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                <Navbar.Brand href="#home">Portfolio</Navbar.Brand>
+                <Navbar.Toggle aria-controls="responsive-navbar-nav"/>
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="me-auto">
-                        <Nav.Link href="#features">Features</Nav.Link>
-                        <Nav.Link href="#pricing">Pricing</Nav.Link>
-                        <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
-                            <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                            <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-                            <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-                            <NavDropdown.Divider />
-                            <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
-                        </NavDropdown>
+                        <Nav.Link href="#dashboard">Dashboard</Nav.Link>
+                        <Nav.Link href="#portfolios">Portfolios</Nav.Link>
+                        <Nav.Link href="#settings">Settings</Nav.Link>
                     </Nav>
                     <Nav>
-                        <Nav.Link href="#deets">More deets</Nav.Link>
-                        <Nav.Link eventKey={2} href="#memes">
-                            Dank memes
-                        </Nav.Link>
+                        <Nav.Link href="#logout">Logout</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </Container>
@@ -46,12 +34,12 @@ function StockNavBar() {
 function WarningHeader() {
     return (
         // Marging m-3: https://getbootstrap.com/docs/5.1/utilities/spacing/#margin-and-padding
-        <Row  className="m-3">
+        <Row className="m-3">
             <Col>
                 <Alert variant="warning">
 
                     <Alert.Heading>
-                        <Icon.ExclamationTriangleFill className="flex-shrink-0 me-2" />
+                        <Icon.ExclamationTriangleFill className="flex-shrink-0 me-2"/>
                         Hey, nice to see you
                     </Alert.Heading>
                     <p>
@@ -85,11 +73,11 @@ export default function Index() {
     return (
         <>
             <AuthLayout>
-                <StockNavBar />
+                <StockNavBar/>
 
-                <WarningHeader />
+                <WarningHeader/>
 
-                <CardPortfolio />
+                <CardPortfolio/>
             </AuthLayout>
         </>
     )
@@ -97,8 +85,6 @@ export default function Index() {
 
 export async function getStaticProps() {
     return {
-        props: {
-
-        }
+        props: {}
     }
 }

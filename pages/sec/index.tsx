@@ -1,7 +1,4 @@
-import Head from 'next/head'
-import {getSortedPostsData} from "lib/posts";
-import utilStyles from 'styles/utils.module.css'
-import { Alert, Card, Col, Container, Nav, Navbar, NavDropdown, Row } from 'react-bootstrap';
+import {Alert, Card, Col, Container, Nav, Navbar, Row} from 'react-bootstrap';
 import * as Icon from 'react-bootstrap-icons';
 
 
@@ -16,7 +13,7 @@ function AuthLayout({children}) {
 function StockNavBar() {
     return (
         <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-            <div className="container">
+            <Container>
                 <Navbar.Brand href="#home">Portfolio</Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav"/>
                 <Navbar.Collapse id="responsive-navbar-nav">
@@ -26,10 +23,10 @@ function StockNavBar() {
                         <Nav.Link href="#settings">Settings</Nav.Link>
                     </Nav>
                     <Nav>
-                        <Nav.Link href="#deets">Logout</Nav.Link>
+                        <Nav.Link href="#logout">Logout</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
-            </div>
+            </Container>
         </Navbar>
     )
 }
@@ -37,12 +34,12 @@ function StockNavBar() {
 function WarningHeader() {
     return (
         // Marging m-3: https://getbootstrap.com/docs/5.1/utilities/spacing/#margin-and-padding
-        <Row  className="m-3">
+        <Row className="m-3">
             <Col>
                 <Alert variant="warning">
 
                     <Alert.Heading>
-                        <Icon.ExclamationTriangleFill className="flex-shrink-0 me-2" />
+                        <Icon.ExclamationTriangleFill className="flex-shrink-0 me-2"/>
                         Hey, nice to see you
                     </Alert.Heading>
                     <p>
@@ -76,11 +73,11 @@ export default function Index() {
     return (
         <>
             <AuthLayout>
-                <StockNavBar />
+                <StockNavBar/>
 
-                <WarningHeader />
+                <WarningHeader/>
 
-                <CardPortfolio />
+                <CardPortfolio/>
             </AuthLayout>
         </>
     )
@@ -88,8 +85,6 @@ export default function Index() {
 
 export async function getStaticProps() {
     return {
-        props: {
-
-        }
+        props: {}
     }
 }

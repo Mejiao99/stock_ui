@@ -2,7 +2,7 @@ import { Alert, Card, Col, Container, Nav, Navbar, Row } from "react-bootstrap";
 import * as Icon from "react-bootstrap-icons";
 import AccuracyWidget from "components/AccuracyWidget";
 import { generateCustomPlaceholderURL } from "react-placeholder-image";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 function AuthLayout({ children }) {
   return <Container>{children}</Container>;

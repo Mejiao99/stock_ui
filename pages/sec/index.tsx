@@ -2,7 +2,6 @@ import { Alert, Card, Col, Container, Nav, Navbar, Row } from "react-bootstrap";
 import * as Icon from "react-bootstrap-icons";
 import AccuracyWidget from "components/AccuracyWidget";
 import { generateCustomPlaceholderURL } from "react-placeholder-image";
-import React from "react";
 
 function AuthLayout({ children }) {
   return <Container>{children}</Container>;
@@ -130,8 +129,8 @@ function CardPortfolios({ portfolios }) {
   );
 }
 
-const portfolios: Portfolio[] = [port1, port2, port3];
 export default function Index() {
+  const portfolios: Portfolio[] = [port1, port2, port3];
   return (
     <>
       <AuthLayout>

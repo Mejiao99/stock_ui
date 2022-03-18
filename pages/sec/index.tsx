@@ -2,6 +2,7 @@ import { Alert, Card, Col, Container, Nav, Navbar, Row } from "react-bootstrap";
 import * as Icon from "react-bootstrap-icons";
 import AccuracyWidget from "components/AccuracyWidget";
 import { generateCustomPlaceholderURL } from "react-placeholder-image";
+import { useState, useEffect } from "react";
 
 function AuthLayout({ children }) {
   return <Container>{children}</Container>;
@@ -129,7 +130,12 @@ export default function Index() {
       currency: "USD",
     },
   };
-  const portfolios: Portfolio[] = [port1, port2, port3];
+
+  const [portfolios, setPortfolios] = useState([]);
+  useEffect(() => {
+    console.log("setPortfolios");
+    setPortfolios([port1, port2, port3]);
+  }, []);
   return (
     <>
       <AuthLayout>

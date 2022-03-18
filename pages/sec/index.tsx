@@ -2,6 +2,7 @@ import { Alert, Card, Col, Container, Nav, Navbar, Row } from "react-bootstrap";
 import * as Icon from "react-bootstrap-icons";
 import AccuracyWidget from "components/AccuracyWidget";
 import { generateCustomPlaceholderURL } from "react-placeholder-image";
+import React, { useState, useEffect } from 'react';
 
 function AuthLayout({ children }) {
   return <Container>{children}</Container>;
@@ -100,36 +101,41 @@ function CardPortfolios({ portfolios }) {
     </>
   );
 }
+const port1: Portfolio = {
+  id: "01",
+  name: "Portfolio1",
+  accuracy: 0.9,
+  totalHoldings: {
+    amount: 5,
+    currency: "USD",
+  },
+};
+const port2: Portfolio = {
+  id: "02",
+  name: "Portfolio2",
+  accuracy: 0.8,
+  totalHoldings: {
+    amount: 5,
+    currency: "USD",
+  },
+};
+const port3: Portfolio = {
+  id: "03",
+  name: "Portfolio3",
+  accuracy: 0.4,
+  totalHoldings: {
+    amount: 5,
+    currency: "USD",
+  },
+};
 
 export default function Index() {
-  const port1: Portfolio = {
-    id: "01",
-    name: "Portfolio1",
-    accuracy: 0.9,
-    totalHoldings: {
-      amount: 5,
-      currency: "USD",
-    },
-  };
-  const port2: Portfolio = {
-    id: "02",
-    name: "Portfolio2",
-    accuracy: 0.8,
-    totalHoldings: {
-      amount: 5,
-      currency: "USD",
-    },
-  };
-  const port3: Portfolio = {
-    id: "03",
-    name: "Portfolio3",
-    accuracy: 0.4,
-    totalHoldings: {
-      amount: 5,
-      currency: "USD",
-    },
-  };
-  const portfolios: Portfolio[] = [port1, port2, port3];
+
+  const [portfolios, setPortfolios] = useState( []);
+  useEffect(() => {
+    console.log("setPortfolios")
+          setPortfolios([port1, port2, port3])
+  }, [])
   return (
     <>
       <AuthLayout>
@@ -143,6 +149,8 @@ export default function Index() {
 
 export async function getStaticProps() {
   return {
-    props: {},
+    props: {
+
+    },
   };
 }

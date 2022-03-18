@@ -65,7 +65,6 @@ interface Portfolio {
   totalHoldings: Money;
 }
 
-
 const otherPlaceholderImageURL = generateCustomPlaceholderURL(100, 25, {
   backgroundColor: "#123456",
   textColor: "#ffffff",
@@ -103,34 +102,34 @@ function CardPortfolios({ portfolios }) {
 }
 
 export default function Index() {
-    const port1: Portfolio = {
-        id: "01",
-        name: "Portfolio1",
-        accuracy: 0.9,
-        totalHoldings: {
-            amount: 5,
-            currency: "USD",
-        },
-    };
-    const port2: Portfolio = {
-        id: "02",
-        name: "Portfolio2",
-        accuracy: 0.8,
-        totalHoldings: {
-            amount: 5,
-            currency: "USD",
-        },
-    };
-    const port3: Portfolio = {
-        id: "03",
-        name: "Portfolio3",
-        accuracy: 0.4,
-        totalHoldings: {
-            amount: 5,
-            currency: "USD",
-        },
-    };
-    const portfolios: Portfolio[] = [port1, port2, port3];
+  const port1: Portfolio = {
+    id: "01",
+    name: "Portfolio1",
+    accuracy: 0.9,
+    totalHoldings: {
+      amount: 5,
+      currency: "USD",
+    },
+  };
+  const port2: Portfolio = {
+    id: "02",
+    name: "Portfolio2",
+    accuracy: 0.8,
+    totalHoldings: {
+      amount: 5,
+      currency: "USD",
+    },
+  };
+  const port3: Portfolio = {
+    id: "03",
+    name: "Portfolio3",
+    accuracy: 0.4,
+    totalHoldings: {
+      amount: 5,
+      currency: "USD",
+    },
+  };
+  const portfolios: Portfolio[] = [port1, port2, port3];
   return (
     <>
       <AuthLayout>

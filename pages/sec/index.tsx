@@ -1,5 +1,7 @@
 import { Alert, Card, Col, Container, Nav, Navbar, Row } from "react-bootstrap";
 import * as Icon from "react-bootstrap-icons";
+import AccuracyWidget from "components/AccuracyWidget";
+import { generateCustomPlaceholderURL } from "react-placeholder-image";
 
 function AuthLayout({ children }) {
   return <Container>{children}</Container>;
@@ -51,10 +53,48 @@ function WarningHeader() {
   );
 }
 
-function CardPortfolio() {
+interface Money {
+  amount: number;
+  currency: string;
+}
+
+interface Portfolio {
+  name: string;
+  accuracy: number;
+  totalHoldings: Money;
+}
+
+const port1: Portfolio = {
+  name: "Portfolio1",
+  accuracy: 0.9,
+  totalHoldings: {
+    amount: 5,
+    currency: "USD",
+  },
+};
+
+const otherPlaceholderImageURL = generateCustomPlaceholderURL(100, 25, {
+  backgroundColor: "#123456",
+  textColor: "#ffffff",
+  text: "Graphic",
+});
+
+function CardPortfolio({ portfolio }) {
+  const name = portfolio.name;
+  const accuracy = portfolio.accuracy;
+  const amount = portfolio.totalHoldings.amount;
+  const currency = portfolio.totalHoldings.currency;
+
   return (
-    <Card>
-      <Card.Body>body</Card.Body>
+    <Card className="m-3 ">
+      <Card.Header className="text-center">{name}</Card.Header>
+      <Card.Body>
+        <Card.Img variant="bottom" src={otherPlaceholderImageURL} />
+        <Card.Text>Accuracy {AccuracyWidget(accuracy)}</Card.Text>
+        <Card.Text>
+          Total holdings: {amount} ${currency}
+        </Card.Text>
+      </Card.Body>
     </Card>
   );
 }
@@ -64,10 +104,8 @@ export default function Index() {
     <>
       <AuthLayout>
         <StockNavBar />
-
         <WarningHeader />
-
-        <CardPortfolio />
+        <CardPortfolio portfolio={port1} />
       </AuthLayout>
     </>
   );

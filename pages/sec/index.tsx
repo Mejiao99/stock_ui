@@ -108,14 +108,18 @@ function CardPortfolios({ portfolios }) {
   );
 }
 
-export default function Index() {
+export default function Index(staticProps) {
   const [portfolios, setPortfolios] = useState([]);
   useEffect(() => {
     console.log("setPortfolios");
     fetch("/static/portfolios.json")
       .then((received) => received.json())
       .then((data) => data["portfolios"] as Portfolio[])
-      .then((receivedPortfolios) => setPortfolios(receivedPortfolios));
+      .then((receivedPortfolios) =>
+        setTimeout(() => {
+          setPortfolios(receivedPortfolios);
+        }, 5000)
+      );
   }, []);
 
   return (

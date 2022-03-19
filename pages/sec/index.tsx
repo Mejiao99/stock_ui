@@ -108,11 +108,12 @@ function CardPortfolios({ portfolios }) {
   );
 }
 
-export default function Index(staticProps) {
+export default function Index(props) {
+
   const [portfolios, setPortfolios] = useState([]);
   useEffect(() => {
     console.log("setPortfolios");
-    fetch("/static/portfolios.json")
+    fetch(props.backendHost+"/portfolios")
       .then((received) => received.json())
       .then((data) => data["portfolios"] as Portfolio[])
       .then((receivedPortfolios) =>
@@ -135,6 +136,8 @@ export default function Index(staticProps) {
 
 export async function getStaticProps() {
   return {
-    props: {},
+    props: {
+      backendHost: process.env.BACKEND_HOST,
+    },
   };
 }

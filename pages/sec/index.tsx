@@ -2,7 +2,7 @@ import { Alert, Card, Col, Container, Nav, Navbar, Row } from "react-bootstrap";
 import * as Icon from "react-bootstrap-icons";
 import AccuracyWidget from "components/AccuracyWidget";
 import { generateCustomPlaceholderURL } from "react-placeholder-image";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
 function AuthLayout({ children }) {
   return <Container>{children}</Container>;
@@ -65,9 +65,11 @@ interface Portfolio {
   accuracy: number;
   totalHoldings: Money;
 }
+
 interface PortfoliosSummaryResponse {
   portfolios: Portfolio[];
 }
+
 function getPortfoliosSummary() {
   return;
 }
@@ -112,9 +114,9 @@ export default function Index(props) {
   const [portfolios, setPortfolios] = useState([]);
   useEffect(() => {
     console.log("setPortfolios");
-    fetch(props.backendHost + "/portfolios")
+    fetch(props.backendHost + "/hello")
       .then((received) => received.json())
-      .then((data) => data["portfolios"] as Portfolio[])
+      .then((data) => data as Portfolio[])
       .then((receivedPortfolios) =>
         setTimeout(() => {
           setPortfolios(receivedPortfolios);

@@ -109,11 +109,10 @@ function CardPortfolios({ portfolios }) {
 }
 
 export default function Index(props) {
-
   const [portfolios, setPortfolios] = useState([]);
   useEffect(() => {
     console.log("setPortfolios");
-    fetch(props.backendHost+"/portfolios")
+    fetch(props.backendHost + "/portfolios")
       .then((received) => received.json())
       .then((data) => data["portfolios"] as Portfolio[])
       .then((receivedPortfolios) =>

@@ -4,6 +4,7 @@ import AccuracyWidget from "components/AccuracyWidget";
 import { generateCustomPlaceholderURL } from "react-placeholder-image";
 import { useEffect, useState } from "react";
 import MoneyWidget from "components/MoneyWidget";
+import { Money } from "components/Money";
 
 function AuthLayout({ children }) {
   return <Container>{children}</Container>;
@@ -55,11 +56,6 @@ function WarningHeader() {
   );
 }
 
-interface Money {
-  amount: number;
-  currency: string;
-}
-
 interface Portfolio {
   id: string;
   name: string;
@@ -76,8 +72,7 @@ const otherPlaceholderImageURL = generateCustomPlaceholderURL(100, 25, {
 function CardPortfolio({ portfolio }) {
   const name = portfolio.name;
   const accuracy = portfolio.accuracy;
-  const amount = portfolio.totalHoldings.amount;
-  const currency = portfolio.totalHoldings.currency;
+  const money = portfolio.totalHoldings;
 
   return (
     <Card className="m-3 ">
@@ -85,9 +80,7 @@ function CardPortfolio({ portfolio }) {
       <Card.Body>
         <Card.Img variant="bottom" src={otherPlaceholderImageURL} />
         <Card.Text>Accuracy {AccuracyWidget(accuracy)}</Card.Text>
-        <Card.Text>
-          Total holdings: {MoneyWidget(amount)} ${currency}
-        </Card.Text>
+        <Card.Text>Total holdings: {MoneyWidget(money)}</Card.Text>
       </Card.Body>
     </Card>
   );

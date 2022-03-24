@@ -2,7 +2,9 @@ import { Alert, Card, Col, Container, Nav, Navbar, Row } from "react-bootstrap";
 import * as Icon from "react-bootstrap-icons";
 import AccuracyWidget from "components/AccuracyWidget";
 import { generateCustomPlaceholderURL } from "react-placeholder-image";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import MoneyWidget from "components/MoneyWidget";
+import { Money } from "components/Money";
 
 function AuthLayout({ children }) {
   return <Container>{children}</Container>;
@@ -54,11 +56,6 @@ function WarningHeader() {
   );
 }
 
-interface Money {
-  amount: number;
-  currency: string;
-}
-
 interface Portfolio {
   id: string;
   name: string;
@@ -75,8 +72,7 @@ const otherPlaceholderImageURL = generateCustomPlaceholderURL(100, 25, {
 function CardPortfolio({ portfolio }) {
   const name = portfolio.name;
   const accuracy = portfolio.accuracy;
-  const amount = portfolio.totalHoldings.amount;
-  const currency = portfolio.totalHoldings.currency;
+  const money = portfolio.totalHoldings;
 
   return (
     <Card className="m-3 ">
@@ -84,9 +80,7 @@ function CardPortfolio({ portfolio }) {
       <Card.Body>
         <Card.Img variant="bottom" src={otherPlaceholderImageURL} />
         <Card.Text>Accuracy {AccuracyWidget(accuracy)}</Card.Text>
-        <Card.Text>
-          Total holdings: {amount} ${currency}
-        </Card.Text>
+        <Card.Text>Total holdings: {MoneyWidget(money)}</Card.Text>
       </Card.Body>
     </Card>
   );
@@ -102,40 +96,20 @@ function CardPortfolios({ portfolios }) {
   );
 }
 
-export default function Index() {
-  const port1: Portfolio = {
-    id: "01",
-    name: "Portfolio1",
-    accuracy: 0.9,
-    totalHoldings: {
-      amount: 5,
-      currency: "USD",
-    },
-  };
-  const port2: Portfolio = {
-    id: "02",
-    name: "Portfolio2",
-    accuracy: 0.8,
-    totalHoldings: {
-      amount: 5,
-      currency: "USD",
-    },
-  };
-  const port3: Portfolio = {
-    id: "03",
-    name: "Portfolio3",
-    accuracy: 0.4,
-    totalHoldings: {
-      amount: 5,
-      currency: "USD",
-    },
-  };
-
+export default function Index(props) {
   const [portfolios, setPortfolios] = useState([]);
   useEffect(() => {
     console.log("setPortfolios");
-    setPortfolios([port1, port2, port3]);
+    fetch(props.backendHost + "/portfolios")
+      .then((received) => received.json())
+      .then((data) => data as Portfolio[])
+      .then((receivedPortfolios) =>
+        setTimeout(() => {
+          setPortfolios(receivedPortfolios);
+        }, 5000)
+      );
   }, []);
+
   return (
     <>
       <AuthLayout>
@@ -149,6 +123,8 @@ export default function Index() {
 
 export async function getStaticProps() {
   return {
-    props: {},
+    props: {
+      backendHost: process.env.BACKEND_HOST,
+    },
   };
 }

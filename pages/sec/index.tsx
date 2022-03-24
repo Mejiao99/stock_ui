@@ -67,14 +67,6 @@ interface Portfolio {
   totalHoldings: Money;
 }
 
-interface PortfoliosSummaryResponse {
-  portfolios: Portfolio[];
-}
-
-function getPortfoliosSummary() {
-  return;
-}
-
 const otherPlaceholderImageURL = generateCustomPlaceholderURL(100, 25, {
   backgroundColor: "#123456",
   textColor: "#ffffff",

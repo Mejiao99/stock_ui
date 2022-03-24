@@ -3,6 +3,7 @@ import * as Icon from "react-bootstrap-icons";
 import AccuracyWidget from "components/AccuracyWidget";
 import { generateCustomPlaceholderURL } from "react-placeholder-image";
 import { useEffect, useState } from "react";
+import AmountWidget from "../../src/components/AmountWidget";
 
 function AuthLayout({ children }) {
   return <Container>{children}</Container>;
@@ -93,7 +94,7 @@ function CardPortfolio({ portfolio }) {
         <Card.Img variant="bottom" src={otherPlaceholderImageURL} />
         <Card.Text>Accuracy {AccuracyWidget(accuracy)}</Card.Text>
         <Card.Text>
-          Total holdings: {amount} ${currency}
+          Total holdings:{AmountWidget(amount)} ${currency}
         </Card.Text>
       </Card.Body>
     </Card>
@@ -114,7 +115,7 @@ export default function Index(props) {
   const [portfolios, setPortfolios] = useState([]);
   useEffect(() => {
     console.log("setPortfolios");
-    fetch(props.backendHost + "/hello")
+    fetch(props.backendHost + "/portfolios")
       .then((received) => received.json())
       .then((data) => data as Portfolio[])
       .then((receivedPortfolios) =>

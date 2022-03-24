@@ -86,7 +86,7 @@ function CardPortfolio({ portfolio }) {
         <Card.Img variant="bottom" src={otherPlaceholderImageURL} />
         <Card.Text>Accuracy {AccuracyWidget(accuracy)}</Card.Text>
         <Card.Text>
-          Total holdings:{AmountWidget(amount)} ${currency}
+          Total holdings: {AmountWidget(amount)} ${currency}
         </Card.Text>
       </Card.Body>
     </Card>

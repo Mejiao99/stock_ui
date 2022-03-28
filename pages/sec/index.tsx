@@ -62,6 +62,20 @@ interface Portfolio {
   accuracy: number;
   totalHoldings: Money;
 }
+interface Holding {
+  quantity: number;
+  ticket: string;
+}
+interface Account {
+  id: string;
+  holdings: Holding[];
+}
+
+interface PortfolioDefinition {
+  id: string;
+  name: string;
+  accounts: Account[];
+}
 
 const otherPlaceholderImageURL = generateCustomPlaceholderURL(100, 25, {
   backgroundColor: "#123456",
@@ -96,26 +110,29 @@ function CardPortfolios({ portfolios }) {
   );
 }
 
+function Calc({ portfolioDefinition }, { stockPrices }) {
+  return portfolioDefinition.map((value) => value.name);
+}
+
 export default function Index(props) {
-  const [portfolios, setPortfolios] = useState([]);
+  const [portfolioDefinition, setPortfolioDefinition] = useState([]);
+  console.log("" + portfolioDefinition);
   useEffect(() => {
-    console.log("setPortfolios");
     fetch(props.backendHost + "/portfolios")
-      .then((received) => received.json())
-      .then((data) => data as Portfolio[])
+      .then<PortfolioDefinition[]>((r) => r.json())
       .then((receivedPortfolios) =>
         setTimeout(() => {
-          setPortfolios(receivedPortfolios);
+          setPortfolioDefinition(receivedPortfolios);
         }, 5000)
       );
   }, []);
-
+  console.log(portfolioDefinition["portfolios"].map((value) => value.name));
   return (
     <>
       <AuthLayout>
         <StockNavBar />
         <WarningHeader />
-        <CardPortfolios portfolios={portfolios} />
+        {/*<CardPortfolios portfolios={portfolios["portfolios"]} />*/}
       </AuthLayout>
     </>
   );

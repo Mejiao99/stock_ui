@@ -5,6 +5,7 @@ import { generateCustomPlaceholderURL } from "react-placeholder-image";
 import { useEffect, useState } from "react";
 import MoneyWidget from "components/MoneyWidget";
 import { Money } from "components/Money";
+import { isJsxSpreadAttribute } from "tsutils";
 
 function AuthLayout({ children }) {
   return <Container>{children}</Container>;
@@ -76,6 +77,14 @@ interface PortfolioDefinition {
   name: string;
   accounts: Account[];
 }
+interface StockPrice {
+  ticket: string;
+  price: Money;
+}
+
+const rates = {
+  CAD: 1.3,
+};
 
 const otherPlaceholderImageURL = generateCustomPlaceholderURL(100, 25, {
   backgroundColor: "#123456",
@@ -85,16 +94,16 @@ const otherPlaceholderImageURL = generateCustomPlaceholderURL(100, 25, {
 
 function CardPortfolio({ portfolio }) {
   const name = portfolio.name;
-  const accuracy = portfolio.accuracy;
-  const money = portfolio.totalHoldings;
+  // const accuracy = portfolio.accuracy;
+  // const money = portfolio.totalHoldings;
 
   return (
     <Card className="m-3 ">
       <Card.Header className="text-center">{name}</Card.Header>
       <Card.Body>
         <Card.Img variant="bottom" src={otherPlaceholderImageURL} />
-        <Card.Text>Accuracy {AccuracyWidget(accuracy)}</Card.Text>
-        <Card.Text>Total holdings: {MoneyWidget(money)}</Card.Text>
+        {/*<Card.Text>Accuracy {AccuracyWidget(accuracy)}</Card.Text>*/}
+        {/*<Card.Text>Total holdings: {MoneyWidget(money)}</Card.Text>*/}
       </Card.Body>
     </Card>
   );
@@ -110,29 +119,46 @@ function CardPortfolios({ portfolios }) {
   );
 }
 
-function Calc({ portfolioDefinition }, { stockPrices }) {
-  return portfolioDefinition.map((value) => value.name);
+function calculateTotalHoldings(
+  holdings: Holding[],
+  stockPrices: StockPrice[],
+  currencyRates,
+  targetCurrency
+) {
+  const initialValue = 0;
+  const ticketsPerValue = holdings.map(
+    (value) =>
+      value.quantity *
+      stockPrices[value.ticket].amount *
+      currencyRates[targetCurrency]
+  );
+  let totalHoldings = 0;
+  return (totalHoldings = ticketsPerValue.reduce(
+    (acumm, value) => acumm + value,
+    initialValue
+  ));
 }
 
 export default function Index(props) {
-  const [portfolioDefinition, setPortfolioDefinition] = useState([]);
-  console.log("" + portfolioDefinition);
+  const [state, setState] = useState([]);
+  console.log("" + state);
   useEffect(() => {
     fetch(props.backendHost + "/portfolios")
-      .then<PortfolioDefinition[]>((r) => r.json())
-      .then((receivedPortfolios) =>
+      .then((received) => received.json())
+      .then((state) =>
         setTimeout(() => {
-          setPortfolioDefinition(receivedPortfolios);
+          setState(state);
         }, 5000)
       );
   }, []);
-  console.log(portfolioDefinition["portfolios"].map((value) => value.name));
+  // const holdings = state["portfolios"].map(value=> value.accounts).map(value => value.holdings);
+  // const prices = state["stockPrices"]
   return (
     <>
       <AuthLayout>
         <StockNavBar />
         <WarningHeader />
-        {/*<CardPortfolios portfolios={portfolios["portfolios"]} />*/}
+        {/*{calculateTotalHoldings(holdings,prices,rates,"CAD")}*/}
       </AuthLayout>
     </>
   );

@@ -109,7 +109,7 @@ function CardPortfolio({ portfolio }) {
 function CardPortfolios({ portfolios }) {
   return (
     <>
-      {portfolios["portfolios"].map((portfolio) => (
+      {portfolios.map((portfolio) => (
         <CardPortfolio key={portfolio.id} portfolio={portfolio} />
       ))}
     </>

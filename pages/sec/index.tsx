@@ -149,8 +149,7 @@ export default function Index(props) {
         }, 5000)
       );
   }, []);
-  // const holdings = state["portfolios"].map(value=> value.accounts).map(value => value.holdings);
-  // const prices = state["stockPrices"]
+
   return (
     <>
       <AuthLayout>

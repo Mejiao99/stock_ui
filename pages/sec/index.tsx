@@ -90,6 +90,7 @@ const rates : CurrencyRates = {
        [["USD_TO_CAD", 1.3]])
 
 };
+// rates.currency.get("USD_TO_CAD");
 
 const otherPlaceholderImageURL = generateCustomPlaceholderURL(100, 25, {
   backgroundColor: "#123456",
@@ -147,6 +148,7 @@ function calculateTotalHoldings(
 export default function Index(props) {
   const [portfolios, setPortfolios] = useState([]);
   useEffect(() => {
+    console.log("setPortfolios");
     fetch(props.backendHost + "/portfolios")
       .then((received) => received.json())
       .then((receivedPortfolios) =>
@@ -162,7 +164,7 @@ export default function Index(props) {
       <AuthLayout>
         <StockNavBar />
         <WarningHeader />
-        {/*{calculateTotalHoldings(holdings,prices,rates,"CAD")}*/}
+        <CardPortfolios portfolios={portfolios} />
       </AuthLayout>
     </>
   );

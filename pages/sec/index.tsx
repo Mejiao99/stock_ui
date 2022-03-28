@@ -81,11 +81,7 @@ interface StockPrice {
   price: Money;
 }
 
-
-const CurrencyRates = new Map<string, number>([
-    ["USD", 1.3],
-]);
-
+const CurrencyRates = new Map<string, number>([["USD", 1.3]]);
 
 const otherPlaceholderImageURL = generateCustomPlaceholderURL(100, 25, {
   backgroundColor: "#123456",
@@ -146,7 +142,7 @@ export default function Index(props) {
     console.log("setPortfolios");
     fetch(props.backendHost + "/portfolios")
       .then((received) => received.json())
-        .then((data) => data as Portfolio[])
+      .then((data) => data as Portfolio[])
       .then((receivedPortfolios) =>
         setTimeout(() => {
           setPortfolios(receivedPortfolios);

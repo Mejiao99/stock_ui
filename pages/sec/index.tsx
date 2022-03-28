@@ -81,8 +81,14 @@ interface StockPrice {
   price: Money;
 }
 
-const rates = {
-  CAD: 1.3,
+interface CurrencyRates {
+  currency : Map<string, number>
+}
+
+const rates : CurrencyRates = {
+   currency: new Map<string, number>(
+       [["USD_TO_CAD", 1.3]])
+
 };
 
 const otherPlaceholderImageURL = generateCustomPlaceholderURL(100, 25, {
@@ -139,14 +145,13 @@ function calculateTotalHoldings(
 }
 
 export default function Index(props) {
-  const [state, setState] = useState([]);
-  console.log("" + state);
+  const [portfolios, setPortfolios] = useState([]);
   useEffect(() => {
     fetch(props.backendHost + "/portfolios")
       .then((received) => received.json())
-      .then((state) =>
+      .then((receivedPortfolios) =>
         setTimeout(() => {
-          setState(state);
+          setPortfolios(receivedPortfolios);
         }, 5000)
       );
   }, []);

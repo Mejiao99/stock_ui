@@ -81,16 +81,11 @@ interface StockPrice {
   price: Money;
 }
 
-interface CurrencyRates {
-  currency : Map<string, number>
-}
 
-const rates : CurrencyRates = {
-   currency: new Map<string, number>(
-       [["USD_TO_CAD", 1.3]])
+const CurrencyRates = new Map<string, number>([
+    ["USD", 1.3],
+]);
 
-};
-// rates.currency.get("USD_TO_CAD");
 
 const otherPlaceholderImageURL = generateCustomPlaceholderURL(100, 25, {
   backgroundColor: "#123456",
@@ -100,16 +95,16 @@ const otherPlaceholderImageURL = generateCustomPlaceholderURL(100, 25, {
 
 function CardPortfolio({ portfolio }) {
   const name = portfolio.name;
-  // const accuracy = portfolio.accuracy;
-  // const money = portfolio.totalHoldings;
+  const accuracy = portfolio.accuracy;
+  const money = portfolio.totalHoldings;
 
   return (
     <Card className="m-3 ">
       <Card.Header className="text-center">{name}</Card.Header>
       <Card.Body>
         <Card.Img variant="bottom" src={otherPlaceholderImageURL} />
-        {/*<Card.Text>Accuracy {AccuracyWidget(accuracy)}</Card.Text>*/}
-        {/*<Card.Text>Total holdings: {MoneyWidget(money)}</Card.Text>*/}
+        <Card.Text>Accuracy {AccuracyWidget(accuracy)}</Card.Text>
+        <Card.Text>Total holdings: {MoneyWidget(money)}</Card.Text>
       </Card.Body>
     </Card>
   );
@@ -118,7 +113,7 @@ function CardPortfolio({ portfolio }) {
 function CardPortfolios({ portfolios }) {
   return (
     <>
-      {portfolios.map((portfolio) => (
+      {portfolios["portfolios"].map((portfolio) => (
         <CardPortfolio key={portfolio.id} portfolio={portfolio} />
       ))}
     </>
@@ -151,6 +146,7 @@ export default function Index(props) {
     console.log("setPortfolios");
     fetch(props.backendHost + "/portfolios")
       .then((received) => received.json())
+        .then((data) => data as Portfolio[])
       .then((receivedPortfolios) =>
         setTimeout(() => {
           setPortfolios(receivedPortfolios);

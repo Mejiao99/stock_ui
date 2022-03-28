@@ -5,7 +5,6 @@ import { generateCustomPlaceholderURL } from "react-placeholder-image";
 import { useEffect, useState } from "react";
 import MoneyWidget from "components/MoneyWidget";
 import { Money } from "components/Money";
-import { isJsxSpreadAttribute } from "tsutils";
 
 function AuthLayout({ children }) {
   return <Container>{children}</Container>;

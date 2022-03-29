@@ -129,14 +129,10 @@ function CardPortfolios({ portfolios }) {
 // StockPrices
 // expected two portfolio
 
-type CurrencyRates = {
-  [key: string]: number;
-};
-
 interface GetPortfolioResponse {
   portfolios: PortfolioDefinition[];
   stockPrices: Map<string, Money>;
-  currencyRates: CurrencyRates;
+  currencyRates: Map<string, number>;
 }
 
 // function calculateAccuracy(accounts: Account[]) {

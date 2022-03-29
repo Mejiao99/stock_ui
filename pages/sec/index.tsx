@@ -129,7 +129,12 @@ function calculateAccuracy(accounts: Account[]): number {
   return 1.0;
 }
 
-function calculateTotalAccountHoldings(account: Account, stockPrices: Map<string, Money>, conversionRates: Map<string, number>, targetCurrency: string): Money {
+function calculateTotalAccountHoldings(
+  account: Account,
+  stockPrices: Map<string, Money>,
+  conversionRates: Map<string, number>,
+  targetCurrency: string
+): Money {
   return {
     amount: 500,
     currency: "USD",
@@ -141,9 +146,11 @@ function calculateTotalHoldings(
   stockPrices: Map<string, Money>,
   conversionRates: Map<string, number>
 ): Money {
-  const holdings: Money[]=portfolioDefinition.accounts.map(account => calculateTotalAccountHoldings(account,stockPrices,conversionRates,"USD"))
-  const amounts: number[]=holdings.map(value=> value.amount);
-  const totalAmount: number = amounts.reduce((acumm,value)=>acumm+value)
+  const holdings: Money[] = portfolioDefinition.accounts.map((account) =>
+    calculateTotalAccountHoldings(account, stockPrices, conversionRates, "USD")
+  );
+  const amounts: number[] = holdings.map((value) => value.amount);
+  const totalAmount: number = amounts.reduce((acumm, value) => acumm + value);
   return {
     amount: totalAmount,
     currency: "USD",

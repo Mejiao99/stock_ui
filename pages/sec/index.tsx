@@ -1,10 +1,10 @@
-import { Alert, Card, Col, Container, Nav, Navbar, Row } from "react-bootstrap";
+import {Alert, Card, Col, Container, Nav, Navbar, Row} from "react-bootstrap";
 import * as Icon from "react-bootstrap-icons";
 import AccuracyWidget from "components/AccuracyWidget";
-import { generateCustomPlaceholderURL } from "react-placeholder-image";
-import { useEffect, useState } from "react";
+import {generateCustomPlaceholderURL} from "react-placeholder-image";
+import {useEffect, useState} from "react";
 import MoneyWidget from "components/MoneyWidget";
-import { Money } from "components/Money";
+import {Money} from "components/Money";
 
 function AuthLayout({ children }) {
   return <Container>{children}</Container>;
@@ -125,30 +125,31 @@ interface GetPortfolioResponse {
   currencyRates: Map<string, number>;
 }
 
-// function calculateAccuracy(accounts: Account[]) {
-// }
-//
-// function calculateTotalHoldings(
-//   accounts: Account[],
-//   stockPrices: Map<string, Money>,
-//   currencyTarget: string
-// ) {
-// }
-//
+function calculateAccuracy(accounts: Account[]):number{
+  return 1.0;
+}
+
+function calculateTotalHoldings(
+  accounts: Account[],
+  stockPrices: Map<string, Money>,
+  currencyRates: Map<string, number>
+):Money{
+  return {
+    amount: 500,
+    currency: "USD",
+  }
+}
+
 function convertPortfolioDefinitionToPortfolio(
   portfolioDefinition: PortfolioDefinition,
   stockPrices: Map<string, Money>,
   currencyRates: Map<string, number>
 ): Portfolio {
-  const money: Money = {
-    amount: 500,
-    currency: "USD",
-  };
   return {
-    id: "D1",
-    name: "C11",
-    accuracy: 1.0,
-    totalHoldings: money
+    id: portfolioDefinition.id,
+    name: portfolioDefinition.name,
+    accuracy: calculateAccuracy(portfolioDefinition.accounts),
+    totalHoldings: calculateTotalHoldings(portfolioDefinition.accounts,stockPrices,currencyRates)
   };
 }
 

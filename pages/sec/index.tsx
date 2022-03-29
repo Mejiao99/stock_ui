@@ -96,6 +96,19 @@ function CardPortfolios({ portfolios }) {
   );
 }
 
+// Backend
+// PortfolioDefinition: D1,Portfolio1, accounts[]
+// C11 Holdings[(TicketA,20),(TicketB,30)]
+// C12 Holdings[(TicketA,5),(TicketB,10)]
+// C13 Holdings[(TicketA,25),(TicketB,2)]
+// PortfolioDefinition: D2,Portfolio2, accounts[] change tickets
+// C21 Holdings[(TicketA,20),(TicketB,30)]
+// C22 Holdings[(TicketA,5),(TicketB,10)]
+// C23 Holdings[(TicketA,25),(TicketB,2)]
+// TargetCurrency
+// StockPrices
+// expected one portfolio
+
 export default function Index(props) {
   const [portfolios, setPortfolios] = useState([]);
   useEffect(() => {

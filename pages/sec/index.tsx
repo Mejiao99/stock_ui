@@ -63,14 +63,9 @@ interface Portfolio {
   totalHoldings: Map<string, Money>;
 }
 
-interface Holding {
-  quantity: number;
-  ticket: string;
-}
-
 interface Account {
   id: string;
-  holdings: Holding[];
+  holdings: Map<string,number>;
 }
 
 interface PortfolioDefinition {
@@ -79,10 +74,6 @@ interface PortfolioDefinition {
   accounts: Account[];
 }
 
-interface StockPrice {
-  ticket: string;
-  price: Money;
-}
 
 const otherPlaceholderImageURL = generateCustomPlaceholderURL(100, 25, {
   backgroundColor: "#123456",
@@ -145,7 +136,7 @@ interface GetPortfolioResponse {
 // ) {
 // }
 //
-function ConvertPortfolioDefinitionToPortfolio(
+function convertPortfolioDefinitionToPortfolio(
   portfolioDefinition: PortfolioDefinition,
   stockPrices: Map<string, Money>
 ): Portfolio {
@@ -156,7 +147,7 @@ function ConvertGetPortfolioResponseToPortfolios(
   portfolioResponse: GetPortfolioResponse
 ): Portfolio[] {
   return portfolioResponse.portfolios.map((value) =>
-    ConvertPortfolioDefinitionToPortfolio(value, portfolioResponse.stockPrices)
+    convertPortfolioDefinitionToPortfolio(value, portfolioResponse.stockPrices)
   );
 }
 

@@ -60,7 +60,7 @@ interface Portfolio {
   id: string;
   name: string;
   accuracy: number;
-  totalHoldings: Map<string, Money>;
+  totalHoldings: Money;
 }
 
 interface Account {
@@ -144,13 +144,11 @@ function convertPortfolioDefinitionToPortfolio(
     amount: 500,
     currency: "USD",
   };
-  const map = new Map<string, Money>();
-  map.set("D1", money);
   return {
     id: "D1",
     name: "C11",
     accuracy: 1.0,
-    totalHoldings: map,
+    totalHoldings: money
   };
 }
 

@@ -134,8 +134,25 @@ interface GetPortfolioResponse {
   stockPrices: StockPrice[];
 }
 
-function GetPortfolioResponseToPortfolios(response: GetPortfolioResponse) {
-  return undefined;
+function portfolioDefinitionToPortfolio(value: PortfolioDefinition) {
+  const portfolio: Portfolio = {
+    id: "D1",
+    name: "C11",
+    accuracy: 0.9,
+    totalHoldings: {
+      amount: 400,
+      currency: "USD",
+    },
+  };
+  return portfolio;
+}
+
+function GetPortfolioResponseToPortfolios(
+  portfolioResponse: GetPortfolioResponse
+) {
+  return portfolioResponse.portfolios.map((value) =>
+    portfolioDefinitionToPortfolio(value)
+  );
 }
 
 export default function Index(props) {

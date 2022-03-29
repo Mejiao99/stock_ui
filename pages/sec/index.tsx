@@ -62,18 +62,31 @@ interface Portfolio {
   accuracy: number;
   totalHoldings: Money;
 }
-
+type CurrencyRates = {
+  [key: string]: number;
+};
 function convertToPortfolio(
   getPortfolioResponse: GetPortfolioResponse,
-  currencyRates: Map<string, number>,
+  currencyRates: CurrencyRates,
   targetCurrency: string
 ) {
+  const holdings: Holding[] =
+    getPortfolioResponse.portfolios[0].accounts[0].holdings;
+  const stock: StockPrice[] = getPortfolioResponse.stockPrices;
+  const price: Money[] = getPortfolioResponse.stockPrices.map(
+    (value) => value.price
+  );
   const portfolio: Portfolio = {
     id: getPortfolioResponse.portfolios[0].id,
     name: getPortfolioResponse.portfolios[0].name,
     accuracy: 0,
     totalHoldings: {
-      amount: 0,
+      amount: calculateTotalHoldings(
+        holdings,
+        stock,
+        currencyRates,
+        targetCurrency
+      ),
       currency: targetCurrency,
     },
   };
@@ -107,10 +120,6 @@ interface GetPortfolioResponse {
   portfolios: PortfolioDefinition[];
   stockPrices: StockPrice[];
 }
-
-type CurrencyRates = {
-    [key: string]: number;
-};
 
 const otherPlaceholderImageURL = generateCustomPlaceholderURL(100, 25, {
   backgroundColor: "#123456",
@@ -152,11 +161,13 @@ function calculateTotalHoldings(
   targetCurrency
 ) {
   const initialValue = 0;
+
+  const amount = stockPrices.map((value) => value.price.amount);
+
   const ticketsPerValue = holdings.map(
     (value) =>
       value.quantity *
-      stockPrices[value.ticket].amount *
-      currencyRates[targetCurrency]
+      amount.reduce((acumm, value) => acumm + value, initialValue)
   );
 
   return ticketsPerValue.reduce((acumm, value) => acumm + value, initialValue);
@@ -164,13 +175,13 @@ function calculateTotalHoldings(
 
 export default function Index(props) {
   const [portfolios, setPortfolios] = useState([]);
-
+  const toCad: CurrencyRates = { usdToCad: 1.3 };
   useEffect(() => {
     console.log("setPortfolios");
     fetch(props.backendHost + "/portfolios")
       .then((received) => received.json())
       .then((portfolioResponse) => portfolioResponse as GetPortfolioResponse)
-      .then((response) => convertToPortfolio(response, CurrencyRates, "CAD"))
+      .then((response) => convertToPortfolio(response, toCad, "CAD"))
       .then((data) => data as Portfolio[])
       .then((receivedPortfolios) =>
         setTimeout(() => {

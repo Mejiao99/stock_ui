@@ -128,21 +128,26 @@ interface GetPortfolioResponse {
 function calculateAccuracy(accounts: Account[]): number {
   return 1.0;
 }
-//TODO: Not assume currency
 function calculateTotalHoldingsInAccount(
   account: Account,
   stockPrices: Map<string, Money>,
   conversionRates: Map<string, number>,
   targetCurrency: string
 ): Money {
-  const tickets: string[] = Object.keys(account.holdings);
-  const amounts: number[] = tickets.map(
-    (ticket) => account.holdings[ticket] * stockPrices[ticket].amount
-  );
-  const totalAmount: number = amounts.reduce((acumm, value) => acumm + value);
+  let result = new Map<string, number>();
+  Object.entries(account.holdings).forEach(([ticket, qty]) => {
+    const stockPrice = stockPrices[ticket];
+    let accum: number = result[stockPrice.currency];
+    if (!accum) {
+      accum = 0;
+    }
+    result[stockPrice.currency] = accum + stockPrice.amount * qty;
+  });
   return {
-    amount: totalAmount * conversionRates[targetCurrency],
     currency: targetCurrency,
+    amount: Object.entries(result)
+      .map(([currency, amount]) => amount * conversionRates[currency])
+      .reduce((accum, value) => accum + value, 0),
   };
 }
 
@@ -160,7 +165,7 @@ function calculateTotalHoldings(
     )
   );
   const amounts: number[] = holdings.map((value) => value.amount);
-  const totalAmount: number = amounts.reduce((acumm, value) => acumm + value);
+  const totalAmount: number = amounts.reduce((accum, value) => accum + value);
   return {
     amount: totalAmount,
     currency: "cad",

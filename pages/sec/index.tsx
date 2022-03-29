@@ -122,20 +122,30 @@ function CardPortfolios({ portfolios }) {
 interface GetPortfolioResponse {
   portfolios: PortfolioDefinition[];
   stockPrices: Map<string, Money>;
-  currencyRates: Map<string, number>;
+  conversionRates: Map<string, number>;
 }
 
 function calculateAccuracy(accounts: Account[]): number {
   return 1.0;
 }
 
-function calculateTotalHoldings(
-  accounts: PortfolioDefinition,
-  stockPrices: Map<string, Money>,
-  currencyRates: Map<string, number>
-): Money {
+function calculateTotalAccountHoldings(account: Account, stockPrices: Map<string, Money>, conversionRates: Map<string, number>, targetCurrency: string): Money {
   return {
     amount: 500,
+    currency: "USD",
+  };
+}
+
+function calculateTotalHoldings(
+  portfolioDefinition: PortfolioDefinition,
+  stockPrices: Map<string, Money>,
+  conversionRates: Map<string, number>
+): Money {
+  const holdings: Money[]=portfolioDefinition.accounts.map(account => calculateTotalAccountHoldings(account,stockPrices,conversionRates,"USD"))
+  const amounts: number[]=holdings.map(value=> value.amount);
+  const totalAmount: number = amounts.reduce((acumm,value)=>acumm+value)
+  return {
+    amount: totalAmount,
     currency: "USD",
   };
 }
@@ -164,7 +174,7 @@ function convertGetPortfolioResponseToPortfolios(
     convertPortfolioDefinitionToPortfolio(
       value,
       portfolioResponse.stockPrices,
-      portfolioResponse.currencyRates
+      portfolioResponse.conversionRates
     )
   );
 }

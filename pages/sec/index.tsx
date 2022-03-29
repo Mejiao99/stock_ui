@@ -137,14 +137,11 @@ function calculateTotalHoldingsInAccount(
 ): Money {
   const tickets: string[] = Object.keys(account.holdings);
   const amounts: number[] = tickets.map(
-    (ticket) =>
-      account.holdings.get(ticket) *
-      stockPrices.get(ticket).amount *
-      conversionRates.get(targetCurrency)
+    (ticket) => account.holdings[ticket] * stockPrices[ticket].amount
   );
   const totalAmount: number = amounts.reduce((acumm, value) => acumm + value);
   return {
-    amount: totalAmount,
+    amount: totalAmount * conversionRates[targetCurrency],
     currency: targetCurrency,
   };
 }
@@ -159,14 +156,14 @@ function calculateTotalHoldings(
       account,
       stockPrices,
       conversionRates,
-      "USD"
+      "USD_TO_CAD"
     )
   );
   const amounts: number[] = holdings.map((value) => value.amount);
   const totalAmount: number = amounts.reduce((acumm, value) => acumm + value);
   return {
     amount: totalAmount,
-    currency: "USD",
+    currency: "CAD",
   };
 }
 
@@ -203,7 +200,7 @@ export default function Index(props) {
   const [portfolios, setPortfolios] = useState([]);
   useEffect(() => {
     console.log("setPortfolios");
-    fetch(props.backendHost + "/portfolios")
+    fetch(props.backendHost + "/api/portfolios")
       .then((received) => received.json())
       .then((portfolioResponse) => portfolioResponse as GetPortfolioResponse)
       .then((response) => convertGetPortfolioResponseToPortfolios(response))

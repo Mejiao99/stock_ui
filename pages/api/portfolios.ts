@@ -9,24 +9,22 @@ export default function handler(req, res) {
         accounts: [
           {
             id: "C1",
-            holdings: [
-              {
-                quantity: 1,
-                ticket: "ticketA",
-              },
-            ],
+            holdings: {
+              ticketA: 8,
+              ticketB: 5,
+              ticketC: 3,
+            },
           },
         ],
       },
     ],
-    stockPrices: [
-      {
-        ticket: "ticketA",
-        price: {
-          amount: 50,
-          currency: "USD",
-        },
-      },
-    ],
+    stockPrices: {
+      ticketA: { amount: 5, currency: "usd" },
+      ticketB: { amount: 2, currency: "usd" },
+      ticketC: { amount: 7, currency: "usd" },
+    },
+    conversionRates: {
+      USD_TO_CAD: 1.3,
+    },
   });
 }

@@ -134,11 +134,27 @@ interface GetPortfolioResponse {
   stockPrices: StockPrice[];
 }
 
-function portfolioDefinitionToPortfolio(portfolioDefinition: PortfolioDefinition) {
-portfolioDefinition.name;
-portfolioDefinition.id;
-portfolioDefinition.accounts;
+function calculateAccuracy(accounts: Account[]) {
+  return 0;
+}
 
+function calculateTotalHoldings(accounts: Account[]) {
+  const money: Money = {
+    amount: 5,
+    currency: "USD",
+  };
+  return money;
+}
+
+function portfolioDefinitionToPortfolio(
+  portfolioDefinition: PortfolioDefinition
+) {
+  const portfolio: Portfolio = {
+    id: portfolioDefinition.id,
+    name: portfolioDefinition.name,
+    accuracy: calculateAccuracy(portfolioDefinition.accounts),
+    totalHoldings: calculateTotalHoldings(portfolioDefinition.accounts),
+  };
   return portfolio;
 }
 

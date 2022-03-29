@@ -130,7 +130,7 @@ function calculateAccuracy(accounts: Account[]): number {
 }
 
 function calculateTotalHoldings(
-  accounts: Account[],
+  accounts: PortfolioDefinition,
   stockPrices: Map<string, Money>,
   currencyRates: Map<string, number>
 ): Money {
@@ -150,7 +150,7 @@ function convertPortfolioDefinitionToPortfolio(
     name: portfolioDefinition.name,
     accuracy: calculateAccuracy(portfolioDefinition.accounts),
     totalHoldings: calculateTotalHoldings(
-      portfolioDefinition.accounts,
+      portfolioDefinition,
       stockPrices,
       currencyRates
     ),

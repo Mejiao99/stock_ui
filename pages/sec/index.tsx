@@ -135,8 +135,13 @@ function calculateTotalHoldingsInAccount(
   conversionRates: Map<string, number>,
   targetCurrency: string
 ): Money {
-  const tickets: string[]= Object.keys(account.holdings)
-  const amounts: number[] = tickets.map((ticket => account.holdings.get(ticket) * stockPrices.get(ticket).amount*conversionRates.get(targetCurrency)))
+  const tickets: string[] = Object.keys(account.holdings);
+  const amounts: number[] = tickets.map(
+    (ticket) =>
+      account.holdings.get(ticket) *
+      stockPrices.get(ticket).amount *
+      conversionRates.get(targetCurrency)
+  );
   const totalAmount: number = amounts.reduce((acumm, value) => acumm + value);
   return {
     amount: totalAmount,
@@ -150,7 +155,7 @@ function calculateTotalHoldings(
   conversionRates: Map<string, number>
 ): Money {
   const holdings: Money[] = portfolioDefinition.accounts.map((account) =>
-      calculateTotalHoldingsInAccount(
+    calculateTotalHoldingsInAccount(
       account,
       stockPrices,
       conversionRates,

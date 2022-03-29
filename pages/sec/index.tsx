@@ -63,6 +63,17 @@ interface Portfolio {
   totalHoldings: Money;
 }
 
+interface Account {
+  id: string;
+  holdings: Map<string, number>;
+}
+
+interface PortfolioDefinition {
+  id: string;
+  name: string;
+  accounts: Account[];
+}
+
 const otherPlaceholderImageURL = generateCustomPlaceholderURL(100, 25, {
   backgroundColor: "#123456",
   textColor: "#ffffff",
@@ -96,12 +107,71 @@ function CardPortfolios({ portfolios }) {
   );
 }
 
+// PortfolioDefinition: D1,Portfolio1, accounts[]
+// C11 Holdings[(TicketA,20),(TicketB,30)]
+// C12 Holdings[(TicketA,5),(TicketB,10)]
+// C13 Holdings[(TicketA,25),(TicketB,2)]
+// PortfolioDefinition: D2,Portfolio2, accounts[] change tickets
+// C21 Holdings[(TicketA,20),(TicketB,30)]
+// C22 Holdings[(TicketA,5),(TicketB,10)]
+// C23 Holdings[(TicketA,25),(TicketB,2)]
+// TargetCurrency
+// StockPrices
+// expected two portfolio
+
+interface GetPortfolioResponse {
+  portfolios: PortfolioDefinition[];
+  stockPrices: Map<string, Money>;
+  currencyRates: Map<string, number>;
+}
+
+// function calculateAccuracy(accounts: Account[]) {
+// }
+//
+// function calculateTotalHoldings(
+//   accounts: Account[],
+//   stockPrices: Map<string, Money>,
+//   currencyTarget: string
+// ) {
+// }
+//
+function convertPortfolioDefinitionToPortfolio(
+  portfolioDefinition: PortfolioDefinition,
+  stockPrices: Map<string, Money>,
+  currencyRates: Map<string, number>
+): Portfolio {
+  const money: Money = {
+    amount: 500,
+    currency: "USD",
+  };
+  return {
+    id: "D1",
+    name: "C11",
+    accuracy: 1.0,
+    totalHoldings: money
+  };
+}
+
+function convertGetPortfolioResponseToPortfolios(
+  portfolioResponse: GetPortfolioResponse
+): Portfolio[] {
+  return portfolioResponse.portfolios.map((value) =>
+    convertPortfolioDefinitionToPortfolio(
+      value,
+      portfolioResponse.stockPrices,
+      portfolioResponse.currencyRates
+    )
+  );
+}
+
 export default function Index(props) {
   const [portfolios, setPortfolios] = useState([]);
   useEffect(() => {
     console.log("setPortfolios");
     fetch(props.backendHost + "/portfolios")
       .then((received) => received.json())
+      .then((portfolioResponse) => portfolioResponse as GetPortfolioResponse)
+      .then((response) => convertGetPortfolioResponseToPortfolios(response))
       .then((data) => data as Portfolio[])
       .then((receivedPortfolios) =>
         setTimeout(() => {

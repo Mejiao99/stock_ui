@@ -143,7 +143,7 @@ function convertPortfolioDefinitionToPortfolio(
   return null;
 }
 
-function ConvertGetPortfolioResponseToPortfolios(
+function convertGetPortfolioResponseToPortfolios(
   portfolioResponse: GetPortfolioResponse
 ): Portfolio[] {
   return portfolioResponse.portfolios.map((value) =>

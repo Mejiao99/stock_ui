@@ -24,7 +24,7 @@ export default function handler(req, res) {
       ticketC: { amount: 7, currency: "usd" },
     },
     conversionRates: {
-      USD_TO_CAD: 1.3,
+      cad: 1.3,
     },
   });
 }

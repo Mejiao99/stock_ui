@@ -128,7 +128,7 @@ interface GetPortfolioResponse {
 function calculateAccuracy(accounts: Account[]): number {
   return 1.0;
 }
-
+//TODO: Not assume currency
 function calculateTotalHoldingsInAccount(
   account: Account,
   stockPrices: Map<string, Money>,
@@ -156,14 +156,14 @@ function calculateTotalHoldings(
       account,
       stockPrices,
       conversionRates,
-      "USD_TO_CAD"
+      "cad"
     )
   );
   const amounts: number[] = holdings.map((value) => value.amount);
   const totalAmount: number = amounts.reduce((acumm, value) => acumm + value);
   return {
     amount: totalAmount,
-    currency: "CAD",
+    currency: "cad",
   };
 }
 

@@ -96,7 +96,7 @@ function CardPortfolios({ portfolios }) {
   );
 }
 
-// Backend
+
 // PortfolioDefinition: D1,Portfolio1, accounts[]
 // C11 Holdings[(TicketA,20),(TicketB,30)]
 // C12 Holdings[(TicketA,5),(TicketB,10)]
@@ -107,7 +107,16 @@ function CardPortfolios({ portfolios }) {
 // C23 Holdings[(TicketA,25),(TicketB,2)]
 // TargetCurrency
 // StockPrices
-// expected one portfolio
+// expected two portfolio
+
+interface GetPortfolioResponse {
+  portfolios: PortfolioDefinition[];
+  stockPrices: StockPrice[];
+}
+
+function GetPortfolioResponseToPortfolios(response: GetPortfolioResponse) {
+  return undefined;
+}
 
 export default function Index(props) {
   const [portfolios, setPortfolios] = useState([]);
@@ -117,7 +126,7 @@ export default function Index(props) {
     fetch(props.backendHost + "/portfolios")
         .then((received) => received.json())
         .then((portfolioResponse) => portfolioResponse as GetPortfolioResponse)
-        .then((response) => GetPortfolioResponseToPortfolios(response, toCad, "CAD"))
+        .then((response) => GetPortfolioResponseToPortfolios(response))
         .then((data) => data as Portfolio[])
         .then((receivedPortfolios) =>
             setTimeout(() => {

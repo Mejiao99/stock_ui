@@ -65,7 +65,7 @@ interface Portfolio {
 
 interface Account {
   id: string;
-  holdings: Map<string,number>;
+  holdings: Map<string, number>;
 }
 
 interface PortfolioDefinition {
@@ -73,7 +73,6 @@ interface PortfolioDefinition {
   name: string;
   accounts: Account[];
 }
-
 
 const otherPlaceholderImageURL = generateCustomPlaceholderURL(100, 25, {
   backgroundColor: "#123456",
@@ -138,16 +137,32 @@ interface GetPortfolioResponse {
 //
 function convertPortfolioDefinitionToPortfolio(
   portfolioDefinition: PortfolioDefinition,
-  stockPrices: Map<string, Money>
+  stockPrices: Map<string, Money>,
+  currencyRates: Map<string, number>
 ): Portfolio {
-  return null;
+  const money: Money = {
+    amount: 500,
+    currency: "USD",
+  };
+  const map = new Map<string, Money>();
+  map.set("D1", money);
+  return {
+    id: "D1",
+    name: "C11",
+    accuracy: 1.0,
+    totalHoldings: map,
+  };
 }
 
 function convertGetPortfolioResponseToPortfolios(
   portfolioResponse: GetPortfolioResponse
 ): Portfolio[] {
   return portfolioResponse.portfolios.map((value) =>
-    convertPortfolioDefinitionToPortfolio(value, portfolioResponse.stockPrices)
+    convertPortfolioDefinitionToPortfolio(
+      value,
+      portfolioResponse.stockPrices,
+      portfolioResponse.currencyRates
+    )
   );
 }
 

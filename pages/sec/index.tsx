@@ -158,7 +158,7 @@ export default function Index(props) {
     fetch(props.backendHost + "/portfolios")
       .then((received) => received.json())
       .then((portfolioResponse) => portfolioResponse as GetPortfolioResponse)
-      .then((response) => ConvertGetPortfolioResponseToPortfolios(response))
+      .then((response) => convertGetPortfolioResponseToPortfolios(response))
       .then((data) => data as Portfolio[])
       .then((receivedPortfolios) =>
         setTimeout(() => {

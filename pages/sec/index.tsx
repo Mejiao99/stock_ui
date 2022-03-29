@@ -131,7 +131,7 @@ function CardPortfolios({ portfolios }) {
 
 interface GetPortfolioResponse {
   portfolios: PortfolioDefinition[];
-  stockPrices: StockPrice[];
+  stockPrices: Map<string,Money>;
 }
 
 function calculateAccuracy(accounts: Account[]) {

@@ -134,16 +134,11 @@ interface GetPortfolioResponse {
   stockPrices: StockPrice[];
 }
 
-function portfolioDefinitionToPortfolio(value: PortfolioDefinition) {
-  const portfolio: Portfolio = {
-    id: "D1",
-    name: "C11",
-    accuracy: 0.9,
-    totalHoldings: {
-      amount: 400,
-      currency: "USD",
-    },
-  };
+function portfolioDefinitionToPortfolio(portfolioDefinition: PortfolioDefinition) {
+portfolioDefinition.name;
+portfolioDefinition.id;
+portfolioDefinition.accounts;
+
   return portfolio;
 }
 

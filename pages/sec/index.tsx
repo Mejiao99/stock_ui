@@ -63,6 +63,27 @@ interface Portfolio {
   totalHoldings: Money;
 }
 
+interface Holding {
+  quantity: number;
+  ticket: string;
+}
+
+interface Account {
+  id: string;
+  holdings: Holding[];
+}
+
+interface PortfolioDefinition {
+  id: string;
+  name: string;
+  accounts: Account[];
+}
+
+interface StockPrice {
+  ticket: string;
+  price: Money;
+}
+
 const otherPlaceholderImageURL = generateCustomPlaceholderURL(100, 25, {
   backgroundColor: "#123456",
   textColor: "#ffffff",
@@ -96,7 +117,6 @@ function CardPortfolios({ portfolios }) {
   );
 }
 
-
 // PortfolioDefinition: D1,Portfolio1, accounts[]
 // C11 Holdings[(TicketA,20),(TicketB,30)]
 // C12 Holdings[(TicketA,5),(TicketB,10)]
@@ -120,29 +140,28 @@ function GetPortfolioResponseToPortfolios(response: GetPortfolioResponse) {
 
 export default function Index(props) {
   const [portfolios, setPortfolios] = useState([]);
-  const toCad: CurrencyRates = { usdToCad: 1.3 };
   useEffect(() => {
     console.log("setPortfolios");
     fetch(props.backendHost + "/portfolios")
-        .then((received) => received.json())
-        .then((portfolioResponse) => portfolioResponse as GetPortfolioResponse)
-        .then((response) => GetPortfolioResponseToPortfolios(response))
-        .then((data) => data as Portfolio[])
-        .then((receivedPortfolios) =>
-            setTimeout(() => {
-              setPortfolios(receivedPortfolios);
-            }, 5000)
-        );
+      .then((received) => received.json())
+      .then((portfolioResponse) => portfolioResponse as GetPortfolioResponse)
+      .then((response) => GetPortfolioResponseToPortfolios(response))
+      .then((data) => data as Portfolio[])
+      .then((receivedPortfolios) =>
+        setTimeout(() => {
+          setPortfolios(receivedPortfolios);
+        }, 5000)
+      );
   }, []);
 
   return (
-      <>
-        <AuthLayout>
-          <StockNavBar />
-          <WarningHeader />
-          <CardPortfolios portfolios={portfolios} />
-        </AuthLayout>
-      </>
+    <>
+      <AuthLayout>
+        <StockNavBar />
+        <WarningHeader />
+        <CardPortfolios portfolios={portfolios} />
+      </AuthLayout>
+    </>
   );
 }
 

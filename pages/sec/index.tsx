@@ -60,7 +60,7 @@ interface Portfolio {
   id: string;
   name: string;
   accuracy: number;
-  totalHoldings: Money;
+  totalHoldings: Map<string, Money>;
 }
 
 interface Holding {
@@ -139,45 +139,28 @@ interface GetPortfolioResponse {
   currencyRates: CurrencyRates;
 }
 
-function calculateAccuracy(accounts: Account[]) {
-  return 0;
-}
-
-function calculateTotalHoldings(
-  accounts: Account[],
-  stockPrices: Map<string, Money>,
-  currencyTarget: string
-) {
-  const money: Money = {
-    amount: 5,
-    currency: "USD",
-  };
-  return money;
-}
-
-function portfolioDefinitionToPortfolio(
+// function calculateAccuracy(accounts: Account[]) {
+// }
+//
+// function calculateTotalHoldings(
+//   accounts: Account[],
+//   stockPrices: Map<string, Money>,
+//   currencyTarget: string
+// ) {
+// }
+//
+function ConvertPortfolioDefinitionToPortfolio(
   portfolioDefinition: PortfolioDefinition,
-  stockPrices: Map<string, Money>,
-  currencyTarget: string
-) {
-  const portfolio: Portfolio = {
-    id: portfolioDefinition.id,
-    name: portfolioDefinition.name,
-    accuracy: calculateAccuracy(portfolioDefinition.accounts),
-    totalHoldings: calculateTotalHoldings(
-      portfolioDefinition.accounts,
-      stockPrices,
-      currencyTarget
-    ),
-  };
-  return portfolio;
+  stockPrices: Map<string, Money>
+): Portfolio {
+  return null;
 }
 
-function GetPortfolioResponseToPortfolios(
+function ConvertGetPortfolioResponseToPortfolios(
   portfolioResponse: GetPortfolioResponse
-) {
+): Portfolio[] {
   return portfolioResponse.portfolios.map((value) =>
-    portfolioDefinitionToPortfolio(value, portfolioResponse.stockPrices, "usd")
+    ConvertPortfolioDefinitionToPortfolio(value, portfolioResponse.stockPrices)
   );
 }
 
@@ -188,7 +171,7 @@ export default function Index(props) {
     fetch(props.backendHost + "/portfolios")
       .then((received) => received.json())
       .then((portfolioResponse) => portfolioResponse as GetPortfolioResponse)
-      .then((response) => GetPortfolioResponseToPortfolios(response))
+      .then((response) => ConvertGetPortfolioResponseToPortfolios(response))
       .then((data) => data as Portfolio[])
       .then((receivedPortfolios) =>
         setTimeout(() => {

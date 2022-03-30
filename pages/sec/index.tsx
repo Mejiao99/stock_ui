@@ -107,7 +107,6 @@ function CardPortfolios({ portfolios }) {
   );
 }
 
-
 interface GetPortfolioResponse {
   portfolios: PortfolioDefinition[];
   stockPrices: Map<string, Money>;
@@ -136,7 +135,7 @@ function calculateTotalHoldingsInAccount(
   return {
     currency: targetCurrency,
     amount: Object.entries(result)
-      .map(([currency, amount]) => amount * conversionRates[currency])
+      .map(([currency, amount]) => amount * conversionRates[targetCurrency])
       .reduce((accum, value) => accum + value, 0),
   };
 }

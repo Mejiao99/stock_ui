@@ -6,13 +6,14 @@ export default function handler(req, res) {
       {
         id: "Xl1",
         name: "Port1",
+        // total holdings = 92.3
         accounts: [
           {
             id: "C1",
             holdings: {
-              ticketA: 8,
-              ticketB: 5,
-              ticketC: 3,
+              ticketA: 8, // usd 40 = cad 52
+              ticketB: 5, // usd 10 = cad 13
+              ticketC: 3, // usd 21 = cad 27.3
             },
           },
         ],
@@ -58,5 +59,6 @@ export default function handler(req, res) {
       usd: 1.3,
       cad: 1.0,
     },
+      targetCurrency: "cad",
   });
 }

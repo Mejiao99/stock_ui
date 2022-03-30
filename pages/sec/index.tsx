@@ -198,7 +198,7 @@ export default function Index(props) {
   const [portfolios, setPortfolios] = useState([]);
   useEffect(() => {
     console.log("setPortfolios");
-    fetch(props.backendHost + "/api/portfolios")
+    fetch(props.backendHost + "/portfolios")
       .then((received) => received.json())
       .then((portfolioResponse) => portfolioResponse as GetPortfolioResponse)
       .then((response) => convertGetPortfolioResponseToPortfolios(response))

@@ -107,22 +107,12 @@ function CardPortfolios({ portfolios }) {
   );
 }
 
-// PortfolioDefinition: D1,Portfolio1, accounts[]
-// C11 Holdings[(TicketA,20),(TicketB,30)]
-// C12 Holdings[(TicketA,5),(TicketB,10)]
-// C13 Holdings[(TicketA,25),(TicketB,2)]
-// PortfolioDefinition: D2,Portfolio2, accounts[] change tickets
-// C21 Holdings[(TicketA,20),(TicketB,30)]
-// C22 Holdings[(TicketA,5),(TicketB,10)]
-// C23 Holdings[(TicketA,25),(TicketB,2)]
-// TargetCurrency
-// StockPrices
-// expected two portfolio
 
 interface GetPortfolioResponse {
   portfolios: PortfolioDefinition[];
   stockPrices: Map<string, Money>;
   conversionRates: Map<string, number>;
+  targetCurrency: string;
 }
 
 function calculateAccuracy(accounts: Account[]): number {
@@ -154,28 +144,30 @@ function calculateTotalHoldingsInAccount(
 function calculateTotalHoldings(
   portfolioDefinition: PortfolioDefinition,
   stockPrices: Map<string, Money>,
-  conversionRates: Map<string, number>
+  conversionRates: Map<string, number>,
+  targetCurrency: string
 ): Money {
   const holdings: Money[] = portfolioDefinition.accounts.map((account) =>
     calculateTotalHoldingsInAccount(
       account,
       stockPrices,
       conversionRates,
-      "cad"
+      targetCurrency
     )
   );
   const amounts: number[] = holdings.map((value) => value.amount);
   const totalAmount: number = amounts.reduce((accum, value) => accum + value);
   return {
     amount: totalAmount,
-    currency: "cad",
+    currency: targetCurrency,
   };
 }
 
 function convertPortfolioDefinitionToPortfolio(
   portfolioDefinition: PortfolioDefinition,
   stockPrices: Map<string, Money>,
-  currencyRates: Map<string, number>
+  currencyRates: Map<string, number>,
+  targetCurrency: string
 ): Portfolio {
   return {
     id: portfolioDefinition.id,
@@ -184,7 +176,8 @@ function convertPortfolioDefinitionToPortfolio(
     totalHoldings: calculateTotalHoldings(
       portfolioDefinition,
       stockPrices,
-      currencyRates
+      currencyRates,
+      targetCurrency
     ),
   };
 }
@@ -196,7 +189,8 @@ function convertGetPortfolioResponseToPortfolios(
     convertPortfolioDefinitionToPortfolio(
       value,
       portfolioResponse.stockPrices,
-      portfolioResponse.conversionRates
+      portfolioResponse.conversionRates,
+      portfolioResponse.targetCurrency
     )
   );
 }

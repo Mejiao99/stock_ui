@@ -107,66 +107,66 @@ function CardPortfolios({ portfolios }) {
   );
 }
 
-// PortfolioDefinition: D1,Portfolio1, accounts[]
-// C11 Holdings[(TicketA,20),(TicketB,30)]
-// C12 Holdings[(TicketA,5),(TicketB,10)]
-// C13 Holdings[(TicketA,25),(TicketB,2)]
-// PortfolioDefinition: D2,Portfolio2, accounts[] change tickets
-// C21 Holdings[(TicketA,20),(TicketB,30)]
-// C22 Holdings[(TicketA,5),(TicketB,10)]
-// C23 Holdings[(TicketA,25),(TicketB,2)]
-// TargetCurrency
-// StockPrices
-// expected two portfolio
-
 interface GetPortfolioResponse {
   portfolios: PortfolioDefinition[];
   stockPrices: Map<string, Money>;
   conversionRates: Map<string, number>;
+  targetCurrency: string;
 }
 
 function calculateAccuracy(accounts: Account[]): number {
   return 1.0;
 }
-
-function calculateTotalHoldingsinAccount(
+function calculateTotalHoldingsInAccount(
   account: Account,
   stockPrices: Map<string, Money>,
   conversionRates: Map<string, number>,
   targetCurrency: string
 ): Money {
-  account.holdings.get(account.id);
+  let result = new Map<string, number>();
+  Object.entries(account.holdings).forEach(([ticket, qty]) => {
+    const stockPrice = stockPrices[ticket];
+    let accum: number = result[stockPrice.currency];
+    if (!accum) {
+      accum = 0;
+    }
+    result[stockPrice.currency] = accum + stockPrice.amount * qty;
+  });
   return {
-    amount: 500,
     currency: targetCurrency,
+    amount: Object.entries(result)
+      .map(([currency, amount]) => amount * conversionRates[currency])
+      .reduce((accum, value) => accum + value, 0),
   };
 }
 
 function calculateTotalHoldings(
   portfolioDefinition: PortfolioDefinition,
   stockPrices: Map<string, Money>,
-  conversionRates: Map<string, number>
+  conversionRates: Map<string, number>,
+  targetCurrency: string
 ): Money {
   const holdings: Money[] = portfolioDefinition.accounts.map((account) =>
-    calculateTotalHoldingsinAccount(
+    calculateTotalHoldingsInAccount(
       account,
       stockPrices,
       conversionRates,
-      "USD"
+      targetCurrency
     )
   );
   const amounts: number[] = holdings.map((value) => value.amount);
-  const totalAmount: number = amounts.reduce((acumm, value) => acumm + value);
+  const totalAmount: number = amounts.reduce((accum, value) => accum + value);
   return {
     amount: totalAmount,
-    currency: "USD",
+    currency: targetCurrency,
   };
 }
 
 function convertPortfolioDefinitionToPortfolio(
   portfolioDefinition: PortfolioDefinition,
   stockPrices: Map<string, Money>,
-  currencyRates: Map<string, number>
+  currencyRates: Map<string, number>,
+  targetCurrency: string
 ): Portfolio {
   return {
     id: portfolioDefinition.id,
@@ -175,7 +175,8 @@ function convertPortfolioDefinitionToPortfolio(
     totalHoldings: calculateTotalHoldings(
       portfolioDefinition,
       stockPrices,
-      currencyRates
+      currencyRates,
+      targetCurrency
     ),
   };
 }
@@ -187,7 +188,8 @@ function convertGetPortfolioResponseToPortfolios(
     convertPortfolioDefinitionToPortfolio(
       value,
       portfolioResponse.stockPrices,
-      portfolioResponse.conversionRates
+      portfolioResponse.conversionRates,
+      portfolioResponse.targetCurrency
     )
   );
 }

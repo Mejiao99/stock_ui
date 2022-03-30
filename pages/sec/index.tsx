@@ -135,7 +135,7 @@ function calculateTotalHoldingsInAccount(
   return {
     currency: targetCurrency,
     amount: Object.entries(result)
-      .map(([currency, amount]) => amount * conversionRates[targetCurrency])
+      .map(([currency, amount]) => amount * conversionRates[currency])
       .reduce((accum, value) => accum + value, 0),
   };
 }

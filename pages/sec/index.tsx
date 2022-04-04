@@ -115,8 +115,21 @@ interface GetPortfolioResponse {
   targetCurrency: string;
 }
 
+function calculateErrors(): number[] {
+  return [1];
+}
+
+function calculateWeights(): number[] {
+  return [1];
+}
+
 function calculateWeightedErrors(): number[] {
-  return [1.0]
+  const weightedErrors: number[] = new Array<number>();
+  for (const error of calculateErrors()) {
+    for (const weight of calculateWeights())
+      weightedErrors.push(error * weight);
+  }
+  return weightedErrors;
 }
 
 function sumOfWeightedErrors(

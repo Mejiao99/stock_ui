@@ -119,10 +119,67 @@ function calculateWeightedError(error: number, weight: number): number {
   return 0;
 }
 
-function sumOfWeightedErrors(accounts: Account[]): number {
-  return accounts
-    .map((account) => calculateWeightedError(1.0, 1.0))
-    .reduce((accum, value) => accum + value, 0);
+function calculateExpectedAmount(
+  actualHoldings: Map<string, number>,
+  targetHoldings: Map<string, number>,
+  stockPrices: Map<string, Money>
+): Map<string, number> {
+  return new Map<string, number>([
+    ["ticketA", 1],
+    ["ticketB", 2],
+  ]);
+}
+
+function calculateDifference(
+  holdings: Map<string, number>,
+  expectedAmount: Map<string, number>
+) {
+  return 0;
+}
+
+function calculateError(totalInAccount: number, difference: number) {
+  return 0;
+}
+
+function calculateWeight(
+  expectedAmount: Map<string, number>,
+  totalInAccount: number
+) {
+  return 0;
+}
+
+function sumOfWeightedErrors(
+  accounts: Account[],
+  stockPrices: Map<string, Money>,
+  conversionRates: Map<string, number>,
+  targetCurrency: string,
+  targetHoldings: Map<string, number>
+): number {
+  const weightedErrors = new Array<number>();
+  for (const account of accounts) {
+    const totalInAccount: number = calculateTotalHoldingsInAccount(
+      account,
+      stockPrices,
+      conversionRates,
+      targetCurrency
+    ).amount;
+    const expectedAmount: Map<string, number> = calculateExpectedAmount(
+      account.holdings,
+      targetHoldings,
+      stockPrices
+    );
+    const difference: number = calculateDifference(
+      account.holdings,
+      expectedAmount
+    );
+    weightedErrors.push(
+      calculateWeightedError(
+        calculateError(totalInAccount, difference),
+        calculateWeight(expectedAmount, totalInAccount)
+      )
+    );
+  }
+  return weightedErrors.reduce((accum, value) => accum + value, 0);
 }
 
 function calculateTotalAccuracyInPortfolio(
@@ -131,7 +188,16 @@ function calculateTotalAccuracyInPortfolio(
   conversionRates: Map<string, number>,
   targetCurrency: string
 ): number {
-  return 1 - sumOfWeightedErrors(portfolioDefinition.accounts);
+  return (
+    1 -
+    sumOfWeightedErrors(
+      portfolioDefinition.accounts,
+      stockPrices,
+      conversionRates,
+      targetCurrency,
+      portfolioDefinition.targetHoldings
+    )
+  );
 }
 
 function calculateTotalHoldingsInAccount(

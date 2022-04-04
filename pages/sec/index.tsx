@@ -115,8 +115,22 @@ interface GetPortfolioResponse {
   targetCurrency: string;
 }
 
+function calculateDifference(): number[] {
+  return [];
+}
+
+function calculateTotalAmountInAccount(): number[] {
+  return [];
+}
+
 function calculateErrors(): number[] {
-  return [1];
+  const errors: number[] = new Array<number>();
+  const totalAmountInAccount: number[] = calculateTotalAmountInAccount();
+  const difference: number[] = calculateDifference();
+  for (let i = 0; i < difference.length; i++) {
+    errors.push(difference[i] / totalAmountInAccount[i]);
+  }
+  return errors;
 }
 
 function calculateWeights(): number[] {

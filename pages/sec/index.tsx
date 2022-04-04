@@ -5,6 +5,7 @@ import { generateCustomPlaceholderURL } from "react-placeholder-image";
 import { useEffect, useState } from "react";
 import MoneyWidget from "components/MoneyWidget";
 import { Money } from "components/Money";
+import { difference } from "next/dist/build/utils";
 
 function AuthLayout({ children }) {
   return <Container>{children}</Container>;
@@ -115,20 +116,21 @@ interface GetPortfolioResponse {
   targetCurrency: string;
 }
 
-function calculateDifference(): number[] {
+function calculateDifferences(): number[] {
   return [];
 }
 
-function calculateTotalAmountInAccount(): number[] {
+function calculateTotalAmountsInAccount(): number[] {
   return [];
 }
 
-function calculateErrors(): number[] {
+function calculateErrors(
+  totalAmountsInAccount: number[],
+  differences: number[]
+): number[] {
   const errors: number[] = new Array<number>();
-  const totalAmountInAccount: number[] = calculateTotalAmountInAccount();
-  const difference: number[] = calculateDifference();
-  for (let i = 0; i < difference.length; i++) {
-    errors.push(difference[i] / totalAmountInAccount[i]);
+  for (let i = 0; i < differences.length; i++) {
+    errors.push(difference[i] / totalAmountsInAccount[i]);
   }
   return errors;
 }
@@ -139,7 +141,9 @@ function calculateWeights(): number[] {
 
 function calculateWeightedErrors(): number[] {
   const weightedErrors: number[] = new Array<number>();
-  const errors: number[] = calculateErrors();
+  const totalAmountsInAccount: number[] = calculateTotalAmountsInAccount();
+  const differences: number[] = calculateDifferences();
+  const errors: number[] = calculateErrors(totalAmountsInAccount, differences);
   const weights: number[] = calculateWeights();
   for (let i = 0; i < errors.length; i++) {
     weightedErrors.push(errors[i] * weights[i]);

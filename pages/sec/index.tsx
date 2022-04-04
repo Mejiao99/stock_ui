@@ -115,36 +115,15 @@ interface GetPortfolioResponse {
   targetCurrency: string;
 }
 
-function calculateWeightedError(error: number, weight: number): number {
+function calculateError(): number {
   return 0;
 }
 
-function calculateExpectedAmount(
-  actualHoldings: Map<string, number>,
-  targetHoldings: Map<string, number>,
-  stockPrices: Map<string, Money>
-): Map<string, number> {
-  return new Map<string, number>([
-    ["ticketA", 1],
-    ["ticketB", 2],
-  ]);
-}
-
-function calculateDifference(
-  holdings: Map<string, number>,
-  expectedAmount: Map<string, number>
-) {
+function calculateWeight(): number {
   return 0;
 }
 
-function calculateError(totalInAccount: number, difference: number) {
-  return 0;
-}
-
-function calculateWeight(
-  expectedAmount: Map<string, number>,
-  totalInAccount: number
-) {
+function calculateWeightedError(number: number, number2: number) {
   return 0;
 }
 
@@ -155,28 +134,10 @@ function sumOfWeightedErrors(
   targetCurrency: string,
   targetHoldings: Map<string, number>
 ): number {
-  const weightedErrors = new Array<number>();
+  let weightedErrors = new Array<number>();
   for (const account of accounts) {
-    const totalInAccount: number = calculateTotalHoldingsInAccount(
-      account,
-      stockPrices,
-      conversionRates,
-      targetCurrency
-    ).amount;
-    const expectedAmount: Map<string, number> = calculateExpectedAmount(
-      account.holdings,
-      targetHoldings,
-      stockPrices
-    );
-    const difference: number = calculateDifference(
-      account.holdings,
-      expectedAmount
-    );
     weightedErrors.push(
-      calculateWeightedError(
-        calculateError(totalInAccount, difference),
-        calculateWeight(expectedAmount, totalInAccount)
-      )
+      calculateWeightedError(calculateError(), calculateWeight())
     );
   }
   return weightedErrors.reduce((accum, value) => accum + value, 0);

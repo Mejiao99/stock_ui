@@ -115,17 +115,10 @@ interface GetPortfolioResponse {
   targetCurrency: string;
 }
 
-function calculateAccuracyInAccount(
+function accountWeightError(
   account: Account,
-  stockPrices: Map<string, Money>,
-  conversionRates: Map<String, number>,
-  targetHoldings: Map<String, number>
-): number {
-  return 1.0;
-}
-
-function calculateTotalAccuracyInAccounts(
-  accountsAccuracy: Map<string, number>
+  targetHoldings: Map<string, number>,
+  money: Money
 ): number {
   return 1.0;
 }
@@ -133,23 +126,27 @@ function calculateTotalAccuracyInAccounts(
 function calculateTotalAccuracyInPortfolio(
   portfolioDefinition: PortfolioDefinition,
   stockPrices: Map<string, Money>,
-  conversionRates: Map<string, number>
+  conversionRates: Map<string, number>,
+  targetCurrency: string
 ): number {
-  const targetHoldings: Map<String, number> =
-    portfolioDefinition.targetHoldings;
-  let accountsAccuracy = new Map<string, number>();
-  for (const account of portfolioDefinition.accounts) {
-    accountsAccuracy.set(
-      account.id,
-      calculateAccuracyInAccount(
+  const accountsWeightError: number[] = portfolioDefinition.accounts.map(
+    (account) =>
+      accountWeightError(
         account,
-        stockPrices,
-        conversionRates,
-        targetHoldings
+        portfolioDefinition.targetHoldings,
+        calculateTotalHoldingsInAccount(
+          account,
+          stockPrices,
+          conversionRates,
+          targetCurrency
+        )
       )
-    );
-  }
-  return calculateTotalAccuracyInAccounts(accountsAccuracy);
+  );
+  const accountsAccuracy: number = accountsWeightError.reduce(
+    (accum, value) => accum + value,
+    0
+  );
+  return 1 - accountsAccuracy;
 }
 
 function calculateTotalHoldingsInAccount(
@@ -209,7 +206,8 @@ function convertPortfolioDefinitionToPortfolio(
     accuracy: calculateTotalAccuracyInPortfolio(
       portfolioDefinition,
       stockPrices,
-      currencyRates
+      currencyRates,
+      targetCurrency
     ),
     totalHoldings: calculateTotalHoldings(
       portfolioDefinition,

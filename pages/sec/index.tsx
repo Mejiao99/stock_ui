@@ -72,6 +72,7 @@ interface PortfolioDefinition {
   id: string;
   name: string;
   accounts: Account[];
+  targetHoldings: Map<string, number>;
 }
 
 const otherPlaceholderImageURL = generateCustomPlaceholderURL(100, 25, {
@@ -112,7 +113,6 @@ interface GetPortfolioResponse {
   stockPrices: Map<string, Money>;
   conversionRates: Map<string, number>;
   targetCurrency: string;
-  targetHoldings: Map<string, number>;
 }
 
 function calculateTotalAccuracyInAccount(
@@ -137,9 +137,6 @@ function calculateTotalAccuracy(
       conversionRates,
       targetHoldings
     )
-  );
-  const totalAccuracy: number = accuracys.reduce(
-    (accum, value) => accum + value
   );
   return 1;
 }

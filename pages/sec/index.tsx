@@ -116,8 +116,23 @@ interface GetPortfolioResponse {
   targetCurrency: string;
 }
 
-function calculateDifferences(): number[] {
+function calculateExpectedAmount() {
   return [];
+}
+
+function calculateCurrentAmount() {
+  return [];
+}
+
+function calculateDifferences(
+  calculateExpectedAmounts: number[],
+  calculateCurrentAmounts: number[]
+): number[] {
+  const differences: number[] = new Array<number>();
+  for (let i = 0; i < calculateExpectedAmounts.length; i++) {
+    differences.push(calculateExpectedAmounts[i] - calculateCurrentAmounts[i]);
+  }
+  return differences;
 }
 
 function calculateTotalAmountsInAccount(): number[] {
@@ -142,7 +157,12 @@ function calculateWeights(): number[] {
 function calculateWeightedErrors(): number[] {
   const weightedErrors: number[] = new Array<number>();
   const totalAmountsInAccount: number[] = calculateTotalAmountsInAccount();
-  const differences: number[] = calculateDifferences();
+  const calculateExpectedAmounts: number[] = calculateExpectedAmount();
+  const calculateCurrentAmounts: number[] = calculateCurrentAmount();
+  const differences: number[] = calculateDifferences(
+    calculateExpectedAmounts,
+    calculateCurrentAmounts
+  );
   const errors: number[] = calculateErrors(totalAmountsInAccount, differences);
   const weights: number[] = calculateWeights();
   for (let i = 0; i < errors.length; i++) {

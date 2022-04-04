@@ -124,7 +124,7 @@ function calculateTotalAccuracyInAccount(
   return 1.0;
 }
 
-function calculateTotalAccuracy(
+function calculateTotalAccuracyInPortfolio(
   portfolioDefinition: PortfolioDefinition,
   stockPrices: Map<string, Money>,
   conversionRates: Map<string, number>,
@@ -194,7 +194,7 @@ function convertPortfolioDefinitionToPortfolio(
   return {
     id: portfolioDefinition.id,
     name: portfolioDefinition.name,
-    accuracy: calculateTotalAccuracy(
+    accuracy: calculateTotalAccuracyInPortfolio(
       portfolioDefinition,
       stockPrices,
       currencyRates

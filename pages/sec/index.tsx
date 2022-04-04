@@ -72,6 +72,7 @@ interface PortfolioDefinition {
   id: string;
   name: string;
   accounts: Account[];
+  targetHoldings: Map<string, number>;
 }
 
 const otherPlaceholderImageURL = generateCustomPlaceholderURL(100, 25, {
@@ -114,9 +115,14 @@ interface GetPortfolioResponse {
   targetCurrency: string;
 }
 
-function calculateAccuracy(accounts: Account[]): number {
+function calculateTotalAccuracyInPortfolio(
+  portfolioDefinition: PortfolioDefinition,
+  stockPrices: Map<string, Money>,
+  conversionRates: Map<string, number>
+): number {
   return 1.0;
 }
+
 function calculateTotalHoldingsInAccount(
   account: Account,
   stockPrices: Map<string, Money>,
@@ -171,7 +177,11 @@ function convertPortfolioDefinitionToPortfolio(
   return {
     id: portfolioDefinition.id,
     name: portfolioDefinition.name,
-    accuracy: calculateAccuracy(portfolioDefinition.accounts),
+    accuracy: calculateTotalAccuracyInPortfolio(
+      portfolioDefinition,
+      stockPrices,
+      currencyRates
+    ),
     totalHoldings: calculateTotalHoldings(
       portfolioDefinition,
       stockPrices,

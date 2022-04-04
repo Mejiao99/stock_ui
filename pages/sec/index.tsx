@@ -125,9 +125,10 @@ function calculateWeights(): number[] {
 
 function calculateWeightedErrors(): number[] {
   const weightedErrors: number[] = new Array<number>();
-  for (const error of calculateErrors()) {
-    for (const weight of calculateWeights())
-      weightedErrors.push(error * weight);
+  const errors: number[] = calculateErrors();
+  const weights: number[] = calculateWeights();
+  for (let i = 0; i < errors.length; i++) {
+    weightedErrors.push(errors[i] * weights[i]);
   }
   return weightedErrors;
 }

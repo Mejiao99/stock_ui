@@ -115,12 +115,41 @@ interface GetPortfolioResponse {
   targetCurrency: string;
 }
 
+function calculateAccuracyInAccount(
+  account: Account,
+  stockPrices: Map<string, Money>,
+  conversionRates: Map<String, number>,
+  targetHoldings: Map<String, number>
+): number {
+  return 1.0;
+}
+
+function calculateTotalAccuracyInAccounts(
+  accountsAccuracy: Map<string, number>
+): number {
+  return 1.0;
+}
+
 function calculateTotalAccuracyInPortfolio(
   portfolioDefinition: PortfolioDefinition,
   stockPrices: Map<string, Money>,
   conversionRates: Map<string, number>
 ): number {
-  return 1.0;
+  const targetHoldings: Map<String, number> =
+    portfolioDefinition.targetHoldings;
+  let accountsAccuracy = new Map<string, number>();
+  for (const account of portfolioDefinition.accounts) {
+    accountsAccuracy.set(
+      account.id,
+      calculateAccuracyInAccount(
+        account,
+        stockPrices,
+        conversionRates,
+        targetHoldings
+      )
+    );
+  }
+  return calculateTotalAccuracyInAccounts(accountsAccuracy);
 }
 
 function calculateTotalHoldingsInAccount(

@@ -121,24 +121,23 @@ function calculateTotalAccuracyInAccount(
   conversionRates: Map<string, number>,
   targetHoldings: Map<string, number>
 ) {
-  return 1;
+  return 1.0;
 }
 
 function calculateTotalAccuracy(
   portfolioDefinition: PortfolioDefinition,
   stockPrices: Map<string, Money>,
   conversionRates: Map<string, number>,
-  targetHoldings: Map<string, number>
 ): number {
   const accuracys: number[] = portfolioDefinition.accounts.map((account) =>
     calculateTotalAccuracyInAccount(
       account,
       stockPrices,
       conversionRates,
-      targetHoldings
+      portfolioDefinition.targetHoldings
     )
   );
-  return 1;
+  return 1.0;
 }
 
 function calculateTotalHoldingsInAccount(
@@ -191,7 +190,6 @@ function convertPortfolioDefinitionToPortfolio(
   stockPrices: Map<string, Money>,
   currencyRates: Map<string, number>,
   targetCurrency: string,
-  targetHoldings: Map<string, number>
 ): Portfolio {
   return {
     id: portfolioDefinition.id,
@@ -199,8 +197,7 @@ function convertPortfolioDefinitionToPortfolio(
     accuracy: calculateTotalAccuracy(
       portfolioDefinition,
       stockPrices,
-      currencyRates,
-      targetHoldings
+      currencyRates
     ),
     totalHoldings: calculateTotalHoldings(
       portfolioDefinition,
@@ -219,8 +216,7 @@ function convertGetPortfolioResponseToPortfolios(
       value,
       portfolioResponse.stockPrices,
       portfolioResponse.conversionRates,
-      portfolioResponse.targetCurrency,
-      portfolioResponse.targetHoldings
+      portfolioResponse.targetCurrency
     )
   );
 }

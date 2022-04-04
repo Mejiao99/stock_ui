@@ -115,8 +115,21 @@ interface GetPortfolioResponse {
   targetCurrency: string;
 }
 
-function calculateWeightedErrors():number[] {
-    return [1.0]
+function calculateErrors(): number[] {
+  return [1];
+}
+
+function calculateWeights(): number[] {
+  return [1];
+}
+
+function calculateWeightedErrors(): number[] {
+  const weightedErrors: number[] = new Array<number>();
+  for (const error of calculateErrors()) {
+    for (const weight of calculateWeights())
+      weightedErrors.push(error * weight);
+  }
+  return weightedErrors;
 }
 
 function sumOfWeightedErrors(
@@ -126,7 +139,7 @@ function sumOfWeightedErrors(
   targetCurrency: string,
   targetHoldings: Map<string, number>
 ): number {
-  const weightedErrors = calculateWeightedErrors()
+  const weightedErrors = calculateWeightedErrors();
   return weightedErrors.reduce((accum, value) => accum + value, 0);
 }
 

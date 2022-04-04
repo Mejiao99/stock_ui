@@ -115,7 +115,12 @@ interface GetPortfolioResponse {
   targetCurrency: string;
 }
 
+function calculateWeightedError(error: number, weight: number) {
+  return 0;
+}
+
 function sumOfWeightedErrors(): number {
+  calculateWeightedError(0.5, 0.2);
   return 0;
 }
 

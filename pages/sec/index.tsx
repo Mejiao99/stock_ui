@@ -115,8 +115,19 @@ interface GetPortfolioResponse {
   targetCurrency: string;
 }
 
-function sumOfWeightedErrors(): number {
-  return 0;
+function calculateWeightedErrors():number[] {
+    return [1.0]
+}
+
+function sumOfWeightedErrors(
+  accounts: Account[],
+  stockPrices: Map<string, Money>,
+  conversionRates: Map<string, number>,
+  targetCurrency: string,
+  targetHoldings: Map<string, number>
+): number {
+  const weightedErrors = calculateWeightedErrors()
+  return weightedErrors.reduce((accum, value) => accum + value, 0);
 }
 
 function calculateTotalAccuracyInPortfolio(
@@ -125,7 +136,16 @@ function calculateTotalAccuracyInPortfolio(
   conversionRates: Map<string, number>,
   targetCurrency: string
 ): number {
-  return 1 - sumOfWeightedErrors();
+  return (
+    1 -
+    sumOfWeightedErrors(
+      portfolioDefinition.accounts,
+      stockPrices,
+      conversionRates,
+      targetCurrency,
+      portfolioDefinition.targetHoldings
+    )
+  );
 }
 
 function calculateTotalHoldingsInAccount(

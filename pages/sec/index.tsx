@@ -115,7 +115,7 @@ interface GetPortfolioResponse {
   targetCurrency: string;
 }
 
-function calculateWeightedError(error: number, weight: number) {
+function calculateWeightedError(error: number, weight: number): number {
   return 0;
 }
 

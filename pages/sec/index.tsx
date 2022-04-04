@@ -115,28 +115,11 @@ interface GetPortfolioResponse {
   targetCurrency: string;
 }
 
-function calculateTotalAccuracyInAccount(
-  account: Account,
-  stockPrices: Map<string, Money>,
-  conversionRates: Map<string, number>,
-  targetHoldings: Map<string, number>
-) {
-  return 1.0;
-}
-
 function calculateTotalAccuracyInPortfolio(
   portfolioDefinition: PortfolioDefinition,
   stockPrices: Map<string, Money>,
-  conversionRates: Map<string, number>,
+  conversionRates: Map<string, number>
 ): number {
-  const accuracys: number[] = portfolioDefinition.accounts.map((account) =>
-    calculateTotalAccuracyInAccount(
-      account,
-      stockPrices,
-      conversionRates,
-      portfolioDefinition.targetHoldings
-    )
-  );
   return 1.0;
 }
 
@@ -189,7 +172,7 @@ function convertPortfolioDefinitionToPortfolio(
   portfolioDefinition: PortfolioDefinition,
   stockPrices: Map<string, Money>,
   currencyRates: Map<string, number>,
-  targetCurrency: string,
+  targetCurrency: string
 ): Portfolio {
   return {
     id: portfolioDefinition.id,

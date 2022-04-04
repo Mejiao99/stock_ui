@@ -127,6 +127,10 @@ function calculateWeightedError(number: number, number2: number) {
   return 0;
 }
 
+function calculateWeightedErrors():number[] {
+    return [1.0]
+}
+
 function sumOfWeightedErrors(
   accounts: Account[],
   stockPrices: Map<string, Money>,
@@ -134,12 +138,7 @@ function sumOfWeightedErrors(
   targetCurrency: string,
   targetHoldings: Map<string, number>
 ): number {
-  let weightedErrors = new Array<number>();
-  for (const account of accounts) {
-    weightedErrors.push(
-      calculateWeightedError(calculateError(), calculateWeight())
-    );
-  }
+  const weightedErrors = calculateWeightedErrors()
   return weightedErrors.reduce((accum, value) => accum + value, 0);
 }
 

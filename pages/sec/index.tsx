@@ -119,9 +119,10 @@ function calculateWeightedError(error: number, weight: number): number {
   return 0;
 }
 
-function sumOfWeightedErrors(): number {
-  calculateWeightedError(0.5, 0.2);
-  return 0;
+function sumOfWeightedErrors(accounts: Account[]): number {
+  return accounts
+    .map((account) => calculateWeightedError(1.0, 1.0))
+    .reduce((accum, value) => accum + value, 0);
 }
 
 function calculateTotalAccuracyInPortfolio(
@@ -130,7 +131,7 @@ function calculateTotalAccuracyInPortfolio(
   conversionRates: Map<string, number>,
   targetCurrency: string
 ): number {
-  return 1 - sumOfWeightedErrors();
+  return 1 - sumOfWeightedErrors(portfolioDefinition.accounts);
 }
 
 function calculateTotalHoldingsInAccount(

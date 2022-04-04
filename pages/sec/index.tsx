@@ -115,12 +115,17 @@ interface GetPortfolioResponse {
   targetCurrency: string;
 }
 
+function sumOfWeightedErrors(): number {
+  return 0;
+}
+
 function calculateTotalAccuracyInPortfolio(
   portfolioDefinition: PortfolioDefinition,
   stockPrices: Map<string, Money>,
-  conversionRates: Map<string, number>
+  conversionRates: Map<string, number>,
+  targetCurrency: string
 ): number {
-  return 1.0;
+  return 1 - sumOfWeightedErrors();
 }
 
 function calculateTotalHoldingsInAccount(
@@ -180,7 +185,8 @@ function convertPortfolioDefinitionToPortfolio(
     accuracy: calculateTotalAccuracyInPortfolio(
       portfolioDefinition,
       stockPrices,
-      currencyRates
+      currencyRates,
+      targetCurrency
     ),
     totalHoldings: calculateTotalHoldings(
       portfolioDefinition,

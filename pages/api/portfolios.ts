@@ -59,6 +59,13 @@ export default function handler(req, res) {
       usd: 1.3,
       cad: 1.0,
     },
-      targetCurrency: "cad",
+    targetCurrency: "cad",
+    targetHoldings: {
+      ticketA: 0.2,
+      ticketB: 0.3,
+      ticketC: 0.3,
+      ticketD: 0.1,
+      ticketE: 0.1,
+    },
   });
 }

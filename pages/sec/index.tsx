@@ -130,7 +130,7 @@ function calculateDifferences(
 ): number[] {
   const differences: number[] = new Array<number>();
   for (let i = 0; i < calculateExpectedAmounts.length; i++) {
-    differences.push(calculateExpectedAmounts[i] - calculateCurrentAmounts[i]);
+    differences.push(Math.abs(calculateExpectedAmounts[i] - calculateCurrentAmounts[i]));
   }
   return differences;
 }

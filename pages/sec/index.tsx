@@ -116,19 +116,18 @@ interface GetPortfolioResponse {
   targetCurrency: string;
 }
 
-function calculateExpectedAmount(
-  expectedHoldingsInAccount: Map<string, number>,
-  stockPrices: Map<string, Money>
+function calculateExpectedAmounts(
+  expectedQuantity: number[],
+  prices: number[]
 ) {
-  let result = new Map<string, number>();
-  Object.entries(expectedHoldingsInAccount).forEach(([ticket, qty]) => {
-    const stockPrice = stockPrices[ticket];
-    result[ticket] = stockPrice.amount * qty;
-  });
-  return Array.from(result.values());
+  const expectedAmounts: number[] = new Array<number>();
+  for (let i = 0; i < expectedQuantity.length; i++) {
+    expectedAmounts.push(Math.abs(expectedAmounts[i] * prices[i]));
+  }
+  return expectedAmounts;
 }
 
-function calculateCurrentAmount() {
+function calculateCurrentAmounts() {
   return [];
 }
 
@@ -162,20 +161,24 @@ function calculateWeights(): number[] {
   return [1];
 }
 
-function calculateExpectedHoldingsInAccount() {
-  return undefined;
+function calculatePrices(): number[] {
+  return [];
+}
+
+function calculateExpectedQuantityInAccount(): number[] {
+  return [];
 }
 
 function calculateWeightedErrors(stockPrices: Map<string, Money>): number[] {
   const weightedErrors: number[] = new Array<number>();
   const totalAmountsInAccount: number[] = calculateTotalAmountsInAccount();
-  const expectedHoldingsInAccount: Map<string, number> =
-    calculateExpectedHoldingsInAccount();
-  const expectedAmounts: number[] = calculateExpectedAmount(
-    expectedHoldingsInAccount,
-    stockPrices
+  const expectedQuantity: number[] = calculateExpectedQuantityInAccount();
+  const prices: number[] = calculatePrices();
+  const expectedAmounts: number[] = calculateExpectedAmounts(
+    expectedQuantity,
+    prices
   );
-  const currentAmounts: number[] = calculateCurrentAmount();
+  const currentAmounts: number[] = calculateCurrentAmounts();
   const differences: number[] = calculateDifferences(
     expectedAmounts,
     currentAmounts

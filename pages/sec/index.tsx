@@ -117,11 +117,11 @@ interface GetPortfolioResponse {
 }
 
 function calculateExpectedAmount(
-  holdingsInAccount: Map<string, number>,
+  expectedHoldingsInAccount: Map<string, number>,
   stockPrices: Map<string, Money>
 ) {
   let result = new Map<string, number>();
-  Object.entries(holdingsInAccount).forEach(([ticket, qty]) => {
+  Object.entries(expectedHoldingsInAccount).forEach(([ticket, qty]) => {
     const stockPrice = stockPrices[ticket];
     result[ticket] = stockPrice.amount * qty;
   });
@@ -162,16 +162,17 @@ function calculateWeights(): number[] {
   return [1];
 }
 
-function calculateHoldingsInAccount() {
+function calculateExpectedHoldingsInAccount() {
   return undefined;
 }
 
 function calculateWeightedErrors(stockPrices: Map<string, Money>): number[] {
   const weightedErrors: number[] = new Array<number>();
   const totalAmountsInAccount: number[] = calculateTotalAmountsInAccount();
-  const holdingsInAccount: Map<string, number> = calculateHoldingsInAccount();
+  const expectedHoldingsInAccount: Map<string, number> =
+    calculateExpectedHoldingsInAccount();
   const expectedAmounts: number[] = calculateExpectedAmount(
-    holdingsInAccount,
+    expectedHoldingsInAccount,
     stockPrices
   );
   const currentAmounts: number[] = calculateCurrentAmount();

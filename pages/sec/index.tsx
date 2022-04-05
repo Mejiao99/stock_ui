@@ -164,8 +164,15 @@ function calculateErrors(
   return errors;
 }
 
-function calculateWeights(): number[] {
-  return [1];
+function calculateWeights(
+  totalAmountsInAccount: number[],
+  expectedAmounts: number[]
+): number[] {
+  const weights: number[] = new Array<number>();
+  for (let i = 0; i < expectedAmounts.length; i++) {
+    weights.push(expectedAmounts[i] / totalAmountsInAccount[i]);
+  }
+  return weights;
 }
 
 function calculatePrices(): number[] {
@@ -199,7 +206,10 @@ function calculateWeightedErrors(): number[] {
     currentAmounts
   );
   const errors: number[] = calculateErrors(totalAmountsInAccount, differences);
-  const weights: number[] = calculateWeights();
+  const weights: number[] = calculateWeights(
+    totalAmountsInAccount,
+    expectedAmounts
+  );
   for (let i = 0; i < errors.length; i++) {
     weightedErrors.push(errors[i] * weights[i]);
   }

@@ -116,11 +116,18 @@ interface GetPortfolioResponse {
   targetCurrency: string;
 }
 
-function calculateExpectedAmount() {
-  return [];
+function calculateExpectedAmounts(
+  expectedQuantity: number[],
+  prices: number[]
+) {
+  const expectedAmounts: number[] = new Array<number>();
+  for (let i = 0; i < expectedQuantity.length; i++) {
+    expectedAmounts.push(Math.abs(expectedAmounts[i] * prices[i]));
+  }
+  return expectedAmounts;
 }
 
-function calculateCurrentAmount() {
+function calculateCurrentAmounts() {
   return [];
 }
 
@@ -154,14 +161,27 @@ function calculateWeights(): number[] {
   return [1];
 }
 
+function calculatePrices(): number[] {
+  return [];
+}
+
+function calculateExpectedQuantityInAccount(): number[] {
+  return [];
+}
+
 function calculateWeightedErrors(): number[] {
   const weightedErrors: number[] = new Array<number>();
   const totalAmountsInAccount: number[] = calculateTotalAmountsInAccount();
-  const expectedAmounts: number[] = calculateExpectedAmount();
-  const currentAmounts: number[] = calculateCurrentAmount();
+  const expectedQuantity: number[] = calculateExpectedQuantityInAccount();
+  const prices: number[] = calculatePrices();
+  const expectedAmounts: number[] = calculateExpectedAmounts(
+    expectedQuantity,
+    prices
+  );
+  const currentAmounts: number[] = calculateCurrentAmounts();
   const differences: number[] = calculateDifferences(
-      expectedAmounts,
-      currentAmounts
+    expectedAmounts,
+    currentAmounts
   );
   const errors: number[] = calculateErrors(totalAmountsInAccount, differences);
   const weights: number[] = calculateWeights();

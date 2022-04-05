@@ -127,8 +127,12 @@ function calculateExpectedAmounts(
   return expectedAmounts;
 }
 
-function calculateCurrentAmounts() {
-  return [];
+function calculateCurrentAmounts(actualQuantity: number[], prices: number[]):number[] {
+  const actualAmounts: number[] = new Array<number>();
+  for (let i = 0; i < actualQuantity.length; i++) {
+    actualAmounts.push(Math.abs(actualQuantity[i] * prices[i]));
+  }
+  return actualAmounts;
 }
 
 function calculateDifferences(
@@ -169,16 +173,24 @@ function calculateExpectedQuantityInAccount(): number[] {
   return [];
 }
 
+function calculateActualQuantityInAccount() {
+  return [];
+}
+
 function calculateWeightedErrors(): number[] {
   const weightedErrors: number[] = new Array<number>();
   const totalAmountsInAccount: number[] = calculateTotalAmountsInAccount();
   const expectedQuantity: number[] = calculateExpectedQuantityInAccount();
+  const actualQuantity: number[] = calculateActualQuantityInAccount();
   const prices: number[] = calculatePrices();
   const expectedAmounts: number[] = calculateExpectedAmounts(
     expectedQuantity,
     prices
   );
-  const currentAmounts: number[] = calculateCurrentAmounts();
+  const currentAmounts: number[] = calculateCurrentAmounts(
+      actualQuantity,
+      prices
+  );
   const differences: number[] = calculateDifferences(
     expectedAmounts,
     currentAmounts

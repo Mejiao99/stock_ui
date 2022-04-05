@@ -127,7 +127,10 @@ function calculateExpectedAmounts(
   return expectedAmounts;
 }
 
-function calculateCurrentAmounts(actualQuantity: number[], prices: number[]):number[] {
+function calculateCurrentAmounts(
+  actualQuantity: number[],
+  prices: number[]
+): number[] {
   const actualAmounts: number[] = new Array<number>();
   for (let i = 0; i < actualQuantity.length; i++) {
     actualAmounts.push(Math.abs(actualQuantity[i] * prices[i]));
@@ -165,8 +168,8 @@ function calculateWeights(): number[] {
   return [1];
 }
 
-function calculatePrices(): number[] {
-  return [];
+function calculatePrices(stockPrices: Map<string, Money>): number[] {
+  return Array.from(stockPrices.values()).map((value) => value.amount);
 }
 
 function calculateExpectedQuantityInAccount(): number[] {
@@ -177,19 +180,19 @@ function calculateActualQuantityInAccount() {
   return [];
 }
 
-function calculateWeightedErrors(): number[] {
+function calculateWeightedErrors(stockPrices: Map<string, Money>): number[] {
   const weightedErrors: number[] = new Array<number>();
   const totalAmountsInAccount: number[] = calculateTotalAmountsInAccount();
   const expectedQuantity: number[] = calculateExpectedQuantityInAccount();
   const actualQuantity: number[] = calculateActualQuantityInAccount();
-  const prices: number[] = calculatePrices();
+  const prices: number[] = calculatePrices(stockPrices);
   const expectedAmounts: number[] = calculateExpectedAmounts(
     expectedQuantity,
     prices
   );
   const currentAmounts: number[] = calculateCurrentAmounts(
-      actualQuantity,
-      prices
+    actualQuantity,
+    prices
   );
   const differences: number[] = calculateDifferences(
     expectedAmounts,
@@ -210,7 +213,7 @@ function sumOfWeightedErrors(
   targetCurrency: string,
   targetHoldings: Map<string, number>
 ): number {
-  const weightedErrors = calculateWeightedErrors();
+  const weightedErrors = calculateWeightedErrors(stockPrices);
   return weightedErrors.reduce((accum, value) => accum + value, 0);
 }
 

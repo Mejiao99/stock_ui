@@ -127,7 +127,10 @@ function calculateExpectedAmounts(
   return expectedAmounts;
 }
 
-function calculateCurrentAmounts(actualQuantity: number[], prices: number[]):number[] {
+function calculateCurrentAmounts(
+  actualQuantity: number[],
+  prices: number[]
+): number[] {
   const actualAmounts: number[] = new Array<number>();
   for (let i = 0; i < actualQuantity.length; i++) {
     actualAmounts.push(Math.abs(actualQuantity[i] * prices[i]));
@@ -188,8 +191,8 @@ function calculateWeightedErrors(): number[] {
     prices
   );
   const currentAmounts: number[] = calculateCurrentAmounts(
-      actualQuantity,
-      prices
+    actualQuantity,
+    prices
   );
   const differences: number[] = calculateDifferences(
     expectedAmounts,

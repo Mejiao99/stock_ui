@@ -116,8 +116,16 @@ interface GetPortfolioResponse {
   targetCurrency: string;
 }
 
-function calculateExpectedAmount() {
-  return [];
+function calculateExpectedAmount(
+  holdingsInAccount: Map<string, number>,
+  stockPrices: Map<string, Money>
+) {
+  let result = new Map<string, number>();
+  Object.entries(holdingsInAccount).forEach(([ticket, qty]) => {
+    const stockPrice = stockPrices[ticket];
+    result[ticket] = stockPrice.amount * qty;
+  });
+  return Array.from(result.values());
 }
 
 function calculateCurrentAmount() {
@@ -154,14 +162,22 @@ function calculateWeights(): number[] {
   return [1];
 }
 
-function calculateWeightedErrors(): number[] {
+function calculateHoldingsInAccount() {
+  return undefined;
+}
+
+function calculateWeightedErrors(stockPrices: Map<string, Money>): number[] {
   const weightedErrors: number[] = new Array<number>();
   const totalAmountsInAccount: number[] = calculateTotalAmountsInAccount();
-  const expectedAmounts: number[] = calculateExpectedAmount();
+  const holdingsInAccount: Map<string, number> = calculateHoldingsInAccount();
+  const expectedAmounts: number[] = calculateExpectedAmount(
+    holdingsInAccount,
+    stockPrices
+  );
   const currentAmounts: number[] = calculateCurrentAmount();
   const differences: number[] = calculateDifferences(
-      expectedAmounts,
-      currentAmounts
+    expectedAmounts,
+    currentAmounts
   );
   const errors: number[] = calculateErrors(totalAmountsInAccount, differences);
   const weights: number[] = calculateWeights();
@@ -178,7 +194,7 @@ function sumOfWeightedErrors(
   targetCurrency: string,
   targetHoldings: Map<string, number>
 ): number {
-  const weightedErrors = calculateWeightedErrors();
+  const weightedErrors = calculateWeightedErrors(stockPrices);
   return weightedErrors.reduce((accum, value) => accum + value, 0);
 }
 

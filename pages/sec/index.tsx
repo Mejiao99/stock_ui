@@ -169,7 +169,7 @@ function calculateExpectedQuantityInAccount(): number[] {
   return [];
 }
 
-function calculateWeightedErrors(stockPrices: Map<string, Money>): number[] {
+function calculateWeightedErrors(): number[] {
   const weightedErrors: number[] = new Array<number>();
   const totalAmountsInAccount: number[] = calculateTotalAmountsInAccount();
   const expectedQuantity: number[] = calculateExpectedQuantityInAccount();
@@ -198,7 +198,7 @@ function sumOfWeightedErrors(
   targetCurrency: string,
   targetHoldings: Map<string, number>
 ): number {
-  const weightedErrors = calculateWeightedErrors(stockPrices);
+  const weightedErrors = calculateWeightedErrors();
   return weightedErrors.reduce((accum, value) => accum + value, 0);
 }
 

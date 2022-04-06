@@ -122,7 +122,7 @@ function calculateExpectedAmounts(
 ) {
   const expectedAmounts: number[] = new Array<number>();
   for (let i = 0; i < expectedQuantity.length; i++) {
-    expectedAmounts.push(Math.abs(expectedAmounts[i] * prices[i]));
+    expectedAmounts.push(expectedAmounts[i] * prices[i]);
   }
   return expectedAmounts;
 }
@@ -133,7 +133,7 @@ function calculateCurrentAmounts(
 ): number[] {
   const actualAmounts: number[] = new Array<number>();
   for (let i = 0; i < actualQuantity.length; i++) {
-    actualAmounts.push(Math.abs(actualQuantity[i] * prices[i]));
+    actualAmounts.push(actualQuantity[i] * prices[i]);
   }
   return actualAmounts;
 }

@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import MoneyWidget from "components/MoneyWidget";
 import { Money } from "components/Money";
 import { difference } from "next/dist/build/utils";
+import importFresh from "import-fresh";
 
 function AuthLayout({ children }) {
   return <Container>{children}</Container>;
@@ -176,6 +177,37 @@ function calculateTotalValueInAccounts(): number[] {
   return [];
 }
 
+function getPortfoliosId(
+  portfolioDefinitions: PortfolioDefinition[]
+): string[] {
+  return portfolioDefinitions.map(
+    (portfolioDefinition) => portfolioDefinition.id
+  );
+}
+
+function getAccountsId(portfolioDefinitions: PortfolioDefinition[]) {
+  let accountsId: string[] = [];
+  for (const portfolioDefinition of portfolioDefinitions) {
+    for (const account of portfolioDefinition.accounts) {
+      accountsId.push(account.id);
+    }
+  }
+  return accountsId;
+}
+
+function getTargets(portfolioDefinitions: PortfolioDefinition[]) {
+  let targets: number[] = [];
+  for (const portfolioDefinition of portfolioDefinitions) {
+    const portfolioDefinitionTargets: number[] = Object.entries(
+      portfolioDefinition.targetHoldings
+    ).map(([ticket]) => portfolioDefinition[ticket]);
+    for (const target of portfolioDefinitionTargets) {
+      targets.push(target);
+    }
+  }
+  return targets;
+}
+
 function calculateColumns(
   portfolioDefinitions: PortfolioDefinition[],
   stockPrices: Map<string, Money>,
@@ -189,13 +221,14 @@ function calculateColumns(
   ticketsValue: number[],
   currentQuantities: number[]
 ] {
-  //TODO: getPortfoliosId(portfolioDefinitions) -> string[]
-  //TODO: getAccountsId(portfolioDefinitions) -> string[]
+  const portfolios: string[] = getPortfoliosId(portfolioDefinitions);
+  const accountsId: string[] = getAccountsId(portfolioDefinitions);
+  const targets: number[] = getTargets(portfolioDefinitions);
   //TODO: getTargets(portfolioDefinitions) -> number[]
   //TODO: getTickets(portfolioDefinitions) -> string[]
   //TODO: calculateTicketsValue(portfolioDefinitions,stockPrices) -> number[]
   //TODO: getCurrentQuantities(portfolioDefinitions) -> number[]
-  return [[], [], [], [], [], []];
+  return [portfolios, accountsId, targets, [], [], []];
 }
 
 function calculateWeightedErrors(
@@ -205,13 +238,13 @@ function calculateWeightedErrors(
   targetCurrency: string
 ): number[] {
   let portfolioDefinitions: PortfolioDefinition[] = [portfolioDefinition];
-  const columns: [
-    portfolios: string[],
-    accounts: string[],
-    targets: number[],
-    tickets: string[],
-    ticketsValue: number[],
-    currentQuantities: number[]
+  let [
+    portfolios,
+    accounts,
+    targets,
+    tickets,
+    ticketsValue,
+    currentQuantities,
   ] = calculateColumns(
     portfolioDefinitions,
     stockPrices,
@@ -219,17 +252,14 @@ function calculateWeightedErrors(
     targetCurrency
   );
   const weightedErrors: number[] = new Array<number>();
-  const targetAmounts: number[] = columns[2];
-  const currentQuantities: number[] = columns[5];
-  const ticketValue: number[] = columns[4];
   const totalValueInAccounts: number[] = calculateTotalValueInAccounts();
   const expectedAmounts: number[] = calculateExpectedAmounts(
-    targetAmounts,
+    targets,
     totalValueInAccounts
   );
   const currentAmounts: number[] = calculateCurrentAmounts(
     currentQuantities,
-    ticketValue
+    ticketsValue
   );
   const differences: number[] = calculateDifferences(
     expectedAmounts,

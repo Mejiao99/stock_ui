@@ -203,9 +203,7 @@ function calculateColumns(
       }
     }
   }
-  //TODO: getAccountsId(portfolioDefinitions) -> string[]
   //TODO: getTargets(portfolioDefinitions) -> number[]
-  //TODO: getTickets(portfolioDefinitions) -> string[]
   //TODO: calculateTicketsValue(portfolioDefinitions,stockPrices) -> number[]
   //TODO: getCurrentQuantities(portfolioDefinitions) -> number[]
   return [portfolioIds, accounts, [], tickets, [], []];

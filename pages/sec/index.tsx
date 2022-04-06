@@ -172,18 +172,22 @@ function calculateWeights(
 }
 
 function calculateTicketValue(): number[] {
+  //TODO:Deleted this method and use ticketsValue from columns
   return [];
 }
 
 function calculateTargetAmountsInAccount(): number[] {
+  //TODO:Deleted this method and use targets from columns
   return [];
 }
 
 function calculateCurrentQuantitiesInAccount() {
+  //TODO:Deleted this method and use currentQuantities from columns
   return [];
 }
 
 function calculateTotalValueInAccounts(): number[] {
+  //TODO: Implement this method. Receive accounts,tickets,ticketsValue
   return [];
 }
 
@@ -200,6 +204,12 @@ function calculateColumns(
   ticketsValue: number[],
   currentQuantities: number[]
 ] {
+  //TODO: getPortfoliosId(portfolioDefinitions) -> string[]
+  //TODO: getAccountsId(portfolioDefinitions) -> string[]
+  //TODO: getTargets(portfolioDefinitions) -> number[]
+  //TODO: getTickets(portfolioDefinitions) -> string[]
+  //TODO: calculateTicketsValue(portfolioDefinitions,stockPrices) -> number[]
+  //TODO: getCurrentQuantities(portfolioDefinitions) -> number[]
   return [[], [], [], [], [], []];
 }
 

@@ -193,12 +193,12 @@ function calculateColumns(
   let accounts: string[] = [];
   let tickets: string[] = [];
   for (let portfolioDefinition of portfolioDefinitions) {
-    portfoliosId.push(portfolioDefinition.id);
     for (let account of portfolioDefinition.accounts) {
-      accounts.push(account.id);
       for (let ticket of Array.from(
         portfolioDefinition.targetHoldings.keys()
       )) {
+        portfoliosId.push(portfolioDefinition.id);
+        accounts.push(account.id);
         tickets.push(ticket);
       }
     }

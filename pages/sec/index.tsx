@@ -13,47 +13,47 @@ function AuthLayout({ children }) {
 
 function StockNavBar() {
   return (
-      <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-        <Container>
-          <Navbar.Brand href="#home">Portfolio</Navbar.Brand>
-          <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-          <Navbar.Collapse id="responsive-navbar-nav">
-            <Nav className="me-auto">
-              <Nav.Link href="#dashboard">Dashboard</Nav.Link>
-              <Nav.Link href="#portfolios">Portfolios</Nav.Link>
-              <Nav.Link href="#settings">Settings</Nav.Link>
-            </Nav>
-            <Nav>
-              <Nav.Link href="#logout">Logout</Nav.Link>
-            </Nav>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
+    <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+      <Container>
+        <Navbar.Brand href="#home">Portfolio</Navbar.Brand>
+        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+        <Navbar.Collapse id="responsive-navbar-nav">
+          <Nav className="me-auto">
+            <Nav.Link href="#dashboard">Dashboard</Nav.Link>
+            <Nav.Link href="#portfolios">Portfolios</Nav.Link>
+            <Nav.Link href="#settings">Settings</Nav.Link>
+          </Nav>
+          <Nav>
+            <Nav.Link href="#logout">Logout</Nav.Link>
+          </Nav>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
   );
 }
 
 function WarningHeader() {
   return (
-      // Marging m-3: https://getbootstrap.com/docs/5.1/utilities/spacing/#margin-and-padding
-      <Row className="m-3">
-        <Col>
-          <Alert variant="warning">
-            <Alert.Heading>
-              <Icon.ExclamationTriangleFill className="flex-shrink-0 me-2" />
-              Hey, nice to see you
-            </Alert.Heading>
-            <p>
-              Aww yeah, you successfully read this important alert message. This
-              example text is going to run a bit longer so that you can see how
-              spacing within an alert works with this kind of content.
-            </p>
-            <p className="mb-0">
-              Whenever you need to, be sure to use margin utilities to keep things
-              nice and tidy.
-            </p>
-          </Alert>
-        </Col>
-      </Row>
+    // Marging m-3: https://getbootstrap.com/docs/5.1/utilities/spacing/#margin-and-padding
+    <Row className="m-3">
+      <Col>
+        <Alert variant="warning">
+          <Alert.Heading>
+            <Icon.ExclamationTriangleFill className="flex-shrink-0 me-2" />
+            Hey, nice to see you
+          </Alert.Heading>
+          <p>
+            Aww yeah, you successfully read this important alert message. This
+            example text is going to run a bit longer so that you can see how
+            spacing within an alert works with this kind of content.
+          </p>
+          <p className="mb-0">
+            Whenever you need to, be sure to use margin utilities to keep things
+            nice and tidy.
+          </p>
+        </Alert>
+      </Col>
+    </Row>
   );
 }
 
@@ -88,24 +88,24 @@ function CardPortfolio({ portfolio }) {
   const money = portfolio.totalHoldings;
 
   return (
-      <Card className="m-3 ">
-        <Card.Header className="text-center">{name}</Card.Header>
-        <Card.Body>
-          <Card.Img variant="bottom" src={otherPlaceholderImageURL} />
-          <Card.Text>Accuracy {AccuracyWidget(accuracy)}</Card.Text>
-          <Card.Text>Total holdings: {MoneyWidget(money)}</Card.Text>
-        </Card.Body>
-      </Card>
+    <Card className="m-3 ">
+      <Card.Header className="text-center">{name}</Card.Header>
+      <Card.Body>
+        <Card.Img variant="bottom" src={otherPlaceholderImageURL} />
+        <Card.Text>Accuracy {AccuracyWidget(accuracy)}</Card.Text>
+        <Card.Text>Total holdings: {MoneyWidget(money)}</Card.Text>
+      </Card.Body>
+    </Card>
   );
 }
 
 function CardPortfolios({ portfolios }) {
   return (
-      <>
-        {portfolios.map((portfolio) => (
-            <CardPortfolio key={portfolio.id} portfolio={portfolio} />
-        ))}
-      </>
+    <>
+      {portfolios.map((portfolio) => (
+        <CardPortfolio key={portfolio.id} portfolio={portfolio} />
+      ))}
+    </>
   );
 }
 
@@ -117,8 +117,8 @@ interface GetPortfolioResponse {
 }
 
 function calculateExpectedAmounts(
-    targetAmount: number[],
-    totalValueInAccount: number[]
+  targetAmount: number[],
+  totalValueInAccount: number[]
 ) {
   const expectedAmounts: number[] = new Array<number>();
   for (let i = 0; i < targetAmount.length; i++) {
@@ -128,8 +128,8 @@ function calculateExpectedAmounts(
 }
 
 function calculateCurrentAmounts(
-    currentQuantities: number[],
-    ticketsValue: number[]
+  currentQuantities: number[],
+  ticketsValue: number[]
 ): number[] {
   const currentAmounts: number[] = new Array<number>();
   for (let i = 0; i < currentQuantities.length; i++) {
@@ -139,8 +139,8 @@ function calculateCurrentAmounts(
 }
 
 function calculateDifferences(
-    expectedAmounts: number[],
-    currentAmounts: number[]
+  expectedAmounts: number[],
+  currentAmounts: number[]
 ): number[] {
   const differences: number[] = new Array<number>();
   for (let i = 0; i < expectedAmounts.length; i++) {
@@ -150,8 +150,8 @@ function calculateDifferences(
 }
 
 function calculateErrors(
-    totalAmountsInAccount: number[],
-    differences: number[]
+  totalAmountsInAccount: number[],
+  differences: number[]
 ): number[] {
   const errors: number[] = new Array<number>();
   for (let i = 0; i < differences.length; i++) {
@@ -161,8 +161,8 @@ function calculateErrors(
 }
 
 function calculateWeights(
-    totalAmountsInAccount: number[],
-    expectedAmounts: number[]
+  totalAmountsInAccount: number[],
+  expectedAmounts: number[]
 ): number[] {
   const weights: number[] = new Array<number>();
   for (let i = 0; i < expectedAmounts.length; i++) {
@@ -187,34 +187,54 @@ function calculateTotalValueInAccounts(): number[] {
   return [];
 }
 
-
-function calculateColumns(portfolioDefinition: PortfolioDefinition, stockPrices: Map<string, Money>, conversionRates: Map<string, number>, targetCurrency: string): [string[],number[],string[], number[], number[]] {
+function calculateColumns(
+  portfolioDefinition: PortfolioDefinition,
+  stockPrices: Map<string, Money>,
+  conversionRates: Map<string, number>,
+  targetCurrency: string
+): [string[], number[], string[], number[], number[]] {
   return [[], [], [], [], []];
 }
 
-function calculateWeightedErrors(portfolioDefinition: PortfolioDefinition, stockPrices: Map<string, Money>, conversionRates: Map<string, number>, targetCurrency: string): number[] {
-  // accounts,targets,tickets,ticketsValue,currentQuantities
-  const columns: [accounts:string[],targets:number[],tickets:string[], ticketsValue:number[], currentQuantities:number[]] = calculateColumns(portfolioDefinition,stockPrices,conversionRates,targetCurrency);
+function calculateWeightedErrors(
+  portfolioDefinition: PortfolioDefinition,
+  stockPrices: Map<string, Money>,
+  conversionRates: Map<string, number>,
+  targetCurrency: string
+): number[] {
+  const columns: [
+    accounts: string[],
+    targets: number[],
+    tickets: string[],
+    ticketsValue: number[],
+    currentQuantities: number[]
+  ] = calculateColumns(
+    portfolioDefinition,
+    stockPrices,
+    conversionRates,
+    targetCurrency
+  );
   const weightedErrors: number[] = new Array<number>();
   const targetAmounts: number[] = calculateTargetAmountsInAccount();
   const currentQuantities: number[] = calculateCurrentQuantitiesInAccount();
+  const ticketValue: number[] = calculateTicketValue();
   const totalValueInAccounts: number[] = calculateTotalValueInAccounts();
   const expectedAmounts: number[] = calculateExpectedAmounts(
-      targetAmounts,
-      totalValueInAccounts
+    targetAmounts,
+    totalValueInAccounts
   );
   const currentAmounts: number[] = calculateCurrentAmounts(
-      currentQuantities,
-      ticketsValue
+    currentQuantities,
+    ticketValue
   );
   const differences: number[] = calculateDifferences(
-      expectedAmounts,
-      currentAmounts
+    expectedAmounts,
+    currentAmounts
   );
   const errors: number[] = calculateErrors(totalValueInAccounts, differences);
   const weights: number[] = calculateWeights(
-      totalValueInAccounts,
-      expectedAmounts
+    totalValueInAccounts,
+    expectedAmounts
   );
   for (let i = 0; i < errors.length; i++) {
     weightedErrors.push(errors[i] * weights[i]);
@@ -223,37 +243,42 @@ function calculateWeightedErrors(portfolioDefinition: PortfolioDefinition, stock
 }
 
 function sumOfWeightedErrors(
-    portfolioDefinition: PortfolioDefinition,
-    stockPrices: Map<string, Money>,
-    conversionRates: Map<string, number>,
-    targetCurrency: string,
+  portfolioDefinition: PortfolioDefinition,
+  stockPrices: Map<string, Money>,
+  conversionRates: Map<string, number>,
+  targetCurrency: string
 ): number {
-  const weightedErrors = calculateWeightedErrors(portfolioDefinition,stockPrices,conversionRates,targetCurrency);
+  const weightedErrors = calculateWeightedErrors(
+    portfolioDefinition,
+    stockPrices,
+    conversionRates,
+    targetCurrency
+  );
   return weightedErrors.reduce((accum, value) => accum + value, 0);
 }
 
 function calculateTotalAccuracyInPortfolio(
-    portfolioDefinition: PortfolioDefinition,
-    stockPrices: Map<string, Money>,
-    conversionRates: Map<string, number>,
-    targetCurrency: string
+  portfolioDefinition: PortfolioDefinition,
+  stockPrices: Map<string, Money>,
+  conversionRates: Map<string, number>,
+  targetCurrency: string
 ): number {
   return (
-      1 -
-      sumOfWeightedErrors(
-          portfolioDefinition,
-          stockPrices,
-          conversionRates,
-          targetCurrency,
-      )
+    1 -
+    sumOfWeightedErrors(
+      portfolioDefinition,
+      stockPrices,
+      conversionRates,
+      targetCurrency
+    )
   );
 }
 
 function calculateTotalHoldingsInAccount(
-    account: Account,
-    stockPrices: Map<string, Money>,
-    conversionRates: Map<string, number>,
-    targetCurrency: string
+  account: Account,
+  stockPrices: Map<string, Money>,
+  conversionRates: Map<string, number>,
+  targetCurrency: string
 ): Money {
   let result = new Map<string, number>();
   Object.entries(account.holdings).forEach(([ticket, qty]) => {
@@ -267,24 +292,24 @@ function calculateTotalHoldingsInAccount(
   return {
     currency: targetCurrency,
     amount: Object.entries(result)
-        .map(([currency, amount]) => amount * conversionRates[currency])
-        .reduce((accum, value) => accum + value, 0),
+      .map(([currency, amount]) => amount * conversionRates[currency])
+      .reduce((accum, value) => accum + value, 0),
   };
 }
 
 function calculateTotalHoldings(
-    portfolioDefinition: PortfolioDefinition,
-    stockPrices: Map<string, Money>,
-    conversionRates: Map<string, number>,
-    targetCurrency: string
+  portfolioDefinition: PortfolioDefinition,
+  stockPrices: Map<string, Money>,
+  conversionRates: Map<string, number>,
+  targetCurrency: string
 ): Money {
   const holdings: Money[] = portfolioDefinition.accounts.map((account) =>
-      calculateTotalHoldingsInAccount(
-          account,
-          stockPrices,
-          conversionRates,
-          targetCurrency
-      )
+    calculateTotalHoldingsInAccount(
+      account,
+      stockPrices,
+      conversionRates,
+      targetCurrency
+    )
   );
   const amounts: number[] = holdings.map((value) => value.amount);
   const totalAmount: number = amounts.reduce((accum, value) => accum + value);
@@ -295,39 +320,39 @@ function calculateTotalHoldings(
 }
 
 function convertPortfolioDefinitionToPortfolio(
-    portfolioDefinition: PortfolioDefinition,
-    stockPrices: Map<string, Money>,
-    currencyRates: Map<string, number>,
-    targetCurrency: string
+  portfolioDefinition: PortfolioDefinition,
+  stockPrices: Map<string, Money>,
+  currencyRates: Map<string, number>,
+  targetCurrency: string
 ): Portfolio {
   return {
     id: portfolioDefinition.id,
     name: portfolioDefinition.name,
     accuracy: calculateTotalAccuracyInPortfolio(
-        portfolioDefinition,
-        stockPrices,
-        currencyRates,
-        targetCurrency
+      portfolioDefinition,
+      stockPrices,
+      currencyRates,
+      targetCurrency
     ),
     totalHoldings: calculateTotalHoldings(
-        portfolioDefinition,
-        stockPrices,
-        currencyRates,
-        targetCurrency
+      portfolioDefinition,
+      stockPrices,
+      currencyRates,
+      targetCurrency
     ),
   };
 }
 
 function convertGetPortfolioResponseToPortfolios(
-    portfolioResponse: GetPortfolioResponse
+  portfolioResponse: GetPortfolioResponse
 ): Portfolio[] {
   return portfolioResponse.portfolios.map((value) =>
-      convertPortfolioDefinitionToPortfolio(
-          value,
-          portfolioResponse.stockPrices,
-          portfolioResponse.conversionRates,
-          portfolioResponse.targetCurrency
-      )
+    convertPortfolioDefinitionToPortfolio(
+      value,
+      portfolioResponse.stockPrices,
+      portfolioResponse.conversionRates,
+      portfolioResponse.targetCurrency
+    )
   );
 }
 
@@ -336,25 +361,25 @@ export default function Index(props) {
   useEffect(() => {
     console.log("setPortfolios");
     fetch(props.backendHost + "/portfolios")
-        .then((received) => received.json())
-        .then((portfolioResponse) => portfolioResponse as GetPortfolioResponse)
-        .then((response) => convertGetPortfolioResponseToPortfolios(response))
-        .then((data) => data as Portfolio[])
-        .then((receivedPortfolios) =>
-            setTimeout(() => {
-              setPortfolios(receivedPortfolios);
-            }, 5000)
-        );
+      .then((received) => received.json())
+      .then((portfolioResponse) => portfolioResponse as GetPortfolioResponse)
+      .then((response) => convertGetPortfolioResponseToPortfolios(response))
+      .then((data) => data as Portfolio[])
+      .then((receivedPortfolios) =>
+        setTimeout(() => {
+          setPortfolios(receivedPortfolios);
+        }, 5000)
+      );
   }, []);
 
   return (
-      <>
-        <AuthLayout>
-          <StockNavBar />
-          <WarningHeader />
-          <CardPortfolios portfolios={portfolios} />
-        </AuthLayout>
-      </>
+    <>
+      <AuthLayout>
+        <StockNavBar />
+        <WarningHeader />
+        <CardPortfolios portfolios={portfolios} />
+      </AuthLayout>
+    </>
   );
 }
 

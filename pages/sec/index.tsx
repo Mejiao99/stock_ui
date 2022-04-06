@@ -117,12 +117,12 @@ interface GetPortfolioResponse {
 }
 
 function calculateExpectedAmounts(
-  expectedQuantity: number[],
-  prices: number[]
+  targetAmount: number[],
+  totalValueInAccount: number[]
 ) {
   const expectedAmounts: number[] = new Array<number>();
-  for (let i = 0; i < expectedQuantity.length; i++) {
-    expectedAmounts.push(Math.abs(expectedAmounts[i] * prices[i]));
+  for (let i = 0; i < targetAmount.length; i++) {
+    expectedAmounts.push(Math.floor(targetAmount[i] / totalValueInAccount[i]));
   }
   return expectedAmounts;
 }
@@ -179,7 +179,7 @@ function calculatePrices(): number[] {
   return [];
 }
 
-function calculateExpectedQuantityInAccount(): number[] {
+function calculateTargetAmountsInAccount(): number[] {
   return [];
 }
 
@@ -187,15 +187,20 @@ function calculateActualQuantityInAccount() {
   return [];
 }
 
+function calculateTotalValueInAccount(): number[] {
+  return [];
+}
+
 function calculateWeightedErrors(): number[] {
   const weightedErrors: number[] = new Array<number>();
   const totalAmountsInAccount: number[] = calculateTotalAmountsInAccount();
-  const expectedQuantity: number[] = calculateExpectedQuantityInAccount();
+  const targetAmounts: number[] = calculateTargetAmountsInAccount();
   const actualQuantity: number[] = calculateActualQuantityInAccount();
   const prices: number[] = calculatePrices();
+  const totalValueInAccount: number[] = calculateTotalValueInAccount();
   const expectedAmounts: number[] = calculateExpectedAmounts(
-    expectedQuantity,
-    prices
+    targetAmounts,
+    totalValueInAccount
   );
   const currentAmounts: number[] = calculateCurrentAmounts(
     actualQuantity,

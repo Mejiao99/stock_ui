@@ -189,13 +189,13 @@ function calculateColumns(
   ticketsValue: number[],
   currentQuantities: number[]
 ] {
-  //TODO: getPortfoliosId(portfolioDefinitions) -> string[]
+  const portfolios:string[]= portfolioDefinitions.map(portfolioDefinition => portfolioDefinition.id)
   //TODO: getAccountsId(portfolioDefinitions) -> string[]
   //TODO: getTargets(portfolioDefinitions) -> number[]
   //TODO: getTickets(portfolioDefinitions) -> string[]
   //TODO: calculateTicketsValue(portfolioDefinitions,stockPrices) -> number[]
   //TODO: getCurrentQuantities(portfolioDefinitions) -> number[]
-  return [[], [], [], [], [], []];
+  return [portfolios, [], [], [], [], []];
 }
 
 function calculateWeightedErrors(

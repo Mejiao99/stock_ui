@@ -191,21 +191,37 @@ function calculateColumns(
 ] {
   let portfolioIds: string[] = [];
   let accounts: string[] = [];
+  let targets: number[] = [];
   let tickets: string[] = [];
+  let ticketsValue: number[] = [];
+  let currentQuantities: number[] = [];
   for (let portfolioDefinition of portfolioDefinitions) {
+    let targetValues = Array.from(portfolioDefinition.targetHoldings.values());
+    for (let target of targetValues) {
+      targets.push(target);
+    }
     for (let account of portfolioDefinition.accounts) {
       let allTickets = Array.from(account.holdings.keys());
+      let ticketsQty = Array.from(account.holdings.values());
       for (let ticket of allTickets) {
+        for (let ticketQty of ticketsQty) {
+          currentQuantities.push(ticketQty);
+          ticketsValue.push(ticketQty * stockPrices[ticket]);
+        }
         portfolioIds.push(portfolioDefinition.id);
         accounts.push(account.id);
         tickets.push(ticket);
       }
     }
   }
-  //TODO: getTargets(portfolioDefinitions) -> number[]
-  //TODO: calculateTicketsValue(portfolioDefinitions,stockPrices) -> number[]
-  //TODO: getCurrentQuantities(portfolioDefinitions) -> number[]
-  return [portfolioIds, accounts, [], tickets, [], []];
+  return [
+    portfolioIds,
+    accounts,
+    targets,
+    tickets,
+    ticketsValue,
+    currentQuantities,
+  ];
 }
 
 function calculateWeightedErrors(

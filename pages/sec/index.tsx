@@ -209,6 +209,10 @@ function calculateColumns(
           targets.push(0.0);
         }
       }
+      for (let ticket of Array.from(
+        portfolioDefinition.targetHoldings.keys()
+      )) {
+      }
     }
   }
   return [

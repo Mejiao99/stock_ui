@@ -175,7 +175,8 @@ function calculateTotalValueInAccounts(): number[] {
   //TODO: Implement this method. Receive accounts,tickets,ticketsValue
   return [];
 }
-
+// targetA 50%, targetB 50%
+// ticketA, ticketC
 function calculateColumns(
   portfolioDefinitions: PortfolioDefinition[],
   stockPrices: Map<string, Money>,
@@ -212,6 +213,15 @@ function calculateColumns(
       for (let ticket of Array.from(
         portfolioDefinition.targetHoldings.keys()
       )) {
+        portfolioIds.push(portfolioDefinition.id);
+        accounts.push(account.id);
+        tickets.push(ticket);
+        ticketValues.push(0);
+        currentQuantities.push(0);
+        if (account.holdings[ticket]) {
+          continue;
+        }
+        targets.push(portfolioDefinition.targetHoldings[ticket]);
       }
     }
   }

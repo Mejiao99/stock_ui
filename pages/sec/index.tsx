@@ -188,12 +188,19 @@ function calculateTotalValueInAccounts(): number[] {
 }
 
 function calculateColumns(
-  portfolioDefinition: PortfolioDefinition,
+  portfolioDefinition: PortfolioDefinition[],
   stockPrices: Map<string, Money>,
   conversionRates: Map<string, number>,
   targetCurrency: string
-): [string[], number[], string[], number[], number[]] {
-  return [[], [], [], [], []];
+): [
+  portfolios: string[],
+  accounts: string[],
+  targets: number[],
+  tickets: string[],
+  ticketsValue: number[],
+  currentQuantities: number[]
+] {
+  return [[], [], [], [], [], []];
 }
 
 function calculateWeightedErrors(
@@ -202,14 +209,16 @@ function calculateWeightedErrors(
   conversionRates: Map<string, number>,
   targetCurrency: string
 ): number[] {
+  let portfolioDefinitions: PortfolioDefinition[] = [portfolioDefinition];
   const columns: [
+    portfolios: string[],
     accounts: string[],
     targets: number[],
     tickets: string[],
     ticketsValue: number[],
     currentQuantities: number[]
   ] = calculateColumns(
-    portfolioDefinition,
+    portfolioDefinitions,
     stockPrices,
     conversionRates,
     targetCurrency

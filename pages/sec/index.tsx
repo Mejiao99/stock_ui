@@ -201,7 +201,11 @@ function calculateColumns(
         portfolioIds.push(portfolioDefinition.id);
         accounts.push(account.id);
         tickets.push(ticket);
-        ticketValues.push(account.holdings[ticket] * stockPrices[ticket]);
+        ticketValues.push(
+          account.holdings[ticket] *
+            stockPrices[ticket].amount *
+            conversionRates[stockPrices[ticket].currency]
+        );
         currentQuantities.push(account.holdings[ticket]);
         if (portfolioDefinition.targetHoldings[ticket]) {
           targets.push(portfolioDefinition.targetHoldings[ticket]);

@@ -172,18 +172,22 @@ function calculateWeights(
 }
 
 function calculateTicketValue(): number[] {
+  //TODO:Deleted this method and use ticketsValue from columns
   return [];
 }
 
 function calculateTargetAmountsInAccount(): number[] {
+  //TODO:Deleted this method and use targets from columns
   return [];
 }
 
 function calculateCurrentQuantitiesInAccount() {
+  //TODO:Deleted this method and use currentQuantities from columns
   return [];
 }
 
 function calculateTotalValueInAccounts(): number[] {
+  //TODO: Implement this method. Receive accounts,tickets,ticketsValue
   return [];
 }
 
@@ -200,7 +204,12 @@ function calculateColumns(
   ticketsValue: number[],
   currentQuantities: number[]
 ] {
-  //TODO: calculate portfolios,accounts,targets,tickets,currentQuantities and return.
+  //TODO: getPortfoliosId(portfolioDefinitions) -> string[]
+  //TODO: getAccountsId(portfolioDefinitions) -> string[]
+  //TODO: getTargets(portfolioDefinitions) -> number[]
+  //TODO: getTickets(portfolioDefinitions) -> string[]
+  //TODO: calculateTicketsValue(portfolioDefinitions,stockPrices) -> number[]
+  //TODO: getCurrentQuantities(portfolioDefinitions) -> number[]
   return [[], [], [], [], [], []];
 }
 
@@ -225,17 +234,17 @@ function calculateWeightedErrors(
     targetCurrency
   );
   const weightedErrors: number[] = new Array<number>();
-  const targetAmounts: number[] = calculateTargetAmountsInAccount(); //TODO: use targets from columns
-  const currentQuantities: number[] = calculateCurrentQuantitiesInAccount(); //TODO: use currentQuantities from columns
-  const ticketValue: number[] = calculateTicketValue(); //TODO: use ticketsValue from columns
-  const totalValueInAccounts: number[] = calculateTotalValueInAccounts(); //TODO: calculateTotalValueInAccounts receive  currentAmounts and accounts
+  const targetAmounts: number[] = calculateTargetAmountsInAccount();
+  const currentQuantities: number[] = calculateCurrentQuantitiesInAccount();
+  const ticketValue: number[] = calculateTicketValue();
+  const totalValueInAccounts: number[] = calculateTotalValueInAccounts();
   const expectedAmounts: number[] = calculateExpectedAmounts(
-    targetAmounts, //TODO: use targets from columns
+    targetAmounts,
     totalValueInAccounts
   );
   const currentAmounts: number[] = calculateCurrentAmounts(
-    currentQuantities, //TODO: use currentQuantities from columns
-    ticketValue //TODO: use TicketsValues from columns
+    currentQuantities,
+    ticketValue
   );
   const differences: number[] = calculateDifferences(
     expectedAmounts,

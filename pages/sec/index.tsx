@@ -209,6 +209,19 @@ function calculateColumns(
           targets.push(0.0);
         }
       }
+      for (let ticket of Array.from(
+        portfolioDefinition.targetHoldings.keys()
+      )) {
+        if (account.holdings[ticket]) {
+          continue;
+        }
+        portfolioIds.push(portfolioDefinition.id);
+        accounts.push(account.id);
+        tickets.push(ticket);
+        ticketValues.push(0.0);
+        currentQuantities.push(0.0);
+        targets.push(portfolioDefinition.targetHoldings[ticket]);
+      }
     }
   }
   return [

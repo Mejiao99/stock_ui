@@ -193,15 +193,17 @@ function calculateColumns(
   let accounts: string[] = [];
   let targets: number[] = [];
   let tickets: string[] = [];
-  let ticketsValue: number[] = [];
+  let ticketValues: number[] = [];
   let currentQuantities: number[] = [];
   for (let portfolioDefinition of portfolioDefinitions) {
     for (let account of portfolioDefinition.accounts) {
       for (let ticket of Array.from(account.holdings.keys())) {
-        ticketsValue.push(account.holdings[ticket]);
         portfolioIds.push(portfolioDefinition.id);
         accounts.push(account.id);
+        targets.push()
         tickets.push(ticket);
+        ticketValues.push(account.holdings[ticket] * stockPrices[ticket]);
+        currentQuantities.push(account.holdings[ticket]);
       }
     }
   }

@@ -212,7 +212,7 @@ function calculateColumns(
     accounts,
     targets,
     tickets,
-    ticketsValue,
+    ticketValues,
     currentQuantities,
   ];
 }

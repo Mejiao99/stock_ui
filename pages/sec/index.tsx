@@ -179,18 +179,18 @@ function calculateTargetAmountsInAccount(): number[] {
   return [];
 }
 
-function calculateCurrentQuantitiesInAccount() {
-  return [];
+function calculateCurrentQuantitiesInAccount(account:Account) {
+  return Array.from(account.holdings.values());
 }
 
 function calculateTotalValueInAccounts(): number[] {
   return [];
 }
 
-function calculateWeightedErrors(): number[] {
+function calculateWeightedErrors(account: Account): number[] {
   const weightedErrors: number[] = new Array<number>();
   const targetAmounts: number[] = calculateTargetAmountsInAccount();
-  const currentQuantities: number[] = calculateCurrentQuantitiesInAccount();
+  const currentQuantities: number[] = calculateCurrentQuantitiesInAccount(account);
   const ticketValue: number[] = calculateTicketValue();
   const totalValueInAccounts: number[] = calculateTotalValueInAccounts();
   const expectedAmounts: number[] = calculateExpectedAmounts(
@@ -223,7 +223,10 @@ function sumOfWeightedErrors(
   targetCurrency: string,
   targetHoldings: Map<string, number>
 ): number {
-  const weightedErrors = calculateWeightedErrors();
+  let weightedErrors:number[];
+  for (const account of accounts){
+   weightedErrors = calculateWeightedErrors(account);
+  }
   return weightedErrors.reduce((accum, value) => accum + value, 0);
 }
 

@@ -200,6 +200,7 @@ function calculateColumns(
   ticketsValue: number[],
   currentQuantities: number[]
 ] {
+  //TODO: calculate portfolios,accounts,targets,tickets,currentQuantities and return.
   return [[], [], [], [], [], []];
 }
 
@@ -224,17 +225,17 @@ function calculateWeightedErrors(
     targetCurrency
   );
   const weightedErrors: number[] = new Array<number>();
-  const targetAmounts: number[] = calculateTargetAmountsInAccount();
-  const currentQuantities: number[] = calculateCurrentQuantitiesInAccount();
-  const ticketValue: number[] = calculateTicketValue();
-  const totalValueInAccounts: number[] = calculateTotalValueInAccounts();
+  const targetAmounts: number[] = calculateTargetAmountsInAccount(); //TODO: use targets from columns
+  const currentQuantities: number[] = calculateCurrentQuantitiesInAccount(); //TODO: use currentQuantities from columns
+  const ticketValue: number[] = calculateTicketValue(); //TODO: use ticketsValue from columns
+  const totalValueInAccounts: number[] = calculateTotalValueInAccounts(); //TODO: calculateTotalValueInAccounts receive  currentAmounts and accounts
   const expectedAmounts: number[] = calculateExpectedAmounts(
-    targetAmounts,
+    targetAmounts, //TODO: use targets from columns
     totalValueInAccounts
   );
   const currentAmounts: number[] = calculateCurrentAmounts(
-    currentQuantities,
-    ticketValue
+    currentQuantities, //TODO: use currentQuantities from columns
+    ticketValue //TODO: use TicketsValues from columns
   );
   const differences: number[] = calculateDifferences(
     expectedAmounts,

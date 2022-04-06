@@ -188,7 +188,7 @@ function calculateTotalValueInAccounts(): number[] {
 }
 
 function calculateColumns(
-  portfolioDefinition: PortfolioDefinition[],
+  portfolioDefinitions: PortfolioDefinition[],
   stockPrices: Map<string, Money>,
   conversionRates: Map<string, number>,
   targetCurrency: string

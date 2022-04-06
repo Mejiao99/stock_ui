@@ -200,10 +200,14 @@ function calculateColumns(
       for (let ticket of Array.from(account.holdings.keys())) {
         portfolioIds.push(portfolioDefinition.id);
         accounts.push(account.id);
-        targets.push()
         tickets.push(ticket);
         ticketValues.push(account.holdings[ticket] * stockPrices[ticket]);
         currentQuantities.push(account.holdings[ticket]);
+        if (portfolioDefinition.targetHoldings[ticket]) {
+          targets.push(portfolioDefinition.targetHoldings[ticket]);
+        } else {
+          targets.push(0.0);
+        }
       }
     }
   }

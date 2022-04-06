@@ -187,7 +187,7 @@ function calculateActualQuantityInAccount() {
   return [];
 }
 
-function calculateTotalValueInAccount(): number[] {
+function calculateTotalValueInAccounts(): number[] {
   return [];
 }
 
@@ -197,10 +197,10 @@ function calculateWeightedErrors(): number[] {
   const targetAmounts: number[] = calculateTargetAmountsInAccount();
   const actualQuantity: number[] = calculateActualQuantityInAccount();
   const prices: number[] = calculatePrices();
-  const totalValueInAccount: number[] = calculateTotalValueInAccount();
+  const totalValueInAccounts: number[] = calculateTotalValueInAccounts();
   const expectedAmounts: number[] = calculateExpectedAmounts(
     targetAmounts,
-    totalValueInAccount
+    totalValueInAccounts
   );
   const currentAmounts: number[] = calculateCurrentAmounts(
     actualQuantity,

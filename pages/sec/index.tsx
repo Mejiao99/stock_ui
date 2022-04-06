@@ -219,9 +219,9 @@ function calculateWeightedErrors(
     targetCurrency
   );
   const weightedErrors: number[] = new Array<number>();
-  const targetAmounts: number[] = columns[2]
-  const currentQuantities: number[] =columns[5]
-  const ticketValue: number[] = columns[4]
+  const targetAmounts: number[] = columns[2];
+  const currentQuantities: number[] = columns[5];
+  const ticketValue: number[] = columns[4];
   const totalValueInAccounts: number[] = calculateTotalValueInAccounts();
   const expectedAmounts: number[] = calculateExpectedAmounts(
     targetAmounts,

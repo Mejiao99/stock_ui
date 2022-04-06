@@ -187,7 +187,42 @@ function calculateTotalValueInAccounts(): number[] {
   return [];
 }
 
-function calculateWeightedErrors(): number[] {
+function calculateColumns(
+  portfolioDefinitions: PortfolioDefinition[],
+  stockPrices: Map<string, Money>,
+  conversionRates: Map<string, number>,
+  targetCurrency: string
+): [
+  portfolios: string[],
+  accounts: string[],
+  targets: number[],
+  tickets: string[],
+  ticketsValue: number[],
+  currentQuantities: number[]
+] {
+  return [[], [], [], [], [], []];
+}
+
+function calculateWeightedErrors(
+  portfolioDefinition: PortfolioDefinition,
+  stockPrices: Map<string, Money>,
+  conversionRates: Map<string, number>,
+  targetCurrency: string
+): number[] {
+  let portfolioDefinitions: PortfolioDefinition[] = [portfolioDefinition];
+  const columns: [
+    portfolios: string[],
+    accounts: string[],
+    targets: number[],
+    tickets: string[],
+    ticketsValue: number[],
+    currentQuantities: number[]
+  ] = calculateColumns(
+    portfolioDefinitions,
+    stockPrices,
+    conversionRates,
+    targetCurrency
+  );
   const weightedErrors: number[] = new Array<number>();
   const targetAmounts: number[] = calculateTargetAmountsInAccount();
   const currentQuantities: number[] = calculateCurrentQuantitiesInAccount();
@@ -217,13 +252,17 @@ function calculateWeightedErrors(): number[] {
 }
 
 function sumOfWeightedErrors(
-  accounts: Account[],
+  portfolioDefinition: PortfolioDefinition,
   stockPrices: Map<string, Money>,
   conversionRates: Map<string, number>,
-  targetCurrency: string,
-  targetHoldings: Map<string, number>
+  targetCurrency: string
 ): number {
-  const weightedErrors = calculateWeightedErrors();
+  const weightedErrors = calculateWeightedErrors(
+    portfolioDefinition,
+    stockPrices,
+    conversionRates,
+    targetCurrency
+  );
   return weightedErrors.reduce((accum, value) => accum + value, 0);
 }
 
@@ -236,11 +275,10 @@ function calculateTotalAccuracyInPortfolio(
   return (
     1 -
     sumOfWeightedErrors(
-      portfolioDefinition.accounts,
+      portfolioDefinition,
       stockPrices,
       conversionRates,
-      targetCurrency,
-      portfolioDefinition.targetHoldings
+      targetCurrency
     )
   );
 }

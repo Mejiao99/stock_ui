@@ -205,13 +205,13 @@ function calculateWeightedErrors(
   targetCurrency: string
 ): number[] {
   let portfolioDefinitions: PortfolioDefinition[] = [portfolioDefinition];
-  const columns: [
-    portfolios: string[],
-    accounts: string[],
-    targets: number[],
-    tickets: string[],
-    ticketsValue: number[],
-    currentQuantities: number[]
+  let [
+    portfolios,
+    accounts,
+    targetAmounts,
+    tickets,
+    ticketsValue,
+    currentQuantities,
   ] = calculateColumns(
     portfolioDefinitions,
     stockPrices,
@@ -219,9 +219,6 @@ function calculateWeightedErrors(
     targetCurrency
   );
   const weightedErrors: number[] = new Array<number>();
-  const targetAmounts: number[] = columns[2];
-  const currentQuantities: number[] = columns[5];
-  const ticketValue: number[] = columns[4];
   const totalValueInAccounts: number[] = calculateTotalValueInAccounts();
   const expectedAmounts: number[] = calculateExpectedAmounts(
     targetAmounts,
@@ -229,7 +226,7 @@ function calculateWeightedErrors(
   );
   const currentAmounts: number[] = calculateCurrentAmounts(
     currentQuantities,
-    ticketValue
+    ticketsValue
   );
   const differences: number[] = calculateDifferences(
     expectedAmounts,

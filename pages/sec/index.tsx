@@ -195,10 +195,10 @@ function calculateColumns(
   for (let portfolioDefinition of portfolioDefinitions) {
     for (let account of portfolioDefinition.accounts) {
       let accountTickets = Array.from(account.holdings.keys());
-      for (let accountTicket of accountTickets) {
+      for (let ticket of accountTickets) {
         portfolioIds.push(portfolioDefinition.id);
         accounts.push(account.id);
-        tickets.push(accountTicket);
+        tickets.push(ticket);
       }
     }
   }

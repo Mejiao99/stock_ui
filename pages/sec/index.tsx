@@ -128,14 +128,14 @@ function calculateExpectedAmounts(
 }
 
 function calculateCurrentAmounts(
-  actualQuantity: number[],
-  prices: number[]
+  currentQuantities: number[],
+  ticketsValue: number[]
 ): number[] {
-  const actualAmounts: number[] = new Array<number>();
-  for (let i = 0; i < actualQuantity.length; i++) {
-    actualAmounts.push(Math.abs(actualQuantity[i] * prices[i]));
+  const currentAmounts: number[] = new Array<number>();
+  for (let i = 0; i < currentQuantities.length; i++) {
+    currentAmounts.push(ticketsValue[i] * currentQuantities[i]);
   }
-  return actualAmounts;
+  return currentAmounts;
 }
 
 function calculateDifferences(
@@ -175,7 +175,7 @@ function calculateWeights(
   return weights;
 }
 
-function calculatePrices(): number[] {
+function calculateTicketValue(): number[] {
   return [];
 }
 
@@ -183,7 +183,7 @@ function calculateTargetAmountsInAccount(): number[] {
   return [];
 }
 
-function calculateActualQuantityInAccount() {
+function calculateCurrentQuantitiesInAccount() {
   return [];
 }
 
@@ -195,16 +195,16 @@ function calculateWeightedErrors(): number[] {
   const weightedErrors: number[] = new Array<number>();
   const totalAmountsInAccount: number[] = calculateTotalAmountsInAccount();
   const targetAmounts: number[] = calculateTargetAmountsInAccount();
-  const actualQuantity: number[] = calculateActualQuantityInAccount();
-  const prices: number[] = calculatePrices();
+  const currentQuantities: number[] = calculateCurrentQuantitiesInAccount();
+  const ticketValue: number[] = calculateTicketValue();
   const totalValueInAccounts: number[] = calculateTotalValueInAccounts();
   const expectedAmounts: number[] = calculateExpectedAmounts(
     targetAmounts,
     totalValueInAccounts
   );
   const currentAmounts: number[] = calculateCurrentAmounts(
-    actualQuantity,
-    prices
+    currentQuantities,
+    ticketValue
   );
   const differences: number[] = calculateDifferences(
     expectedAmounts,

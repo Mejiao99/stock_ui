@@ -189,7 +189,9 @@ function calculateColumns(
   ticketsValue: number[],
   currentQuantities: number[]
 ] {
-  const portfolios:string[]= portfolioDefinitions.map(portfolioDefinition => portfolioDefinition.id)
+  const portfolios: string[] = portfolioDefinitions.map(
+    (portfolioDefinition) => portfolioDefinition.id
+  );
   //TODO: getAccountsId(portfolioDefinitions) -> string[]
   //TODO: getTargets(portfolioDefinitions) -> number[]
   //TODO: getTickets(portfolioDefinitions) -> string[]

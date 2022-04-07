@@ -192,7 +192,6 @@ function calculateTotalValueInAccounts(
   accounts: string[],
   ticketsValues: number[]
 ): number[] {
-  const setOfAccounts = Array.from(new Set(accounts)).sort();
   let accountValues: number[] = [];
   for (const account of accounts) {
     accountValues.push(sumIf(accounts, account, ticketsValues));

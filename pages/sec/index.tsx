@@ -220,34 +220,31 @@ function calculateColumns(
   let currentQuantities: number[] = [];
   for (let portfolioDefinition of portfolioDefinitions) {
     for (let account of portfolioDefinition.accounts) {
-      for (let ticket of Array.from(Object.keys(account.holdings))) {
-        portfolioIds.push(portfolioDefinition.id);
-        accounts.push(account.id);
-        tickets.push(ticket);
-        ticketValues.push(
-          account.holdings[ticket] *
-            stockPrices[ticket].amount *
-            conversionRates[stockPrices[ticket].currency]
-        );
-        currentQuantities.push(account.holdings[ticket]);
+      for (let ticket of Array.from(
+        Object.keys(portfolioDefinition.targetHoldings)
+      )) {
+        if (account.holdings[ticket]) {
+          portfolioIds.push(portfolioDefinition.id);
+          accounts.push(account.id);
+          tickets.push(ticket);
+          ticketValues.push(
+            account.holdings[ticket] *
+              stockPrices[ticket].amount *
+              conversionRates[stockPrices[ticket].currency]
+          );
+          currentQuantities.push(account.holdings[ticket]);
+        } else {
+          portfolioIds.push(portfolioDefinition.id);
+          accounts.push(account.id);
+          tickets.push(ticket);
+          ticketValues.push(0.0);
+          currentQuantities.push(0.0);
+        }
         if (portfolioDefinition.targetHoldings[ticket]) {
           targets.push(portfolioDefinition.targetHoldings[ticket]);
         } else {
           targets.push(0.0);
         }
-      }
-      for (let ticket of Array.from(
-          Object.keys(portfolioDefinition.targetHoldings)
-      )) {
-        if (account.holdings[ticket]) {
-          continue;
-        }
-        portfolioIds.push(portfolioDefinition.id);
-        accounts.push(account.id);
-        tickets.push(ticket);
-        ticketValues.push(0.0);
-        currentQuantities.push(0.0);
-        targets.push(portfolioDefinition.targetHoldings[ticket]);
       }
     }
   }

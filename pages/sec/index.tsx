@@ -176,14 +176,24 @@ function calculateWeights(
 // tickets: a,b,c,d,a,b
 // ticketsValue: 10,20,30,40,100,50
 // accountsValue c11 = 40, c12 = 60, C21=100,C22=50
-function indexOfAll(array: any[], searchItem: any): any[] {
-  return [];
+function indexOfAll(array: any[], searchItem: any): number[] {
+  let i = array.indexOf(searchItem),
+    indexes = [];
+  while (i !== -1) {
+    indexes.push(i);
+    i = array.indexOf(searchItem, ++i);
+  }
+  return indexes;
 }
 function calculateTotalValueOfAccount(
   ticketsValue: number[],
-  indexOfAccounts: string[]
+  indexOfAccounts: number[]
 ): number {
-  return 0.0;
+  let accountValues: number[] = [];
+  for (const indexAccount of indexOfAccounts) {
+    accountValues.push(ticketsValue[indexAccount]);
+  }
+  return accountValues.reduce((accum, value) => accum + value, 0);
 }
 
 function calculateTotalValueInAccounts(

@@ -302,7 +302,6 @@ function calculateWeightedErrors(
   for (let i = 0; i < errors.length; i++) {
     weightedErrors.push(errors[i] * weights[i]);
   }
-
   return weightedErrors;
 }
 

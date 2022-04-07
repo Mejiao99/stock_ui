@@ -209,14 +209,14 @@ function calculateColumns(
   accounts: string[],
   targets: number[],
   tickets: string[],
-  currentAmounts: number[],
+  ticketsValue: number[],
   currentQuantities: number[]
 ] {
   let portfolioIds: string[] = [];
   let accounts: string[] = [];
   let targets: number[] = [];
   let tickets: string[] = [];
-  let currentAmounts: number[] = [];
+  let ticketValues: number[] = [];
   let currentQuantities: number[] = [];
   for (let portfolioDefinition of portfolioDefinitions) {
     for (let account of portfolioDefinition.accounts) {
@@ -227,7 +227,7 @@ function calculateColumns(
           portfolioIds.push(portfolioDefinition.id);
           accounts.push(account.id);
           tickets.push(ticket);
-          currentAmounts.push(
+          ticketValues.push(
             Math.floor(
               account.holdings[ticket] *
                 stockPrices[ticket].amount *
@@ -239,7 +239,7 @@ function calculateColumns(
           portfolioIds.push(portfolioDefinition.id);
           accounts.push(account.id);
           tickets.push(ticket);
-          currentAmounts.push(0.0);
+          ticketValues.push(0.0);
           currentQuantities.push(0.0);
         }
         if (portfolioDefinition.targetHoldings[ticket]) {
@@ -255,7 +255,7 @@ function calculateColumns(
     accounts,
     targets,
     tickets,
-    currentAmounts,
+    ticketValues,
     currentQuantities,
   ];
 }
@@ -272,7 +272,7 @@ function calculateWeightedErrors(
     accounts,
     targetAmounts,
     tickets,
-    currentAmounts,
+    ticketsValue,
     currentQuantities,
   ] = calculateColumns(
     portfolioDefinitions,
@@ -283,7 +283,7 @@ function calculateWeightedErrors(
   const weightedErrors: number[] = new Array<number>();
   const totalValueInAccounts: number[] = calculateTotalValueInAccounts(
     accounts,
-    currentAmounts
+    ticketsValue
   );
   const expectedAmounts: number[] = calculateExpectedAmounts(
     targetAmounts,
@@ -291,7 +291,7 @@ function calculateWeightedErrors(
   );
   const differences: number[] = calculateDifferences(
     expectedAmounts,
-    currentAmounts
+    ticketsValue
   );
   const errors: number[] = calculateErrors(totalValueInAccounts, differences);
   const weights: number[] = calculateWeights(

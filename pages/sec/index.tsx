@@ -5,7 +5,6 @@ import { generateCustomPlaceholderURL } from "react-placeholder-image";
 import { useEffect, useState } from "react";
 import MoneyWidget from "components/MoneyWidget";
 import { Money } from "components/Money";
-import { difference } from "next/dist/build/utils";
 
 function AuthLayout({ children }) {
   return <Container>{children}</Container>;
@@ -122,7 +121,7 @@ function calculateExpectedAmounts(
 ) {
   const expectedAmounts: number[] = new Array<number>();
   for (let i = 0; i < targetAmount.length; i++) {
-    expectedAmounts.push(Math.floor(targetAmount[i] / totalValueInAccount[i]));
+    expectedAmounts.push(Math.floor(targetAmount[i] * totalValueInAccount[i]));
   }
   return expectedAmounts;
 }
@@ -155,7 +154,7 @@ function calculateErrors(
 ): number[] {
   const errors: number[] = new Array<number>();
   for (let i = 0; i < differences.length; i++) {
-    errors.push(difference[i] / totalAmountsInAccount[i]);
+    errors.push(differences[i] / totalAmountsInAccount[i]);
   }
   return errors;
 }
@@ -193,9 +192,8 @@ function calculateTotalValueInAccounts(
   accounts: string[],
   ticketsValues: number[]
 ): number[] {
-  const setOfAccounts = Array.from(new Set(accounts)).sort();
   let accountValues: number[] = [];
-  for (const account of setOfAccounts) {
+  for (const account of accounts) {
     accountValues.push(sumIf(accounts, account, ticketsValues));
   }
   return accountValues;
@@ -222,7 +220,7 @@ function calculateColumns(
   let currentQuantities: number[] = [];
   for (let portfolioDefinition of portfolioDefinitions) {
     for (let account of portfolioDefinition.accounts) {
-      for (let ticket of Array.from(account.holdings.keys())) {
+      for (let ticket of Array.from(Object.keys(account.holdings))) {
         portfolioIds.push(portfolioDefinition.id);
         accounts.push(account.id);
         tickets.push(ticket);
@@ -239,7 +237,7 @@ function calculateColumns(
         }
       }
       for (let ticket of Array.from(
-        portfolioDefinition.targetHoldings.keys()
+          Object.keys(portfolioDefinition.targetHoldings)
       )) {
         if (account.holdings[ticket]) {
           continue;
@@ -292,13 +290,9 @@ function calculateWeightedErrors(
     targetAmounts,
     totalValueInAccounts
   );
-  const currentAmounts: number[] = calculateCurrentAmounts(
-    currentQuantities,
-    ticketsValue
-  );
   const differences: number[] = calculateDifferences(
     expectedAmounts,
-    currentAmounts
+    ticketsValue
   );
   const errors: number[] = calculateErrors(totalValueInAccounts, differences);
   const weights: number[] = calculateWeights(

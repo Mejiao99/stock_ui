@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 import MoneyWidget from "components/MoneyWidget";
 import { Money } from "components/Money";
 import { difference } from "next/dist/build/utils";
-import importFresh from "import-fresh";
 
 function AuthLayout({ children }) {
   return <Container>{children}</Container>;

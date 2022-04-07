@@ -171,7 +171,12 @@ function calculateWeights(
   return weights;
 }
 
-function calculateTotalValueInAccounts(): number[] {
+function calculateTotalValueInAccounts(
+  portfolios: string[],
+  accounts: string[],
+  tickets: string[],
+  ticketsValue: number[]
+): number[] {
   //TODO: Implement this method. Receive accounts,tickets,ticketsValue
   return [];
 }
@@ -259,7 +264,12 @@ function calculateWeightedErrors(
     targetCurrency
   );
   const weightedErrors: number[] = new Array<number>();
-  const totalValueInAccounts: number[] = calculateTotalValueInAccounts();
+  const totalValueInAccounts: number[] = calculateTotalValueInAccounts(
+    portfolios,
+    accounts,
+    tickets,
+    ticketsValue
+  );
   const expectedAmounts: number[] = calculateExpectedAmounts(
     targetAmounts,
     totalValueInAccounts

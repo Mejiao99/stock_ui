@@ -171,14 +171,34 @@ function calculateWeights(
   return weights;
 }
 
+function indexOfAll(array: any[], searchItem: any): number[] {
+  let result: number[] = [];
+  for (let i = 0; i < array.length; i++) {
+    if (array[i] == searchItem) {
+      result.push(i);
+    }
+  }
+  return result;
+}
+
+function sumIf(accounts: string[], account: string, ticketsValues: number[]) {
+  let accountValue: number[] = [];
+  for (const index of indexOfAll(accounts, account)) {
+    accountValue.push(ticketsValues[index]);
+  }
+  return accountValue.reduce((accum, value) => accum + value, 0);
+}
+
 function calculateTotalValueInAccounts(
-  portfolios: string[],
   accounts: string[],
-  tickets: string[],
-  ticketsValue: number[]
+  ticketsValues: number[]
 ): number[] {
-  //TODO: Implement this method. Receive accounts,tickets,ticketsValue
-  return [];
+  const setOfAccounts = Array.from(new Set(accounts)).sort();
+  let accountValues: number[] = [];
+  for (const account of setOfAccounts) {
+    accountValues.push(sumIf(accounts, account, ticketsValues));
+  }
+  return accountValues;
 }
 
 function calculateColumns(
@@ -265,9 +285,7 @@ function calculateWeightedErrors(
   );
   const weightedErrors: number[] = new Array<number>();
   const totalValueInAccounts: number[] = calculateTotalValueInAccounts(
-    portfolios,
     accounts,
-    tickets,
     ticketsValue
   );
   const expectedAmounts: number[] = calculateExpectedAmounts(

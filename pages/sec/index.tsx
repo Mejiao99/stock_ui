@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import MoneyWidget from "components/MoneyWidget";
 import { Money } from "components/Money";
 import { difference } from "next/dist/build/utils";
+import importFresh from "import-fresh";
 
 function AuthLayout({ children }) {
   return <Container>{children}</Container>;
@@ -171,14 +172,35 @@ function calculateWeights(
   return weights;
 }
 
+// portfoliosId: 1,1,1,1,2,2
+// accounts:C11,C12,C11,C12,C21,C22
+// tickets: a,b,c,d,a,b
+// ticketsValue: 10,20,30,40,100,50
+// accountsValue c11 = 40, c12 = 60, C21=100,C22=50
+function indexOfAll(array: any[], searchItem: any): any[] {
+  return [];
+}
+function calculateTotalValueOfAccount(
+  ticketsValue: number[],
+  indexOfAccounts: string[]
+): number {
+  return 0.0;
+}
+
 function calculateTotalValueInAccounts(
-  portfolios: string[],
+  portfoliosIds: string[],
   accounts: string[],
   tickets: string[],
   ticketsValue: number[]
 ): number[] {
-  //TODO: Implement this method. Receive accounts,tickets,ticketsValue
-  return [];
+  const setOfAccounts = Array.from(new Set(accounts));
+  let valueInAccounts: number[] = [];
+  for (const account of setOfAccounts) {
+    valueInAccounts.push(
+      calculateTotalValueOfAccount(ticketsValue, indexOfAll(accounts, account))
+    );
+  }
+  return valueInAccounts;
 }
 
 function calculateColumns(

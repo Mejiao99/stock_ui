@@ -171,45 +171,34 @@ function calculateWeights(
   return weights;
 }
 
-// portfoliosId: 1,1,1,1,2,2
-// accounts:C11,C12,C11,C12,C21,C22
-// tickets: a,b,c,d,a,b
-// ticketsValue: 10,20,30,40,100,50
-// accountsValue c11 = 40, c12 = 60, C21=100,C22=50
 function indexOfAll(array: any[], searchItem: any): number[] {
-  let i = array.indexOf(searchItem),
-    indexes = [];
-  while (i !== -1) {
-    indexes.push(i);
-    i = array.indexOf(searchItem, ++i);
+  let result: number[] = [];
+  for (let i = 0; i < array.length; i++) {
+    if (array[i] == searchItem) {
+      result.push(i);
+    }
   }
-  return indexes;
+  return result;
 }
-function calculateTotalValueOfAccount(
-  ticketsValue: number[],
-  indexOfAccounts: number[]
-): number {
-  let accountValues: number[] = [];
-  for (const indexAccount of indexOfAccounts) {
-    accountValues.push(ticketsValue[indexAccount]);
+
+function sumIf(accounts: string[], account: string, ticketsValues: number[]) {
+  let accountValue: number[] = [];
+  for (const index of indexOfAll(accounts, account)) {
+    accountValue.push(ticketsValues[index]);
   }
-  return accountValues.reduce((accum, value) => accum + value, 0);
+  return accountValue.reduce((accum, value) => accum + value, 0);
 }
 
 function calculateTotalValueInAccounts(
-  portfoliosIds: string[],
   accounts: string[],
-  tickets: string[],
-  ticketsValue: number[]
+  ticketsValues: number[]
 ): number[] {
-  const setOfAccounts = Array.from(new Set(accounts));
-  let valueInAccounts: number[] = [];
+  const setOfAccounts = Array.from(new Set(accounts)).sort();
+  let accountValues: number[] = [];
   for (const account of setOfAccounts) {
-    valueInAccounts.push(
-      calculateTotalValueOfAccount(ticketsValue, indexOfAll(accounts, account))
-    );
+    accountValues.push(sumIf(accounts, account, ticketsValues));
   }
-  return valueInAccounts;
+  return accountValues;
 }
 
 function calculateColumns(
@@ -296,9 +285,7 @@ function calculateWeightedErrors(
   );
   const weightedErrors: number[] = new Array<number>();
   const totalValueInAccounts: number[] = calculateTotalValueInAccounts(
-    portfolios,
     accounts,
-    tickets,
     ticketsValue
   );
   const expectedAmounts: number[] = calculateExpectedAmounts(

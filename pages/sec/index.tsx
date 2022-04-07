@@ -126,6 +126,17 @@ function calculateExpectedAmounts(
   return expectedAmounts;
 }
 
+function calculateCurrentAmounts(
+  currentQuantities: number[],
+  ticketsValue: number[]
+): number[] {
+  const currentAmounts: number[] = new Array<number>();
+  for (let i = 0; i < currentQuantities.length; i++) {
+    currentAmounts.push(ticketsValue[i] * currentQuantities[i]);
+  }
+  return currentAmounts;
+}
+
 function calculateDifferences(
   expectedAmounts: number[],
   currentAmounts: number[]

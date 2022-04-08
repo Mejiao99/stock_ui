@@ -121,7 +121,7 @@ function calculateExpectedAmounts(
 ) {
   const expectedAmounts: number[] = new Array<number>();
   for (let i = 0; i < targetAmount.length; i++) {
-    expectedAmounts.push(Math.floor(targetAmount[i] * totalValueInAccount[i]));
+    expectedAmounts.push(targetAmount[i] * totalValueInAccount[i]);
   }
   return expectedAmounts;
 }
@@ -180,21 +180,21 @@ function indexOfAll(array: any[], searchItem: any): number[] {
   return result;
 }
 
-function sumIf(accounts: string[], account: string, ticketsValues: number[]) {
+function sumIf(accounts: string[], account: string, currentAmounts: number[]) {
   let accountValue: number[] = [];
   for (const index of indexOfAll(accounts, account)) {
-    accountValue.push(ticketsValues[index]);
+    accountValue.push(currentAmounts[index]);
   }
   return accountValue.reduce((accum, value) => accum + value, 0);
 }
 
 function calculateTotalValueInAccounts(
   accounts: string[],
-  ticketsValues: number[]
+  currentAmounts: number[]
 ): number[] {
   let accountValues: number[] = [];
   for (const account of accounts) {
-    accountValues.push(sumIf(accounts, account, ticketsValues));
+    accountValues.push(sumIf(accounts, account, currentAmounts));
   }
   return accountValues;
 }
@@ -209,7 +209,7 @@ function calculateColumns(
   accounts: string[],
   targets: number[],
   tickets: string[],
-  ticketsValue: number[],
+  currentAmounts: number[],
   currentQuantities: number[]
 ] {
   let portfolioIds: string[] = [];
@@ -228,11 +228,9 @@ function calculateColumns(
           accounts.push(account.id);
           tickets.push(ticket);
           currentAmounts.push(
-            Math.floor(
-              account.holdings[ticket] *
-                stockPrices[ticket].amount *
-                conversionRates[stockPrices[ticket].currency]
-            )
+            account.holdings[ticket] *
+              stockPrices[ticket].amount *
+              conversionRates[stockPrices[ticket].currency]
           );
           currentQuantities.push(account.holdings[ticket]);
         } else {

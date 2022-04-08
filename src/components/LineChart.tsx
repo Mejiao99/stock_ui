@@ -51,7 +51,7 @@ const LineChart: React.FunctionComponent<props> = ({ holdings }) => {
     labels,
     datasets: [
       {
-        label: "Dataset 1",
+        label: "Port1Holdings",
         data: dataN,
         borderColor: "rgb(255, 99, 132)",
         backgroundColor: "rgba(255, 99, 132, 0.5)",

@@ -216,7 +216,7 @@ function calculateColumns(
   let accounts: string[] = [];
   let targets: number[] = [];
   let tickets: string[] = [];
-  let ticketValues: number[] = [];
+  let currentAmounts: number[] = [];
   let currentQuantities: number[] = [];
   for (let portfolioDefinition of portfolioDefinitions) {
     for (let account of portfolioDefinition.accounts) {
@@ -227,7 +227,7 @@ function calculateColumns(
           portfolioIds.push(portfolioDefinition.id);
           accounts.push(account.id);
           tickets.push(ticket);
-          ticketValues.push(
+          currentAmounts.push(
             Math.floor(
               account.holdings[ticket] *
                 stockPrices[ticket].amount *
@@ -239,7 +239,7 @@ function calculateColumns(
           portfolioIds.push(portfolioDefinition.id);
           accounts.push(account.id);
           tickets.push(ticket);
-          ticketValues.push(0.0);
+          currentAmounts.push(0.0);
           currentQuantities.push(0.0);
         }
         if (portfolioDefinition.targetHoldings[ticket]) {
@@ -255,7 +255,7 @@ function calculateColumns(
     accounts,
     targets,
     tickets,
-    ticketValues,
+    currentAmounts,
     currentQuantities,
   ];
 }
@@ -272,7 +272,7 @@ function calculateWeightedErrors(
     accounts,
     targetAmounts,
     tickets,
-    ticketsValue,
+    currentAmounts,
     currentQuantities,
   ] = calculateColumns(
     portfolioDefinitions,
@@ -283,7 +283,7 @@ function calculateWeightedErrors(
   const weightedErrors: number[] = new Array<number>();
   const totalValueInAccounts: number[] = calculateTotalValueInAccounts(
     accounts,
-    ticketsValue
+    currentAmounts
   );
   const expectedAmounts: number[] = calculateExpectedAmounts(
     targetAmounts,
@@ -291,7 +291,7 @@ function calculateWeightedErrors(
   );
   const differences: number[] = calculateDifferences(
     expectedAmounts,
-    ticketsValue
+    currentAmounts
   );
   const errors: number[] = calculateErrors(totalValueInAccounts, differences);
   const weights: number[] = calculateWeights(

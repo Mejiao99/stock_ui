@@ -5,6 +5,7 @@ import { generateCustomPlaceholderURL } from "react-placeholder-image";
 import { useEffect, useState } from "react";
 import MoneyWidget from "components/MoneyWidget";
 import { Money } from "components/Money";
+import LineChart from "../../src/components/LineChart";
 
 function AuthLayout({ children }) {
   return <Container>{children}</Container>;
@@ -74,13 +75,32 @@ interface PortfolioDefinition {
   accounts: Account[];
   targetHoldings: Map<string, number>;
 }
-
+export interface HoldingsPerMonth {
+  month: string;
+  holding: number;
+}
 const otherPlaceholderImageURL = generateCustomPlaceholderURL(100, 25, {
   backgroundColor: "#123456",
   textColor: "#ffffff",
   text: "Graphic",
 });
-
+const holdingPerMonth1: HoldingsPerMonth = {
+  month: "February",
+  holding: 10.0,
+};
+const holdingPerMonth2: HoldingsPerMonth = {
+  month: "March",
+  holding: 20.0,
+};
+const holdingPerMonth3: HoldingsPerMonth = {
+  month: "December",
+  holding: 30.0,
+};
+const perMonthHoldings: HoldingsPerMonth[] = [
+  holdingPerMonth1,
+  holdingPerMonth2,
+  holdingPerMonth3,
+];
 function CardPortfolio({ portfolio }) {
   const name = portfolio.name;
   const accuracy = portfolio.accuracy;
@@ -90,7 +110,7 @@ function CardPortfolio({ portfolio }) {
     <Card className="m-3 ">
       <Card.Header className="text-center">{name}</Card.Header>
       <Card.Body>
-        <Card.Img variant="bottom" src={otherPlaceholderImageURL} />
+        <LineChart holdings={perMonthHoldings} />
         <Card.Text>Accuracy {AccuracyWidget(accuracy)}</Card.Text>
         <Card.Text>Total holdings: {MoneyWidget(money)}</Card.Text>
       </Card.Body>

@@ -425,11 +425,7 @@ export default function Index(props) {
       .then((portfolioResponse) => portfolioResponse as GetPortfolioResponse)
       .then((response) => convertGetPortfolioResponseToPortfolios(response))
       .then((data) => data as Portfolio[])
-      .then((receivedPortfolios) =>
-        setTimeout(() => {
-          setPortfolios(receivedPortfolios);
-        }, 5000)
-      );
+      .then((receivedPortfolios) => setPortfolios(receivedPortfolios));
   }, []);
 
   return (

@@ -121,7 +121,7 @@ function calculateExpectedAmounts(
 ) {
   const expectedAmounts: number[] = new Array<number>();
   for (let i = 0; i < targetAmount.length; i++) {
-    expectedAmounts.push(Math.floor(targetAmount[i] * totalValueInAccount[i]));
+    expectedAmounts.push(targetAmount[i] * totalValueInAccount[i]);
   }
   return expectedAmounts;
 }
@@ -180,21 +180,21 @@ function indexOfAll(array: any[], searchItem: any): number[] {
   return result;
 }
 
-function sumIf(accounts: string[], account: string, ticketsValues: number[]) {
+function sumIf(accounts: string[], account: string, currentAmounts: number[]) {
   let accountValue: number[] = [];
   for (const index of indexOfAll(accounts, account)) {
-    accountValue.push(ticketsValues[index]);
+    accountValue.push(currentAmounts[index]);
   }
   return accountValue.reduce((accum, value) => accum + value, 0);
 }
 
 function calculateTotalValueInAccounts(
   accounts: string[],
-  ticketsValues: number[]
+  currentAmounts: number[]
 ): number[] {
   let accountValues: number[] = [];
   for (const account of accounts) {
-    accountValues.push(sumIf(accounts, account, ticketsValues));
+    accountValues.push(sumIf(accounts, account, currentAmounts));
   }
   return accountValues;
 }
@@ -209,14 +209,14 @@ function calculateColumns(
   accounts: string[],
   targets: number[],
   tickets: string[],
-  ticketsValue: number[],
+  currentAmounts: number[],
   currentQuantities: number[]
 ] {
   let portfolioIds: string[] = [];
   let accounts: string[] = [];
   let targets: number[] = [];
   let tickets: string[] = [];
-  let ticketValues: number[] = [];
+  let currentAmounts: number[] = [];
   let currentQuantities: number[] = [];
   for (let portfolioDefinition of portfolioDefinitions) {
     for (let account of portfolioDefinition.accounts) {
@@ -227,7 +227,7 @@ function calculateColumns(
           portfolioIds.push(portfolioDefinition.id);
           accounts.push(account.id);
           tickets.push(ticket);
-          ticketValues.push(
+          currentAmounts.push(
             account.holdings[ticket] *
               stockPrices[ticket].amount *
               conversionRates[stockPrices[ticket].currency]
@@ -237,7 +237,7 @@ function calculateColumns(
           portfolioIds.push(portfolioDefinition.id);
           accounts.push(account.id);
           tickets.push(ticket);
-          ticketValues.push(0.0);
+          currentAmounts.push(0.0);
           currentQuantities.push(0.0);
         }
         if (portfolioDefinition.targetHoldings[ticket]) {
@@ -253,7 +253,7 @@ function calculateColumns(
     accounts,
     targets,
     tickets,
-    ticketValues,
+    currentAmounts,
     currentQuantities,
   ];
 }
@@ -270,7 +270,7 @@ function calculateWeightedErrors(
     accounts,
     targetAmounts,
     tickets,
-    ticketsValue,
+    currentAmounts,
     currentQuantities,
   ] = calculateColumns(
     portfolioDefinitions,
@@ -281,7 +281,7 @@ function calculateWeightedErrors(
   const weightedErrors: number[] = new Array<number>();
   const totalValueInAccounts: number[] = calculateTotalValueInAccounts(
     accounts,
-    ticketsValue
+    currentAmounts
   );
   const expectedAmounts: number[] = calculateExpectedAmounts(
     targetAmounts,
@@ -289,7 +289,7 @@ function calculateWeightedErrors(
   );
   const differences: number[] = calculateDifferences(
     expectedAmounts,
-    ticketsValue
+    currentAmounts
   );
   const errors: number[] = calculateErrors(totalValueInAccounts, differences);
   const weights: number[] = calculateWeights(

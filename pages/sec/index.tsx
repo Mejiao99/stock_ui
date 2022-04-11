@@ -76,8 +76,8 @@ interface PortfolioDefinition {
   targetHoldings: Map<string, number>;
 }
 export interface HoldingsPerMonth {
-  month: string;
-  holding: number;
+  month: Date;
+  holding: Money;
 }
 const otherPlaceholderImageURL = generateCustomPlaceholderURL(100, 25, {
   backgroundColor: "#123456",
@@ -85,16 +85,25 @@ const otherPlaceholderImageURL = generateCustomPlaceholderURL(100, 25, {
   text: "Graphic",
 });
 const holdingPerMonth1: HoldingsPerMonth = {
-  month: "February",
-  holding: 10.0,
+  month: new Date(2022, 1, 1),
+  holding: {
+    amount: 5,
+    currency: "cad",
+  },
 };
 const holdingPerMonth2: HoldingsPerMonth = {
-  month: "March",
-  holding: 20.0,
+  month: new Date(2022, 2, 1),
+  holding: {
+    amount: 20,
+    currency: "cad",
+  },
 };
 const holdingPerMonth3: HoldingsPerMonth = {
-  month: "December",
-  holding: 30.0,
+  month: new Date(2022, 3, 1),
+  holding: {
+    amount: 10,
+    currency: "cad",
+  },
 };
 const perMonthHoldings: HoldingsPerMonth[] = [
   holdingPerMonth1,

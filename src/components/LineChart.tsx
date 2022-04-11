@@ -44,8 +44,14 @@ const LineChart: React.FunctionComponent<props> = ({ holdings }) => {
   const labels: string[] = [];
 
   holdings.forEach((holding) => {
-    dataN.push(holding.holding);
-    labels.push(holding.month);
+    dataN.push(holding.holding.amount);
+    labels.push(
+      holding.month.toLocaleString("en-us", {
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+      })
+    );
   });
   const data = {
     labels,

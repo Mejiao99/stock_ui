@@ -15,23 +15,57 @@ export default function AccountsTable() {
            <tbody>
            <tr>
                <td>C1</td>
-               <td>Number</td>
-               <td>Number</td>
-               <td>Number</td>
-               <td>Number</td>
-               <td>Number</td>
-               <td>Number</td>
+               <td>6.29 CAD</td>
+               <td>5 USD</td>
+               <td></td>
+               <td>10 CAD</td>
+               <td>7.96 USD</td>
+               <td>10 CAD</td>
            </tr>
            <tr>
-               <td>2</td>
-               <td>Jacob</td>
-               <td>Thornton</td>
-               <td>@fat</td>
+               <td>C2</td>
+               <td>12.57 CAD</td>
+               <td>5 USD</td>
+               <td>4.60 EUR</td>
+               <td>20 CAD</td>
+               <td>15.91 USD</td>
+               <td>20 CAD</td>
            </tr>
            <tr>
-               <td>3</td>
-               <td colSpan={2}>Larry the Bird</td>
-               <td>@twitter</td>
+               <td>C3</td>
+               <td>6.29 CAD</td>
+               <td>5 USD</td>
+               <td></td>
+               <td>10 CAD</td>
+               <td>7.96 USD</td>
+               <td>10 CAD</td>
+           </tr>
+           <tr>
+               <td>C4</td>
+               <td>6.29 CAD</td>
+               <td>5 USD</td>
+               <td></td>
+               <td>10 CAD</td>
+               <td>7.96 USD</td>
+               <td>10 CAD</td>
+           </tr>
+           <tr>
+               <td>C4</td>
+               <td>6.29 CAD</td>
+               <td>5 USD</td>
+               <td></td>
+               <td>10 CAD</td>
+               <td>7.96 USD</td>
+               <td>10 CAD</td>
+           </tr>
+           <tr>
+               <td>Total</td>
+               <td>31.44 CAD</td>
+               <td>20 USD</td>
+               <td>4.60 EUR</td>
+               <td>50 CAD</td>
+               <td>38.78 USD</td>
+               <td>50 CAD</td>
            </tr>
            </tbody>
        </Table>

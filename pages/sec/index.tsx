@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import MoneyWidget from "components/MoneyWidget";
 import { Money } from "components/Money";
 import LineChart from "../../src/components/LineChart";
+import AccountsTable from "../../src/components/AccountsTable";
 
 function AuthLayout({ children }) {
   return <Container>{children}</Container>;
@@ -454,6 +455,7 @@ export default function Index(props) {
         <StockNavBar />
         <WarningHeader />
         <CardPortfolios portfolios={portfolios} />
+        <AccountsTable/>
       </AuthLayout>
     </>
   );

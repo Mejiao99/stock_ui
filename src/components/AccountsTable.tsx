@@ -1,7 +1,7 @@
 import Table from 'react-bootstrap/Table'
 
 export default function AccountsTable() {
-   return( <Table striped bordered hover>
+   return( <Table responsive striped bordered hover>
            <thead>
            <tr className="bg-dark text-white-50 border border-dark ">
                <th>Account</th>

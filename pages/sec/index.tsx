@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import MoneyWidget from "components/MoneyWidget";
 import { Money } from "components/Money";
 import LineChart from "../../src/components/LineChart";
+import AccountsTable from "../../src/components/AccountsTable";
 
 function AuthLayout({ children }) {
   return <Container>{children}</Container>;
@@ -113,6 +114,7 @@ function CardPortfolio({ portfolio }) {
         <LineChart holdings={perMonthHoldings} />
         <Card.Text>Accuracy {AccuracyWidget(accuracy)}</Card.Text>
         <Card.Text>Total holdings: {MoneyWidget(money)}</Card.Text>
+        <AccountsTable/>
       </Card.Body>
     </Card>
   );

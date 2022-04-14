@@ -114,6 +114,7 @@ function CardPortfolio({ portfolio }) {
         <LineChart holdings={perMonthHoldings} />
         <Card.Text>Accuracy {AccuracyWidget(accuracy)}</Card.Text>
         <Card.Text>Total holdings: {MoneyWidget(money)}</Card.Text>
+        <AccountsTable/>
       </Card.Body>
     </Card>
   );
@@ -455,7 +456,6 @@ export default function Index(props) {
         <StockNavBar />
         <WarningHeader />
         <CardPortfolios portfolios={portfolios} />
-        <AccountsTable/>
       </AuthLayout>
     </>
   );

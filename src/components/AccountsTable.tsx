@@ -4,11 +4,7 @@ interface Cell {
   data?: string;
 }
 
-function RenderTable(data:Cell[][]) {}
-
-
-
-
+function RenderTable(data: Cell[][]) {}
 
 export default function AccountsTable() {
   return (
@@ -73,5 +69,4 @@ export default function AccountsTable() {
       </tbody>
     </Table>
   );
-
 }

@@ -3,29 +3,8 @@ import Table from "react-bootstrap/Table";
 interface Cell {
   text?: string;
 }
-let cellAccount: Cell = {
-  text: "Account",
-};
-let cellTicketA: Cell = {
-  text: "TicketA",
-};
-let cellTicketB: Cell = {
-  text: "TicketB",
-};
-let cellTicketC: Cell = {
-  text: "TicketC",
-};
-let cellCurrencyCAD: Cell = {
-  text: "Currency:CAD",
-};
-let cellCurrencyUSD: Cell = {
-  text: "Currency:USD",
-};
-let cellTotal: Cell = {
-  text: "Total",
-};
 
-let testDataInterface: String[][] = [
+let testData: String[][] = [
   [
     "Account",
     "TicketA",
@@ -38,20 +17,17 @@ let testDataInterface: String[][] = [
   ["C1", "6.29 CAD", "5 USD", "", "10 CAD", "7.96 USD", "10 CAD"],
 ];
 
-function RenderTable(data: String[][]) {
+let testCellInterface: Cell[][] = [
+  [{text:"C1"}, {text:"6.29 CAD"}, {text:"5 USD"}, {text:""}, {text:"10 CAD"}, {text:"7.96 USD"}, {text:"10 CAD"}],
+];
+
+function RenderTable(data: Cell[][]) {
   return (
     <Table responsive striped bordered hover>
-      <thead>
-        <tr className="bg-dark text-white-50 border border-dark text-nowrap">
-          {data[0].map((x, i) => (
-            <Column key={i} text={x} />
-          ))}
-        </tr>
-      </thead>
       <tbody>
         <tr className="border border-dark text-nowrap">
-          {data[1].map((x, i) => (
-            <Row key={i} text={x} />
+          {data[0].map((x, i) => (
+            <Row key={i} text={x.text} />
           ))}
         </tr>
       </tbody>
@@ -62,7 +38,7 @@ const Column = (cell: any) => <th>{cell.text}</th>;
 const Row = (cell: any) => <td>{cell.text}</td>;
 
 export default function AccountsTable() {
-  return RenderTable(testDataInterface);
+  return RenderTable(testCellInterface);
   // <Table responsive striped bordered hover>
   //   <thead>
   //     <tr className="bg-dark text-white-50 border border-dark text-nowrap">

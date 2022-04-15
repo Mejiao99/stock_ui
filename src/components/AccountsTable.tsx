@@ -1,7 +1,7 @@
 import Table from "react-bootstrap/Table";
 
 interface Cell {
-  data?: string;
+  text?: string;
 }
 
 function RenderTable(data: Cell[][]) {}

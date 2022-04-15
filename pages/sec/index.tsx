@@ -114,7 +114,7 @@ function CardPortfolio({ portfolio }) {
         <LineChart holdings={perMonthHoldings} />
         <Card.Text>Accuracy {AccuracyWidget(accuracy)}</Card.Text>
         <Card.Text>Total holdings: {MoneyWidget(money)}</Card.Text>
-        <AccountsTable/>
+        <AccountsTable />
       </Card.Body>
     </Card>
   );

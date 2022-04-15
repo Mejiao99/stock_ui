@@ -63,4 +63,7 @@ export default function AccountsTable() {
       </tbody>
     </Table>
   );
+
+  function RenderTable() {}
+
 }

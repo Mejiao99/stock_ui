@@ -1,5 +1,15 @@
 import Table from "react-bootstrap/Table";
 
+interface Cell {
+  data?: string;
+}
+
+function RenderTable(data:Cell[][]) {}
+
+
+
+
+
 export default function AccountsTable() {
   return (
     <Table responsive striped bordered hover>
@@ -63,7 +73,5 @@ export default function AccountsTable() {
       </tbody>
     </Table>
   );
-
-  function RenderTable() {}
 
 }

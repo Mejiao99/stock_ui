@@ -73,14 +73,14 @@ function RenderTable(data: Cell[][]) {
     </Table>
   );
 }
-function renderCell(cell: Cell) {
+function RenderCell(cell: Cell) {
   return <td>{cell.text}</td>;
 }
 
 function RenderRows(cells: Cell[]) {
   return (
     <tr className="border border-dark text-nowrap">
-      {cells.map((cell) => renderCell(cell))}
+      {cells.map((cell) => RenderCell(cell))}
     </tr>
   );
 }

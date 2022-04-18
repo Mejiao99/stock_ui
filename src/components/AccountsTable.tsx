@@ -66,35 +66,21 @@ let testCellInterface: Cell[][] = [
 
 function RenderTable(data: Cell[][]) {
   return (
-    <Table responsive striped bordered hover>
-      <thead>
-        {columns.map((cellList, x, cellMatrix) => RenderColumns(cellMatrix[x]))}
-      </thead>
+    <Table responsive striped bordered hover size="sm">
       <tbody>
         {data.map((cellList, x, cellMatrix) => RenderRows(cellMatrix[x]))}
       </tbody>
     </Table>
   );
 }
-
-function RenderRows(cells: Cell[]) {
-  const Row = (cell: Cell) => <td>{cell.text}</td>;
-  return (
-    <tr className="border border-dark text-nowrap">
-      {cells.map((cell, i) => (
-        <Row key={i} text={cell.text} />
-      ))}
-    </tr>
-  );
+function RenderCell(cell: Cell) {
+  return <td>{cell.text}</td>;
 }
 
-function RenderColumns(cells: Cell[]) {
-  const Column = (cell: Cell) => <th>{cell.text}</th>;
+function RenderRows(cells: Cell[]) {
   return (
-    <tr className="bg-dark text-white-50 border border-dark text-nowrap">
-      {cells.map((cell, i) => (
-        <Column key={i} text={cell.text} />
-      ))}
+    <tr className="border border-dark text-nowrap">
+      {cells.map((cell) => RenderCell(cell))}
     </tr>
   );
 }

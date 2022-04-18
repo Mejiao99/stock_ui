@@ -4,77 +4,38 @@ interface Cell {
   text?: string;
 }
 
+let testData: String[][] = [
+  [
+    "Account",
+    "TicketA",
+    "TicketB",
+    "TicketC",
+    "Currency:CAD",
+    "Currency:USD",
+    "Total",
+  ],
+  ["C1", "6.29 CAD", "5 USD", "", "10 CAD", "7.96 USD", "10 CAD"],
+];
+
 let testCellInterface: Cell[][] = [
-  [
-    { text: "C1" },
-    { text: "6.29 CAD" },
-    { text: "5 USD" },
-    { text: "" },
-    { text: "10 CAD" },
-    { text: "7.96 USD" },
-    { text: "10 CAD" },
-  ],
-  [
-    { text: "C1" },
-    { text: "6.29 CAD" },
-    { text: "5 USD" },
-    { text: "" },
-    { text: "10 CAD" },
-    { text: "7.96 USD" },
-    { text: "10 CAD" },
-  ],
-  [
-    { text: "C1" },
-    { text: "6.29 CAD" },
-    { text: "5 USD" },
-    { text: "" },
-    { text: "10 CAD" },
-    { text: "7.96 USD" },
-    { text: "10 CAD" },
-  ],
-  [
-    { text: "C1" },
-    { text: "6.29 CAD" },
-    { text: "5 USD" },
-    { text: "" },
-    { text: "10 CAD" },
-    { text: "7.96 USD" },
-    { text: "10 CAD" },
-  ],
-  [
-    { text: "C1" },
-    { text: "6.29 CAD" },
-    { text: "5 USD" },
-    { text: "" },
-    { text: "10 CAD" },
-    { text: "7.96 USD" },
-    { text: "10 CAD" },
-  ],
+  [{text:"C1"}, {text:"6.29 CAD"}, {text:"5 USD"}, {text:""}, {text:"10 CAD"}, {text:"7.96 USD"}, {text:"10 CAD"}],
 ];
 
 function RenderTable(data: Cell[][]) {
-  console.log(
-    data.map((cellList, x, cellMatrix) => cellMatrix[x].map((x, i) => x.text))
-  );
-
   return (
-    <Table responsive striped bordered hover>
-      <tbody>
-        {data.map((cellList, x, cellMatrix) => RenderRows(cellMatrix[x]))}
-      </tbody>
-    </Table>
+      <Table responsive striped bordered hover>
+        <tbody>
+        <tr className="border border-dark text-nowrap">
+          {data[0].map((x, i) => (
+              <Row key={i} text={x.text} />
+          ))}
+        </tr>
+        </tbody>
+      </Table>
   );
 }
-function RenderRows(cells: Cell[]) {
-  const Row = (cell: Cell) => <td>{cell.text}</td>;
-  return (
-    <tr className="border border-dark text-nowrap">
-      {cells.map((x, i) => (
-        <Row key={i} text={x.text} />
-      ))}
-    </tr>
-  );
-}
+const Column = (cell: any) => <th>{cell.text}</th>;
+const Row = (cell: any) => <td>{cell.text}</td>;
 
 export default function AccountsTable() {
   return RenderTable(testCellInterface);

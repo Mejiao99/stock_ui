@@ -4,7 +4,7 @@ import { Money } from "components/Money";
 interface Cell {
   text?: string;
 }
-
+// optionals from response is only for testing
 interface GetTableResponse {
   accounts: string[];
   tickets: string[];

@@ -8,11 +8,44 @@ interface Cell {
 interface GetTableResponse {
   accounts: string[];
   tickets: string[];
-  data: Money[][];
+  data?: Money[][];
   totalPerAccount: Money[];
-  totalPerTicket: Money[];
-  totalTotal: Money;
-  total: string;
+  totalPerTicket?: Money[];
+  totalTotal?: Money;
+  total?: string;
+}
+
+let tableResponse:GetTableResponse = {
+  accounts: ["C1,C2,C3,C4"],
+  tickets: ["TicketA","TicketB","TicketC"],
+  totalPerAccount:[{currency:"CAD",amount:10},{currency:"USD",amount:7.96}],
+}
+
+function GenerateTicketsColumns(tickets:string[]):Cell[]{
+  let result:Cell[] =[]
+  tickets.map((ticket) => result.push({text:ticket}))
+  return result;
+}
+function GenerateCurrencyColumns(totalPerAccount:Money[]):Cell[]{
+  let result:Cell[] =[]
+  totalPerAccount.map((money) => result.push({text:"Currency:"+money.currency}))
+  return result;
+}
+function getColumns (tickets:string[],totalPerAccount:Money[]):Cell[]{
+  let result:Cell[] =[]
+  result.push({text:"Account"})
+
+  for (let ticket of GenerateTicketsColumns(tickets)){
+    result.push(ticket)
+  }
+
+  for (let currency of GenerateCurrencyColumns(totalPerAccount)){
+    result.push(currency)
+  }
+
+  result.push({text:"Total"})
+
+  return  result;
 }
 
 export let columns: Cell[][] = [
@@ -28,8 +61,9 @@ export let columns: Cell[][] = [
 ];
 
 let testCellInterface: Cell[][] = [
+    getColumns(tableResponse.tickets,tableResponse.totalPerAccount),
   [
-    { text: "C1" },
+    { text: "C3" },
     { text: "6.29 CAD" },
     { text: "5 USD" },
     { text: "" },

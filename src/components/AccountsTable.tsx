@@ -15,37 +15,42 @@ interface GetTableResponse {
   total?: string;
 }
 
-let tableResponse:GetTableResponse = {
+let tableResponse: GetTableResponse = {
   accounts: ["C1,C2,C3,C4"],
-  tickets: ["TicketA","TicketB","TicketC"],
-  totalPerAccount:[{currency:"CAD",amount:10},{currency:"USD",amount:7.96}],
-}
+  tickets: ["TicketA", "TicketB", "TicketC"],
+  totalPerAccount: [
+    { currency: "CAD", amount: 10 },
+    { currency: "USD", amount: 7.96 },
+  ],
+};
 
-function GenerateTicketsColumns(tickets:string[]):Cell[]{
-  let result:Cell[] =[]
-  tickets.map((ticket) => result.push({text:ticket}))
+function GenerateTicketsColumns(tickets: string[]): Cell[] {
+  let result: Cell[] = [];
+  tickets.map((ticket) => result.push({ text: ticket }));
   return result;
 }
-function GenerateCurrencyColumns(totalPerAccount:Money[]):Cell[]{
-  let result:Cell[] =[]
-  totalPerAccount.map((money) => result.push({text:"Currency:"+money.currency}))
+function GenerateCurrencyColumns(totalPerAccount: Money[]): Cell[] {
+  let result: Cell[] = [];
+  totalPerAccount.map((money) =>
+    result.push({ text: "Currency:" + money.currency })
+  );
   return result;
 }
-function getHeaders (tickets:string[],totalPerAccount:Money[]):Cell[]{
-  let result:Cell[] =[]
-  result.push({text:"Account"})
+function getHeaders(tickets: string[], totalPerAccount: Money[]): Cell[] {
+  let result: Cell[] = [];
+  result.push({ text: "Account" });
 
-  for (let ticket of GenerateTicketsColumns(tickets)){
-    result.push(ticket)
+  for (let ticket of GenerateTicketsColumns(tickets)) {
+    result.push(ticket);
   }
 
-  for (let currency of GenerateCurrencyColumns(totalPerAccount)){
-    result.push(currency)
+  for (let currency of GenerateCurrencyColumns(totalPerAccount)) {
+    result.push(currency);
   }
 
-  result.push({text:"Total"})
+  result.push({ text: "Total" });
 
-  return  result;
+  return result;
 }
 
 export let columns: Cell[][] = [
@@ -61,7 +66,7 @@ export let columns: Cell[][] = [
 ];
 
 let testCellInterface: Cell[][] = [
-  getHeaders(tableResponse.tickets,tableResponse.totalPerAccount),
+  getHeaders(tableResponse.tickets, tableResponse.totalPerAccount),
   [
     { text: "C1" },
     { text: "6.29 CAD" },

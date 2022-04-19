@@ -31,7 +31,7 @@ function GenerateCurrencyColumns(totalPerAccount:Money[]):Cell[]{
   totalPerAccount.map((money) => result.push({text:"Currency:"+money.currency}))
   return result;
 }
-function getColumns (tickets:string[],totalPerAccount:Money[]):Cell[]{
+function getHeaders (tickets:string[],totalPerAccount:Money[]):Cell[]{
   let result:Cell[] =[]
   result.push({text:"Account"})
 
@@ -61,7 +61,7 @@ export let columns: Cell[][] = [
 ];
 
 let testCellInterface: Cell[][] = [
-    getColumns(tableResponse.tickets,tableResponse.totalPerAccount),
+  getHeaders(tableResponse.tickets,tableResponse.totalPerAccount),
   [
     { text: "C3" },
     { text: "6.29 CAD" },

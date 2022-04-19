@@ -63,7 +63,7 @@ export let columns: Cell[][] = [
 let testCellInterface: Cell[][] = [
   getHeaders(tableResponse.tickets,tableResponse.totalPerAccount),
   [
-    { text: "C3" },
+    { text: "C1" },
     { text: "6.29 CAD" },
     { text: "5 USD" },
     { text: "" },

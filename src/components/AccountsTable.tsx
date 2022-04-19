@@ -1,8 +1,20 @@
 import Table from "react-bootstrap/Table";
+import {Money} from "./Money";
 
 interface Cell {
   text?: string;
 }
+
+interface TableDefinition{
+  accounts: string[]
+  tickets: string[]
+  data: Money[][]
+  totalPerAccount: number[]
+  totalPerTicket: number[]
+  totalTotal: Money
+}
+
+
 
 export let columns: Cell[][] = [
   [

@@ -27,8 +27,10 @@ export default function handler(req, res) {
     ],
     totals: {
       account: [
-        { currency: "CAD", amount: 50 },
-        { currency: "USD", amount: 39.78 },
+        { currency: "CAD", amount: 10 },
+        { currency: "USD", amount: 20 },
+        { currency: "CAD", amount: 10 },
+        { currency: "CAD", amount: 10 },
       ],
       ticket: [
         { currency: "CAD", amount: 31.44 },

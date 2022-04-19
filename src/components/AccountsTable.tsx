@@ -12,7 +12,6 @@ interface GetTableResponse {
   totalPerAccount: Money[];
   totalPerTicket?: Money[];
   totalTotal?: Money;
-  total?: string;
 }
 
 let tableResponse: GetTableResponse = {

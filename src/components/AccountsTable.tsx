@@ -1,5 +1,5 @@
 import Table from "react-bootstrap/Table";
-import { Money } from "./Money";
+import { Money } from "components/Money";
 
 interface Cell {
   text?: string;
@@ -9,8 +9,8 @@ interface GetTableResponse {
   accounts: string[];
   tickets: string[];
   data: Money[][];
-  totalPerAccount: number[];
-  totalPerTicket: number[];
+  totalPerAccount: Money[];
+  totalPerTicket: Money[];
   totalTotal: Money;
   total: string;
 }

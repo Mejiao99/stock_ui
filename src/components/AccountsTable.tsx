@@ -9,7 +9,7 @@ interface Totals {
   ticket: Money[];
   total: Money;
 }
-// optionals from response is only for testing
+
 interface GetTableResponse {
   accounts: string[];
   tickets: string[];

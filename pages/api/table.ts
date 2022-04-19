@@ -1,9 +1,61 @@
 export default function handler(req, res) {
-    res.status(200).json({
-        // accounts: string[];
-        accounts: ["C1","C2","C3","C4"],
-        tickets: ["TicketA","TicketB","TicketC"],
-        data:{},
-        totals: {},
-    });
+  res.status(200).json({
+    // accounts: string[];
+    accounts: ["C1", "C2", "C3", "C4"],
+    tickets: ["TicketA", "TicketB", "TicketC"],
+    data: [
+      [
+        { amount: 6.29, currency: "CAD" },
+        { amount: 5, currency: "USD" },
+        { amount: 0, currency: "EUR" },
+        { amount: 10, currency: "CAD" },
+        { amount: 7.96, currency: "USD" },
+        { amount: 10, currency: "CAD" },
+      ],
+      [
+        { amount: 12.57, currency: "CAD" },
+        { amount: 5, currency: "USD" },
+        { amount: 4.6, currency: "EUR" },
+        { amount: 20, currency: "CAD" },
+        { amount: 15.91, currency: "USD" },
+        { amount: 20, currency: "CAD" },
+      ],
+      [
+        { amount: 6.29, currency: "CAD" },
+        { amount: 5, currency: "USD" },
+        { amount: 0, currency: "EUR" },
+        { amount: 10, currency: "CAD" },
+        { amount: 7.96, currency: "USD" },
+        { amount: 10, currency: "CAD" },
+      ],
+      [
+        { amount: 6.29, currency: "CAD" },
+        { amount: 5, currency: "USD" },
+        { amount: 0, currency: "EUR" },
+        { amount: 10, currency: "CAD" },
+        { amount: 7.96, currency: "USD" },
+        { amount: 10, currency: "CAD" },
+      ],
+      [
+        { amount: 6.29, currency: "CAD" },
+        { amount: 5, currency: "USD" },
+        { amount: 0, currency: "EUR" },
+        { amount: 10, currency: "CAD" },
+        { amount: 7.96, currency: "USD" },
+        { amount: 10, currency: "CAD" },
+      ],
+    ],
+    totals: {
+      account: [
+        { currency: "CAD", amount: 50 },
+        { currency: "USD", amount: 39.78 },
+      ],
+      ticket: [
+        { currency: "CAD", amount: 31.44 },
+        { currency: "USD", amount: 20 },
+        { currency: "EUR", amount: 4.6 },
+      ],
+      total: { currency: "CAD", amount: 50 },
+    },
+  });
 }

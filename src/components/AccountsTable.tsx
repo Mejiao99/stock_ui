@@ -12,6 +12,7 @@ interface GetTableResponse {
   totalPerAccount: number[];
   totalPerTicket: number[];
   totalTotal: Money;
+  total: string;
 }
 
 export let columns: Cell[][] = [

@@ -1,9 +1,21 @@
 import Table from "react-bootstrap/Table";
+import {Money} from "./Money";
 
 interface Cell {
   text?: string;
 }
-
+interface Totals{
+  account:Money[]
+  ticket:Money[]
+  total:Money
+}
+// optionals from response is only for testing
+interface GetTableResponse {
+  accounts: string[];
+  tickets: string[];
+  data: Money[][];
+  totals:Totals
+}
 export let columns: Cell[][] = [
   [
     { text: "Account" },

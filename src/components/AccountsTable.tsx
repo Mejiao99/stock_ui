@@ -87,8 +87,10 @@ function GenerateMatrix(tableResponse: GetTableResponse): Cell[][] {
       result[i][j] = undefined;
     }
   }
+  result[0].push()
   return result;
 }
+
 
 function RenderTable(data: Cell[][]) {
   return (

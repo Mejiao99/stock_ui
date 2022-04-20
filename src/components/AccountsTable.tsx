@@ -88,8 +88,8 @@ function replaceCellsHorizontal(
   j: number,
   cells: Cell[]
 ) {
-  for (let cell of cells) {
-    matrix[i][j] = cell;
+  for (let j = 0; j < cells.length; j++) {
+    matrix[i][j + 1] = cells[j];
   }
 }
 function GenerateMatrix(tableResponse: GetTableResponse): Cell[][] {
@@ -102,9 +102,12 @@ function GenerateMatrix(tableResponse: GetTableResponse): Cell[][] {
       result[i][j] = StringToCell("foo");
     }
   }
-  for (let j = 0; j < tableResponse.tickets.length; j++) {
-    result[0][j + 1] = StringToCell(tableResponse.tickets[j]);
-  }
+  replaceCellsHorizontal(
+    result,
+    0,
+    1,
+    StringListToCellList(tableResponse.tickets)
+  );
 
   return result;
 }

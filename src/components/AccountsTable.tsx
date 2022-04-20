@@ -102,6 +102,9 @@ function GenerateMatrix(tableResponse: GetTableResponse): Cell[][] {
   }
   // Ticket headers
   replaceCellsHorizontal(result, 0, 1, tableResponse.tickets.map(StringToCell))
+  for (let i = 0; i <tableResponse.accounts.length; i++){
+    replaceCellsHorizontal(result, i+1, 1, tableResponse.data[i].map((money)=>StringToCell(money.amount+" "+money.currency )))
+  }
 
   return result;
 }

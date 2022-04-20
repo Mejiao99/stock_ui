@@ -1,5 +1,6 @@
 import Table from "react-bootstrap/Table";
 import { Money } from "./Money";
+import {map} from "react-bootstrap/ElementChildren";
 
 interface Cell {
   text?: string;
@@ -76,15 +77,6 @@ let testCellInterface: Cell[][] = [
   ],
 ];
 
-function GenerateHeaderRow(tickets: string[]):Cell[] {
-  let result:Cell[]=[]
-  result.push({text:"Account"})
-  tickets.forEach((ticket)=>result.push({text:ticket}))
-  result.push({text:"Currency:USD"})
-  result.push({text:"Currency:CAD"})
-  result.push({text:"Total"})
-  return result;
-}
 function GenerateMatrix(tableResponse: GetTableResponse): Cell[][] {
   let result: Cell[][] = [];
   let rows = tableResponse.accounts.length + 2;
@@ -95,7 +87,9 @@ function GenerateMatrix(tableResponse: GetTableResponse): Cell[][] {
       result[i][j] = undefined;
     }
   }
-  GenerateHeaderRow(tableResponse.tickets).forEach((cell)=> result[0].push(cell))
+  result[0].push({text:"Account"})
+  tableResponse.tickets.forEach((ticket)=>result[0].push({text:ticket}))
+  result[0].push({text:"Total"})
 
   return result;
 }

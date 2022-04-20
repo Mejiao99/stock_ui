@@ -76,9 +76,18 @@ let testCellInterface: Cell[][] = [
   ],
 ];
 
-function GenerateMatrix(tableResponse:GetTableResponse):Cell[][]{
+function GenerateRow(tableResponse: GetTableResponse, i: number):Cell[] {
+  let result:Cell[]=[]
+  return result;
+}
 
-  return testCellInterface;
+function GenerateMatrix(tableResponse:GetTableResponse):Cell[][]{
+  let result:Cell[][] = [];
+  let rows:number = tableResponse.accounts.length;
+  for (let i = 0; i < rows; i++) {
+    result[i] = GenerateRow(tableResponse,i)
+  }
+  return result;
 }
 
 function RenderTable(data: Cell[][]) {

@@ -76,6 +76,10 @@ let testCellInterface: Cell[][] = [
   ],
 ];
 
+function GenerateMatrix(GetTableResponse):Cell[][]{
+  return testCellInterface;
+}
+
 function RenderTable(data: Cell[][]) {
   return (
     <Table responsive striped bordered hover size="sm">
@@ -98,5 +102,5 @@ function RenderRows(cells: Cell[]) {
 }
 
 export default function AccountsTable() {
-  return RenderTable(testCellInterface);
+  return RenderTable(GenerateMatrix([]));
 }

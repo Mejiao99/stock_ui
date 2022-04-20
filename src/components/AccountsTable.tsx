@@ -86,10 +86,10 @@ function GenerateMatrix(tableResponse: GetTableResponse): Cell[][] {
   for (let i = 0; i < rows; i++) {
     result[i] = [];
     for (let j = 0; j < columns; j++) {
-      result[i][j] = undefined;
+      result[i][j] = StringToCell("foo");
     }
   }
-  result[0]=tableResponse.tickets.map((ticket)=> StringToCell(ticket))
+
   return result;
 }
 
@@ -122,6 +122,6 @@ export default function AccountsTable() {
     data: [],
     totals: { account: [], ticket: [], total: { amount: 0, currency: "cad" } },
   };
-  console.log(GenerateMatrix(tableResponse))
-  return RenderTable(testCellInterface);
+  console.log()
+  return RenderTable(GenerateMatrix(tableResponse));
 }

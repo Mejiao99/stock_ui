@@ -76,6 +76,9 @@ let testCellInterface: Cell[][] = [
   ],
 ];
 
+function StringToCell(string:string):Cell{
+  return {text:string}
+}
 function GenerateMatrix(tableResponse: GetTableResponse): Cell[][] {
   let result: Cell[][] = [];
   let rows = tableResponse.accounts.length + 2;
@@ -86,10 +89,7 @@ function GenerateMatrix(tableResponse: GetTableResponse): Cell[][] {
       result[i][j] = undefined;
     }
   }
-  result[0].push({text:"Account"})
-  tableResponse.tickets.forEach((ticket)=>result[0].push({text:ticket}))
-  result[0].push({text:"Total"})
-
+  result[0]=tableResponse.tickets.map((ticket)=> StringToCell(ticket))
   return result;
 }
 

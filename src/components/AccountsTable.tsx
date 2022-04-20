@@ -100,6 +100,7 @@ function GenerateMatrix(tableResponse: GetTableResponse): Cell[][] {
       result[i][j] = StringToCell("foo");
     }
   }
+  // Ticket headers
   replaceCellsHorizontal(result, 0, 1, tableResponse.tickets.map(StringToCell))
 
   return result;

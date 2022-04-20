@@ -1,6 +1,5 @@
 import Table from "react-bootstrap/Table";
 import { Money } from "./Money";
-import {map} from "react-bootstrap/ElementChildren";
 
 interface Cell {
   text?: string;

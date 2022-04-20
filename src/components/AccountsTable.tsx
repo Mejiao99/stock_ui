@@ -93,8 +93,6 @@ function GenerateMatrix(tableResponse: GetTableResponse): Cell[][] {
       result[0][j] = StringToCell(tableResponse.tickets[j]);
   }
 
-
-  result[0]=tableResponse.tickets.map((ticket)=> StringToCell(ticket))
   return result;
 }
 

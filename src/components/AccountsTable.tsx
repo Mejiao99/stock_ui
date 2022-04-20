@@ -76,7 +76,8 @@ let testCellInterface: Cell[][] = [
   ],
 ];
 
-function GenerateMatrix(GetTableResponse):Cell[][]{
+function GenerateMatrix(tableResponse:GetTableResponse):Cell[][]{
+
   return testCellInterface;
 }
 
@@ -102,5 +103,6 @@ function RenderRows(cells: Cell[]) {
 }
 
 export default function AccountsTable() {
-  return RenderTable(GenerateMatrix([]));
+  let tableResponse:GetTableResponse = {accounts:[],tickets:[],data:[],totals:{account:[],ticket:[],total:{amount:0,currency:"cad"}}}
+  return RenderTable(GenerateMatrix(tableResponse));
 }

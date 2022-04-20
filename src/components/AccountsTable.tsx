@@ -76,7 +76,15 @@ let testCellInterface: Cell[][] = [
   ],
 ];
 
-
+function GenerateHeaderRow(tickets: string[]):Cell[] {
+  let result:Cell[]=[]
+  result.push({text:"Account"})
+  tickets.forEach((ticket)=>result.push({text:ticket}))
+  result.push({text:"Currency:USD"})
+  result.push({text:"Currency:CAD"})
+  result.push({text:"Total"})
+  return result;
+}
 function GenerateMatrix(tableResponse: GetTableResponse): Cell[][] {
   let result: Cell[][] = [];
   let rows = tableResponse.accounts.length + 2;
@@ -87,7 +95,8 @@ function GenerateMatrix(tableResponse: GetTableResponse): Cell[][] {
       result[i][j] = undefined;
     }
   }
-  result[0].push()
+  GenerateHeaderRow(tableResponse.tickets).forEach((cell)=> result[0].push(cell))
+
   return result;
 }
 

@@ -76,8 +76,21 @@ let testCellInterface: Cell[][] = [
   ],
 ];
 
-function StringToCell(string:string):Cell{
-  return {text:string}
+function StringToCell(string: string): Cell {
+  return { text: string };
+}
+function StringListToCellList(stringList: string[]): Cell[] {
+  return stringList.map((string) => StringToCell(string));
+}
+function replaceCellsHorizontal(
+  matrix: Cell[][],
+  i: number,
+  j: number,
+  cells: Cell[]
+) {
+  for (let cell of cells) {
+    matrix[i][j] = cell;
+  }
 }
 function GenerateMatrix(tableResponse: GetTableResponse): Cell[][] {
   let result: Cell[][] = [];
@@ -90,12 +103,11 @@ function GenerateMatrix(tableResponse: GetTableResponse): Cell[][] {
     }
   }
   for (let j = 0; j < tableResponse.tickets.length; j++) {
-      result[0][j] = StringToCell(tableResponse.tickets[j]);
+    result[0][j + 1] = StringToCell(tableResponse.tickets[j]);
   }
 
   return result;
 }
-
 
 function RenderTable(data: Cell[][]) {
   return (
@@ -119,9 +131,9 @@ function RenderRows(cells: Cell[]) {
 }
 
 export default function AccountsTable() {
-  let response:GetTableResponse = {
+  let response: GetTableResponse = {
     accounts: ["C1", "C2", "C3", "C4"],
-    tickets: ["TicketA", "TicketB", "TicketC","Currency:CAD","Currency:USD"],
+    tickets: ["TicketA", "TicketB", "TicketC", "Currency:CAD", "Currency:USD"],
     data: [
       [
         { amount: 6.29, currency: "CAD" },
@@ -166,6 +178,6 @@ export default function AccountsTable() {
       ],
       total: { currency: "CAD", amount: 50 },
     },
-  }
+  };
   return RenderTable(GenerateMatrix(response));
 }

@@ -76,16 +76,41 @@ let testCellInterface: Cell[][] = [
   ],
 ];
 
-function GenerateRow(tableResponse: GetTableResponse, i: number):Cell[] {
+function GenerateHeaderRow(tickets: string[], totals: Totals) {
+  let result:Cell[] = []
+  return result;
+}
+
+
+function GenerateAccountRow(data: Money[], money: Money) {
+  let result:Cell[] = []
+  return result;
+}
+
+function GenerateTotalRow(totals: Totals):Cell[] {
+  let result:Cell[] = []
+  return result;
+}
+
+function GenerateRow(tableResponse: GetTableResponse, currentPosition: number, rows:number):Cell[] {
   let result:Cell[]=[]
+  if(currentPosition == 0 ){
+    GenerateHeaderRow(tableResponse.tickets,tableResponse.totals)
+  }
+  if(currentPosition > rows-2 ){
+    return GenerateAccountRow(tableResponse.data[currentPosition],tableResponse.totals.account[currentPosition])
+  }
+  if(currentPosition == rows){
+    return GenerateTotalRow(tableResponse.totals)
+  }
   return result;
 }
 
 function GenerateMatrix(tableResponse:GetTableResponse):Cell[][]{
   let result:Cell[][] = [];
-  let rows:number = tableResponse.accounts.length;
+  let rows:number = tableResponse.accounts.length+2;
   for (let i = 0; i < rows; i++) {
-    result[i] = GenerateRow(tableResponse,i)
+    result[i] = GenerateRow(tableResponse,i,rows)
   }
   return result;
 }

@@ -79,17 +79,15 @@ let testCellInterface: Cell[][] = [
 function StringToCell(string: string): Cell {
   return { text: string };
 }
-function StringListToCellList(stringList: string[]): Cell[] {
-  return stringList.map((string) => StringToCell(string));
-}
+
 function replaceCellsHorizontal(
   matrix: Cell[][],
   i: number,
   j: number,
   cells: Cell[]
 ) {
-  for (let j = 0; j < cells.length; j++) {
-    matrix[i][j + 1] = cells[j];
+  for (let k = 0; k < cells.length; k++) {
+    matrix[i][j + k] = cells[k];
   }
 }
 function GenerateMatrix(tableResponse: GetTableResponse): Cell[][] {
@@ -106,7 +104,7 @@ function GenerateMatrix(tableResponse: GetTableResponse): Cell[][] {
     result,
     0,
     1,
-    StringListToCellList(tableResponse.tickets)
+    tableResponse.tickets.map((ticket) => StringToCell(ticket))
   );
 
   return result;

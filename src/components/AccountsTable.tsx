@@ -1,5 +1,6 @@
 import Table from "react-bootstrap/Table";
 import { Money } from "components/Money";
+import {useEffect, useState} from "react";
 
 interface Cell {
   text?: string;
@@ -118,55 +119,65 @@ function RenderRows(cells: Cell[]) {
 }
 
 export default function AccountsTable() {
-  let response: GetTableResponse = {
-    accounts: ["C1", "C2", "C3", "C4"],
-    tickets: ["TicketA", "TicketB", "TicketC", "Currency:CAD", "Currency:USD"],
-    data: [
-      [
-        { amount: 6.29, currency: "CAD" },
-        { amount: 5, currency: "USD" },
-        { amount: 0, currency: "EUR" },
-        { amount: 10, currency: "CAD" },
-        { amount: 7.96, currency: "USD" },
-      ],
-      [
-        { amount: 12.57, currency: "CAD" },
-        { amount: 5, currency: "USD" },
-        { amount: 4.6, currency: "EUR" },
-        { amount: 20, currency: "CAD" },
-        { amount: 15.91, currency: "USD" },
-      ],
-      [
-        { amount: 6.29, currency: "CAD" },
-        { amount: 5, currency: "USD" },
-        { amount: 0, currency: "EUR" },
-        { amount: 10, currency: "CAD" },
-        { amount: 7.96, currency: "USD" },
-      ],
-      [
-        { amount: 6.29, currency: "CAD" },
-        { amount: 5, currency: "USD" },
-        { amount: 0, currency: "EUR" },
-        { amount: 10, currency: "CAD" },
-        { amount: 7.96, currency: "USD" },
-      ],
-    ],
-    totals: {
-      accounts: [
-        { currency: "CAD", amount: 10 },
-        { currency: "USD", amount: 20 },
-        { currency: "CAD", amount: 10 },
-        { currency: "CAD", amount: 10 },
-      ],
-      tickets: [
-        { currency: "CAD", amount: 31.44 },
-        { currency: "USD", amount: 20 },
-        { currency: "EUR", amount: 4.6 },
-        { currency: "CAD", amount: 50 },
-        { currency: "USD", amount: 39.78 },
-      ],
-      total: { currency: "CAD", amount: 50 },
-    },
-  };
-  return RenderTable(GenerateMatrix(response));
+  // let response: GetTableResponse = {
+  //   accounts: ["C1", "C2", "C3", "C4"],
+  //   tickets: ["TicketA", "TicketB", "TicketC", "Currency:CAD", "Currency:USD"],
+  //   data: [
+  //     [
+  //       { amount: 6.29, currency: "CAD" },
+  //       { amount: 5, currency: "USD" },
+  //       { amount: 0, currency: "EUR" },
+  //       { amount: 10, currency: "CAD" },
+  //       { amount: 7.96, currency: "USD" },
+  //     ],
+  //     [
+  //       { amount: 12.57, currency: "CAD" },
+  //       { amount: 5, currency: "USD" },
+  //       { amount: 4.6, currency: "EUR" },
+  //       { amount: 20, currency: "CAD" },
+  //       { amount: 15.91, currency: "USD" },
+  //     ],
+  //     [
+  //       { amount: 6.29, currency: "CAD" },
+  //       { amount: 5, currency: "USD" },
+  //       { amount: 0, currency: "EUR" },
+  //       { amount: 10, currency: "CAD" },
+  //       { amount: 7.96, currency: "USD" },
+  //     ],
+  //     [
+  //       { amount: 6.29, currency: "CAD" },
+  //       { amount: 5, currency: "USD" },
+  //       { amount: 0, currency: "EUR" },
+  //       { amount: 10, currency: "CAD" },
+  //       { amount: 7.96, currency: "USD" },
+  //     ],
+  //   ],
+  //   totals: {
+  //     accounts: [
+  //       { currency: "CAD", amount: 10 },
+  //       { currency: "USD", amount: 20 },
+  //       { currency: "CAD", amount: 10 },
+  //       { currency: "CAD", amount: 10 },
+  //     ],
+  //     tickets: [
+  //       { currency: "CAD", amount: 31.44 },
+  //       { currency: "USD", amount: 20 },
+  //       { currency: "EUR", amount: 4.6 },
+  //       { currency: "CAD", amount: 50 },
+  //       { currency: "USD", amount: 39.78 },
+  //     ],
+  //     total: { currency: "CAD", amount: 50 },
+  //   },
+  // };
+  const [tableResponse, setTableResponse] = useState<GetTableResponse|null>(null);
+  useEffect(() => {
+    console.log("setPortfolios");
+    fetch("api/table")
+        .then((received) => received.json())
+        .then((response) => response as GetTableResponse)
+        .then((table) => setTableResponse(table));
+  }, []);
+
+  return RenderTable(GenerateMatrix((tableResponse)))
+
 }

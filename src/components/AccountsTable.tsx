@@ -80,8 +80,8 @@ function StringToCell(string: string): Cell {
   return { text: string };
 }
 
-function MoneyToCell(money:Money):Cell{
-  return {text: money.amount+" "+money.currency}
+function MoneyToCell(money: Money): Cell {
+  return { text: money.amount + " " + money.currency };
 }
 
 function replaceCellsHorizontal(
@@ -95,16 +95,21 @@ function replaceCellsHorizontal(
   }
 }
 
-function replaceCellsVertical(matrix: Cell[][], i: number, j: number, cells: Cell[]) {
+function replaceCellsVertical(
+  matrix: Cell[][],
+  i: number,
+  j: number,
+  cells: Cell[]
+) {
   for (let k = 0; k < cells.length; k++) {
-    matrix[i+k][j] = cells[k];
+    matrix[i + k][j] = cells[k];
   }
 }
 
 function GenerateMatrix(tableResponse: GetTableResponse): Cell[][] {
   let result: Cell[][] = [];
-  let rows:number = tableResponse.accounts.length + 2;
-  let columns:number = tableResponse.tickets.length + 2;
+  let rows: number = tableResponse.accounts.length + 2;
+  let columns: number = tableResponse.tickets.length + 2;
   for (let i = 0; i < rows; i++) {
     result[i] = [];
     for (let j = 0; j < columns; j++) {
@@ -112,21 +117,40 @@ function GenerateMatrix(tableResponse: GetTableResponse): Cell[][] {
     }
   }
   // Ticket headers
-  replaceCellsHorizontal(result, 0, 1, tableResponse.tickets.map(StringToCell))
+  replaceCellsHorizontal(result, 0, 1, tableResponse.tickets.map(StringToCell));
 
- // Account tickets
-  for (let i = 0; i <tableResponse.accounts.length; i++){
-    replaceCellsHorizontal(result, i+1, 1, tableResponse.data[i].map(MoneyToCell))
+  // Account tickets
+  for (let i = 0; i < tableResponse.accounts.length; i++) {
+    replaceCellsHorizontal(
+      result,
+      i + 1,
+      1,
+      tableResponse.data[i].map(MoneyToCell)
+    );
   }
 
   // Accounts
-  result[0][0] = StringToCell("Account")
-  replaceCellsVertical(result,1,0,tableResponse.accounts.map(StringToCell))
+  result[0][0] = StringToCell("Account");
+  replaceCellsVertical(result, 1, 0, tableResponse.accounts.map(StringToCell));
 
   // Total
-  result[0][columns-1] = StringToCell("Total")
-  replaceCellsVertical(result,1,columns-1,tableResponse.totals.account.map(MoneyToCell))
+  result[0][columns - 1] = StringToCell("Total");
+  replaceCellsVertical(
+    result,
+    1,
+    columns - 1,
+    tableResponse.totals.account.map(MoneyToCell)
+  );
 
+  // Total total
+  result[rows - 1][0] = StringToCell("Total");
+  replaceCellsHorizontal(
+    result,
+    rows - 1,
+    1,
+    tableResponse.totals.ticket.map(MoneyToCell)
+  );
+  result[rows - 1][columns - 1] = MoneyToCell(tableResponse.totals.total);
 
   return result;
 }
@@ -197,6 +221,8 @@ export default function AccountsTable() {
         { currency: "CAD", amount: 31.44 },
         { currency: "USD", amount: 20 },
         { currency: "EUR", amount: 4.6 },
+        { currency: "CAD", amount: 50 },
+        { currency: "USD", amount: 39.78 },
       ],
       total: { currency: "CAD", amount: 50 },
     },

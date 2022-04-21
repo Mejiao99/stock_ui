@@ -36,6 +36,8 @@ export default function handler(req, res) {
         { currency: "CAD", amount: 31.44 },
         { currency: "USD", amount: 20 },
         { currency: "EUR", amount: 4.6 },
+        { currency: "Currency:CAD", amount: 50 },
+        { currency: "Currency:USD", amount: 39.78 },
       ],
       total: { currency: "CAD", amount: 50 },
     },

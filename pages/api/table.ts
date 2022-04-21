@@ -26,13 +26,13 @@ export default function handler(req, res) {
       ],
     ],
     totals: {
-      account: [
+      accounts: [
         { currency: "CAD", amount: 10 },
         { currency: "USD", amount: 20 },
         { currency: "CAD", amount: 10 },
         { currency: "CAD", amount: 10 },
       ],
-      ticket: [
+      tickets: [
         { currency: "CAD", amount: 31.44 },
         { currency: "USD", amount: 20 },
         { currency: "EUR", amount: 4.6 },

@@ -5,8 +5,8 @@ interface Cell {
   text?: string;
 }
 interface Totals {
-  account: Money[];
-  ticket: Money[];
+  accounts: Money[];
+  tickets: Money[];
   total: Money;
 }
 
@@ -54,13 +54,13 @@ function GenerateMatrix(tableResponse: GetTableResponse): Cell[][] {
   for (let i = 0; i < rows; i++) {
     result[i] = [];
     for (let j = 0; j < columns; j++) {
-      result[i][j] = StringToCell("foo");
+      result[i][j] = undefined;
     }
   }
   // Ticket headers
   replaceCellsHorizontal(result, 0, 1, tableResponse.tickets.map(StringToCell));
 
-  // Account tickets
+  // Money in each account per ticket
   for (let i = 0; i < tableResponse.accounts.length; i++) {
     replaceCellsHorizontal(
       result,
@@ -74,13 +74,13 @@ function GenerateMatrix(tableResponse: GetTableResponse): Cell[][] {
   result[0][0] = StringToCell("Account");
   replaceCellsVertical(result, 1, 0, tableResponse.accounts.map(StringToCell));
 
-  // Total
+  // Total in each account
   result[0][columns - 1] = StringToCell("Total");
   replaceCellsVertical(
     result,
     1,
     columns - 1,
-    tableResponse.totals.account.map(MoneyToCell)
+    tableResponse.totals.accounts.map(MoneyToCell)
   );
 
   // Total total
@@ -89,7 +89,7 @@ function GenerateMatrix(tableResponse: GetTableResponse): Cell[][] {
     result,
     rows - 1,
     1,
-    tableResponse.totals.ticket.map(MoneyToCell)
+    tableResponse.totals.tickets.map(MoneyToCell)
   );
   result[rows - 1][columns - 1] = MoneyToCell(tableResponse.totals.total);
 
@@ -152,13 +152,13 @@ export default function AccountsTable() {
       ],
     ],
     totals: {
-      account: [
+      accounts: [
         { currency: "CAD", amount: 10 },
         { currency: "USD", amount: 20 },
         { currency: "CAD", amount: 10 },
         { currency: "CAD", amount: 10 },
       ],
-      ticket: [
+      tickets: [
         { currency: "CAD", amount: 31.44 },
         { currency: "USD", amount: 20 },
         { currency: "EUR", amount: 4.6 },

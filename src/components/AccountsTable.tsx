@@ -123,6 +123,10 @@ function GenerateMatrix(tableResponse: GetTableResponse): Cell[][] {
   result[0][0] = StringToCell("Account")
   replaceCellsVertical(result,1,0,tableResponse.accounts.map(StringToCell))
 
+  // Total
+  result[0][columns-1] = StringToCell("Total")
+  replaceCellsVertical(result,1,columns-1,tableResponse.totals.account.map(MoneyToCell))
+
 
   return result;
 }

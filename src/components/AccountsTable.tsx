@@ -1,5 +1,5 @@
 import Table from "react-bootstrap/Table";
-import { Money } from "./Money";
+import { Money } from "components/Money";
 
 interface Cell {
   text?: string;
@@ -16,65 +16,6 @@ interface GetTableResponse {
   data: Money[][];
   totals: Totals;
 }
-export let columns: Cell[][] = [
-  [
-    { text: "Account" },
-    { text: "TicketA" },
-    { text: "TicketB" },
-    { text: "TicketC" },
-    { text: "Currency:CAD" },
-    { text: "Currency:USD" },
-    { text: "Total" },
-  ],
-];
-
-let testCellInterface: Cell[][] = [
-  [
-    { text: "C1" },
-    { text: "6.29 CAD" },
-    { text: "5 USD" },
-    { text: "" },
-    { text: "10 CAD" },
-    { text: "7.96 USD" },
-    { text: "10 CAD" },
-  ],
-  [
-    { text: "C2" },
-    { text: "12.57 CAD" },
-    { text: "5 USD" },
-    { text: "4.60 EUR" },
-    { text: "20 CAD" },
-    { text: "7.96 USD" },
-    { text: "20 CAD" },
-  ],
-  [
-    { text: "C3" },
-    { text: "6.29 CAD" },
-    { text: "5 USD" },
-    { text: "" },
-    { text: "10 CAD" },
-    { text: "7.96 USD" },
-    { text: "10 CAD" },
-  ],
-  [
-    { text: "C4" },
-    { text: "6.29 CAD" },
-    { text: "5 USD" },
-    { text: "" },
-    { text: "10 CAD" },
-    { text: "7.96 USD" },
-    { text: "10 CAD" },
-  ],
-  [
-    { text: "Total" },
-    { text: "31.44 CAD" },
-    { text: "20 USD" },
-    { text: "4.60 EUR" },
-    { text: "50 CAD" },
-    { text: "39.78 USD" },
-    { text: "50 CAD" },
-  ],
-];
 
 function StringToCell(string: string): Cell {
   return { text: string };

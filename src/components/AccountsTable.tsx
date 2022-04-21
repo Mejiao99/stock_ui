@@ -80,6 +80,10 @@ function StringToCell(string: string): Cell {
   return { text: string };
 }
 
+function MoneyToCell(money:Money):Cell{
+  return {text: money.amount+" "+money.currency}
+}
+
 function replaceCellsHorizontal(
   matrix: Cell[][],
   i: number,
@@ -90,10 +94,17 @@ function replaceCellsHorizontal(
     matrix[i][j + k] = cells[k];
   }
 }
+
+function replaceCellsVertical(matrix: Cell[][], i: number, j: number, cells: Cell[]) {
+  for (let k = 0; k < cells.length; k++) {
+    matrix[i+k][j] = cells[k];
+  }
+}
+
 function GenerateMatrix(tableResponse: GetTableResponse): Cell[][] {
   let result: Cell[][] = [];
-  let rows = tableResponse.accounts.length + 2;
-  let columns = tableResponse.tickets.length + 2;
+  let rows:number = tableResponse.accounts.length + 2;
+  let columns:number = tableResponse.tickets.length + 2;
   for (let i = 0; i < rows; i++) {
     result[i] = [];
     for (let j = 0; j < columns; j++) {
@@ -102,9 +113,16 @@ function GenerateMatrix(tableResponse: GetTableResponse): Cell[][] {
   }
   // Ticket headers
   replaceCellsHorizontal(result, 0, 1, tableResponse.tickets.map(StringToCell))
+
+ // Account tickets
   for (let i = 0; i <tableResponse.accounts.length; i++){
-    replaceCellsHorizontal(result, i+1, 1, tableResponse.data[i].map((money)=>StringToCell(money.amount+" "+money.currency )))
+    replaceCellsHorizontal(result, i+1, 1, tableResponse.data[i].map(MoneyToCell))
   }
+
+  // Accounts
+  result[0][0] = StringToCell("Account")
+  replaceCellsVertical(result,1,0,tableResponse.accounts.map(StringToCell))
+
 
   return result;
 }

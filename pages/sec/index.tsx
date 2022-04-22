@@ -102,7 +102,7 @@ const perMonthHoldings: HoldingsPerMonth[] = [
   holdingPerMonth2,
   holdingPerMonth3,
 ];
-function CardPortfolio({ portfolio }) {
+function CardPortfolio({ portfolio, table }) {
   const name = portfolio.name;
   const accuracy = portfolio.accuracy;
   const money = portfolio.totalHoldings;
@@ -114,17 +114,17 @@ function CardPortfolio({ portfolio }) {
         <LineChart holdings={perMonthHoldings} />
         <Card.Text>Accuracy {AccuracyWidget(accuracy)}</Card.Text>
         <Card.Text>Total holdings: {MoneyWidget(money)}</Card.Text>
-        <AccountsTable />
+        <AccountsTable table={table}/>
       </Card.Body>
     </Card>
   );
 }
 
-function CardPortfolios({ portfolios }) {
+function CardPortfolios({ portfolios, tablePerPortfolioDefinitions}) {
   return (
     <>
       {portfolios.map((portfolio) => (
-        <CardPortfolio key={portfolio.id} portfolio={portfolio} />
+        <CardPortfolio key={portfolio.id} portfolio={portfolio} table={tablePerPortfolioDefinitions[portfolio.id]} />
       ))}
     </>
   );
@@ -135,7 +135,7 @@ interface GetPortfolioResponse {
   stockPrices: Map<string, Money>;
   conversionRates: Map<string, number>;
   targetCurrency: string;
-  tablePerPortfolioDefinition: Map<string, GetTableResponse>;
+  tablePerPortfolioDefinitions: Map<string, GetTableResponse>;
 }
 
 function calculateExpectedAmounts(
@@ -441,12 +441,16 @@ function convertGetPortfolioResponseToPortfolios(
 
 export default function Index(props) {
   const [portfolios, setPortfolios] = useState([]);
+  const [tablePerPortfolioDefinitions, setTablePerPortfolioDefinitions] = useState({});
   useEffect(() => {
     console.log("setPortfolios");
     fetch(props.backendHost + "/portfolios")
       .then((received) => received.json())
       .then((portfolioResponse) => portfolioResponse as GetPortfolioResponse)
-      .then((response) => convertGetPortfolioResponseToPortfolios(response))
+      .then((response) => {
+        setTablePerPortfolioDefinitions(response.tablePerPortfolioDefinitions);
+        return convertGetPortfolioResponseToPortfolios(response);
+      })
       .then((data) => data as Portfolio[])
       .then((receivedPortfolios) => setPortfolios(receivedPortfolios));
   }, []);
@@ -456,7 +460,7 @@ export default function Index(props) {
       <AuthLayout>
         <StockNavBar />
         <WarningHeader />
-        <CardPortfolios portfolios={portfolios} />
+        <CardPortfolios portfolios={portfolios} tablePerPortfolioDefinitions={tablePerPortfolioDefinitions} />
       </AuthLayout>
     </>
   );

@@ -4,7 +4,7 @@ export default function handler(req, res) {
   res.status(200).json({
     portfolios: [
       {
-        id: "Xl1",
+        id: "port-1",
         name: "Port1",
         // total holdings = 92.3
         accounts: [
@@ -26,7 +26,7 @@ export default function handler(req, res) {
         },
       },
       {
-        id: "Xl2",
+        id: "port-2",
         name: "Port2",
         // total holdings = cad 144.3
         accounts: [
@@ -74,14 +74,15 @@ export default function handler(req, res) {
       cad: 1.0,
     },
     targetCurrency: "cad",
-    tablePerPortfolioDefinition: {
-      Xl1: {
+    tablePerPortfolioDefinitions: {
+      "port-1": {
         accounts: ["C1"],
         tickets: ["TicketA", "TicketB", "TicketC", "Currency:CAD", "Currency:USD"],
         data: [
           [
             { amount: 6.29, currency: "CAD" },
             { amount: 5, currency: "USD" },
+            { amount: 0, currency: "EUR" },
             { amount: 0, currency: "EUR" },
           ],
         ],
@@ -99,8 +100,7 @@ export default function handler(req, res) {
           total: { currency: "CAD", amount: 50 },
         },
       },
-      Xl2: {
-        // accounts: string[];
+      "port-2": {
         accounts: ["C1", "C2", "C3", "C4"],
         tickets: ["TicketA", "TicketB", "TicketC", "Currency:CAD", "Currency:USD"],
         data: [

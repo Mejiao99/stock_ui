@@ -49,14 +49,22 @@ function replaceCellsVertical(
 
 function GenerateMatrix(tableResponse: GetTableResponse): Cell[][] {
   let result: Cell[][] = [];
+
+  if (!tableResponse){
+    return result;
+  }
+
   let rows: number = tableResponse.accounts.length + 2;
   let columns: number = tableResponse.tickets.length + 2;
+
   for (let i = 0; i < rows; i++) {
     result[i] = [];
     for (let j = 0; j < columns; j++) {
       result[i][j] = undefined;
     }
   }
+
+
   // Ticket headers
   replaceCellsHorizontal(result, 0, 1, tableResponse.tickets.map(StringToCell));
 
@@ -97,6 +105,7 @@ function GenerateMatrix(tableResponse: GetTableResponse): Cell[][] {
 }
 
 function RenderTable(data: Cell[][]) {
+  console.log("data: ", data)
   return (
     <Table responsive striped bordered hover size="sm">
       <tbody>
@@ -106,6 +115,9 @@ function RenderTable(data: Cell[][]) {
   );
 }
 function RenderCell(cell: Cell) {
+  if (!cell){
+    return <td/>
+  }
   return <td>{cell.text}</td>;
 }
 
@@ -117,56 +129,6 @@ function RenderRows(cells: Cell[]) {
   );
 }
 
-export default function AccountsTable() {
-  let response: GetTableResponse = {
-    accounts: ["C1", "C2", "C3", "C4"],
-    tickets: ["TicketA", "TicketB", "TicketC", "Currency:CAD", "Currency:USD"],
-    data: [
-      [
-        { amount: 6.29, currency: "CAD" },
-        { amount: 5, currency: "USD" },
-        { amount: 0, currency: "EUR" },
-        { amount: 10, currency: "CAD" },
-        { amount: 7.96, currency: "USD" },
-      ],
-      [
-        { amount: 12.57, currency: "CAD" },
-        { amount: 5, currency: "USD" },
-        { amount: 4.6, currency: "EUR" },
-        { amount: 20, currency: "CAD" },
-        { amount: 15.91, currency: "USD" },
-      ],
-      [
-        { amount: 6.29, currency: "CAD" },
-        { amount: 5, currency: "USD" },
-        { amount: 0, currency: "EUR" },
-        { amount: 10, currency: "CAD" },
-        { amount: 7.96, currency: "USD" },
-      ],
-      [
-        { amount: 6.29, currency: "CAD" },
-        { amount: 5, currency: "USD" },
-        { amount: 0, currency: "EUR" },
-        { amount: 10, currency: "CAD" },
-        { amount: 7.96, currency: "USD" },
-      ],
-    ],
-    totals: {
-      accounts: [
-        { currency: "CAD", amount: 10 },
-        { currency: "USD", amount: 20 },
-        { currency: "CAD", amount: 10 },
-        { currency: "CAD", amount: 10 },
-      ],
-      tickets: [
-        { currency: "CAD", amount: 31.44 },
-        { currency: "USD", amount: 20 },
-        { currency: "EUR", amount: 4.6 },
-        { currency: "CAD", amount: 50 },
-        { currency: "USD", amount: 39.78 },
-      ],
-      total: { currency: "CAD", amount: 50 },
-    },
-  };
-  return RenderTable(GenerateMatrix(response));
+export default function AccountsTable({table}) {
+  return RenderTable(GenerateMatrix(table));
 }

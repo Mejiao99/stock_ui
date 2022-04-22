@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import MoneyWidget from "components/MoneyWidget";
 import { Money } from "components/Money";
 import LineChart from "components/LineChart";
-import AccountsTable, {GetTableResponse} from "components/AccountsTable";
+import AccountsTable, { GetTableResponse } from "components/AccountsTable";
 
 function AuthLayout({ children }) {
   return <Container>{children}</Container>;
@@ -135,7 +135,7 @@ interface GetPortfolioResponse {
   stockPrices: Map<string, Money>;
   conversionRates: Map<string, number>;
   targetCurrency: string;
-  PortfoliosTables: Map<string, GetTableResponse>;
+  tablePerPortfolioDefinition: Map<string, GetTableResponse>;
 }
 
 function calculateExpectedAmounts(

@@ -10,7 +10,7 @@ interface Totals {
   total: Money;
 }
 
-interface GetTableResponse {
+export interface GetTableResponse {
   accounts: string[];
   tickets: string[];
   data: Money[][];

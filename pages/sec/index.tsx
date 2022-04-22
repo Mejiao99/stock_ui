@@ -5,8 +5,8 @@ import { generateCustomPlaceholderURL } from "react-placeholder-image";
 import { useEffect, useState } from "react";
 import MoneyWidget from "components/MoneyWidget";
 import { Money } from "components/Money";
-import LineChart from "../../src/components/LineChart";
-import AccountsTable from "../../src/components/AccountsTable";
+import LineChart from "components/LineChart";
+import AccountsTable, {GetTableResponse} from "components/AccountsTable";
 
 function AuthLayout({ children }) {
   return <Container>{children}</Container>;
@@ -135,6 +135,7 @@ interface GetPortfolioResponse {
   stockPrices: Map<string, Money>;
   conversionRates: Map<string, number>;
   targetCurrency: string;
+  PortfoliosTables: Map<string, GetTableResponse>;
 }
 
 function calculateExpectedAmounts(

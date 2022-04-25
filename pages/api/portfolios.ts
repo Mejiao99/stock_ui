@@ -77,7 +77,13 @@ export default function handler(req, res) {
     tablePerPortfolioDefinitions: {
       "port-1": {
         accounts: ["C1"],
-        tickets: ["TicketA", "TicketB", "TicketC", "Currency:CAD", "Currency:USD"],
+        tickets: [
+          "TicketA",
+          "TicketB",
+          "TicketC",
+          "Currency:CAD",
+          "Currency:USD",
+        ],
         data: [
           [
             { amount: 6.29, currency: "CAD" },
@@ -87,9 +93,7 @@ export default function handler(req, res) {
           ],
         ],
         totals: {
-          accounts: [
-            { currency: "CAD", amount: 10 },
-          ],
+          accounts: [{ currency: "CAD", amount: 10 }],
           tickets: [
             { currency: "CAD", amount: 31.44 },
             { currency: "USD", amount: 20 },
@@ -102,7 +106,13 @@ export default function handler(req, res) {
       },
       "port-2": {
         accounts: ["C1", "C2", "C3", "C4"],
-        tickets: ["TicketA", "TicketB", "TicketC", "Currency:CAD", "Currency:USD"],
+        tickets: [
+          "TicketA",
+          "TicketB",
+          "TicketC",
+          "Currency:CAD",
+          "Currency:USD",
+        ],
         data: [
           [
             { amount: 6.29, currency: "CAD" },

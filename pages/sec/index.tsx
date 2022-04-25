@@ -114,17 +114,21 @@ function CardPortfolio({ portfolio, table }) {
         <LineChart holdings={perMonthHoldings} />
         <Card.Text>Accuracy {AccuracyWidget(accuracy)}</Card.Text>
         <Card.Text>Total holdings: {MoneyWidget(money)}</Card.Text>
-        <AccountsTable table={table}/>
+        <AccountsTable table={table} />
       </Card.Body>
     </Card>
   );
 }
 
-function CardPortfolios({ portfolios, tablePerPortfolioDefinitions}) {
+function CardPortfolios({ portfolios, tablePerPortfolioDefinitions }) {
   return (
     <>
       {portfolios.map((portfolio) => (
-        <CardPortfolio key={portfolio.id} portfolio={portfolio} table={tablePerPortfolioDefinitions[portfolio.id]} />
+        <CardPortfolio
+          key={portfolio.id}
+          portfolio={portfolio}
+          table={tablePerPortfolioDefinitions[portfolio.id]}
+        />
       ))}
     </>
   );
@@ -441,7 +445,8 @@ function convertGetPortfolioResponseToPortfolios(
 
 export default function Index(props) {
   const [portfolios, setPortfolios] = useState([]);
-  const [tablePerPortfolioDefinitions, setTablePerPortfolioDefinitions] = useState({});
+  const [tablePerPortfolioDefinitions, setTablePerPortfolioDefinitions] =
+    useState({});
   useEffect(() => {
     console.log("setPortfolios");
     fetch(props.backendHost + "/portfolios")
@@ -460,7 +465,10 @@ export default function Index(props) {
       <AuthLayout>
         <StockNavBar />
         <WarningHeader />
-        <CardPortfolios portfolios={portfolios} tablePerPortfolioDefinitions={tablePerPortfolioDefinitions} />
+        <CardPortfolios
+          portfolios={portfolios}
+          tablePerPortfolioDefinitions={tablePerPortfolioDefinitions}
+        />
       </AuthLayout>
     </>
   );

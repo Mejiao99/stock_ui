@@ -50,7 +50,7 @@ function replaceCellsVertical(
 function GenerateMatrix(tableResponse: GetTableResponse): Cell[][] {
   let result: Cell[][] = [];
 
-  if (!tableResponse){
+  if (!tableResponse) {
     return result;
   }
 
@@ -63,7 +63,6 @@ function GenerateMatrix(tableResponse: GetTableResponse): Cell[][] {
       result[i][j] = undefined;
     }
   }
-
 
   // Ticket headers
   replaceCellsHorizontal(result, 0, 1, tableResponse.tickets.map(StringToCell));
@@ -105,7 +104,7 @@ function GenerateMatrix(tableResponse: GetTableResponse): Cell[][] {
 }
 
 function RenderTable(data: Cell[][]) {
-  console.log("data: ", data)
+  console.log("data: ", data);
   return (
     <Table responsive striped bordered hover size="sm">
       <tbody>
@@ -115,8 +114,8 @@ function RenderTable(data: Cell[][]) {
   );
 }
 function RenderCell(cell: Cell) {
-  if (!cell){
-    return <td/>
+  if (!cell) {
+    return <td />;
   }
   return <td>{cell.text}</td>;
 }
@@ -129,6 +128,6 @@ function RenderRows(cells: Cell[]) {
   );
 }
 
-export default function AccountsTable({table}) {
+export default function AccountsTable({ table }) {
   return RenderTable(GenerateMatrix(table));
 }

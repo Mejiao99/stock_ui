@@ -76,7 +76,7 @@ export default function handler(req, res) {
     targetCurrency: "cad",
     tablePerPortfolioDefinitions: {
       "port-1": {
-        accounts: ["C1"],
+        accounts: ["C1", "C2", "C3", "C4"],
         tickets: [
           "TicketA",
           "TicketB",
@@ -89,11 +89,45 @@ export default function handler(req, res) {
             { amount: 6.29, currency: "CAD" },
             { amount: 5, currency: "USD" },
             { amount: 0, currency: "EUR" },
+            { amount: 10, currency: "CAD" },
+            { amount: 7.96, currency: "USD" },
+          ],
+          [
+            { amount: 12.57, currency: "CAD" },
+            { amount: 5, currency: "USD" },
+            { amount: 4.60, currency: "EUR" },
+            { amount: 20, currency: "CAD" },
+            { amount: 15.91, currency: "USD" },
+          ],
+          [
+            { amount: 6.29, currency: "CAD" },
+            { amount: 5, currency: "USD" },
             { amount: 0, currency: "EUR" },
+            { amount: 10, currency: "CAD" },
+            { amount: 7.96, currency: "USD" },
+          ],
+          [
+            { amount: 6.29, currency: "CAD" },
+            { amount: 5, currency: "USD" },
+            { amount: 0, currency: "EUR" },
+            { amount: 10, currency: "CAD" },
+            { amount: 7.96, currency: "USD" },
+          ],
+          [
+            { amount: 6.29, currency: "CAD" },
+            { amount: 5, currency: "USD" },
+            { amount: 0, currency: "EUR" },
+            { amount: 10, currency: "CAD" },
+            { amount: 7.96, currency: "USD" },
           ],
         ],
         totals: {
-          accounts: [{ currency: "CAD", amount: 10 }],
+          accounts: [
+            { currency: "CAD", amount: 10 },
+            { currency: "CAD", amount: 10 },
+            { currency: "USD", amount: 20 },
+            { currency: "CAD", amount: 10 },
+          ],
           tickets: [
             { currency: "CAD", amount: 31.44 },
             { currency: "USD", amount: 20 },
@@ -118,27 +152,35 @@ export default function handler(req, res) {
             { amount: 6.29, currency: "CAD" },
             { amount: 5, currency: "USD" },
             { amount: 0, currency: "EUR" },
+            { amount: 10, currency: "CAD" },
+            { amount: 7.96, currency: "USD" },
           ],
           [
             { amount: 12.57, currency: "CAD" },
             { amount: 5, currency: "USD" },
-            { amount: 4.6, currency: "EUR" },
+            { amount: 4.60, currency: "EUR" },
+            { amount: 20, currency: "CAD" },
+            { amount: 15.91, currency: "USD" },
           ],
           [
             { amount: 6.29, currency: "CAD" },
             { amount: 5, currency: "USD" },
             { amount: 0, currency: "EUR" },
+            { amount: 10, currency: "CAD" },
+            { amount: 7.96, currency: "USD" },
           ],
           [
             { amount: 6.29, currency: "CAD" },
             { amount: 5, currency: "USD" },
             { amount: 0, currency: "EUR" },
+            { amount: 10, currency: "CAD" },
+            { amount: 7.96, currency: "USD" },
           ],
         ],
         totals: {
           accounts: [
             { currency: "CAD", amount: 10 },
-            { currency: "USD", amount: 20 },
+            { currency: "CAD", amount: 20 },
             { currency: "CAD", amount: 10 },
             { currency: "CAD", amount: 10 },
           ],

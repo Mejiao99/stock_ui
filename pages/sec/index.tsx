@@ -459,7 +459,6 @@ export default function Index(props) {
       .then((data) => data as Portfolio[])
       .then((receivedPortfolios) => setPortfolios(receivedPortfolios));
   }, []);
-
   return (
     <>
       <AuthLayout>

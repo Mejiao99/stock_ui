@@ -111,8 +111,8 @@ function CardPortfolio({ portfolio, table }) {
     <Card className="m-3 ">
       <Card.Header className="text-center">{name}</Card.Header>
       <Card.Body>
-        <LineChart holdings={perMonthHoldings} />
-        <Card.Text>Accuracy {AccuracyWidget(accuracy)}</Card.Text>
+        {/*<LineChart holdings={perMonthHoldings} />*/}
+        {/*<Card.Text>Accuracy {AccuracyWidget(accuracy)}</Card.Text>*/}
         <Card.Text>Total holdings: {MoneyWidget(money)}</Card.Text>
         <AccountsTable table={table} />
       </Card.Body>

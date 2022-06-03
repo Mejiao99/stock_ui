@@ -22,7 +22,7 @@ function StringToCell(string: string): Cell {
 }
 
 function MoneyToCell(money: Money): Cell {
-  return { text: money.amount + " " + money.currency };
+  return { text: money.amount.toFixed(2) + " " + money.currency };
 }
 
 function replaceCellsHorizontal(

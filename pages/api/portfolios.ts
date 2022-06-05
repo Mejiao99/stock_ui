@@ -95,7 +95,7 @@ export default function handler(req, res) {
           [
             { amount: 12.57, currency: "CAD" },
             { amount: 5, currency: "USD" },
-            { amount: 4.60, currency: "EUR" },
+            { amount: 4.6, currency: "EUR" },
             { amount: 20, currency: "CAD" },
             { amount: 15.91, currency: "USD" },
           ],
@@ -158,7 +158,7 @@ export default function handler(req, res) {
           [
             { amount: 12.57, currency: "CAD" },
             { amount: 5, currency: "USD" },
-            { amount: 4.60, currency: "EUR" },
+            { amount: 4.6, currency: "EUR" },
             { amount: 20, currency: "CAD" },
             { amount: 15.91, currency: "USD" },
           ],

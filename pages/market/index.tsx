@@ -21,7 +21,7 @@ export default function Home(props) {
   const [marketResponse, setMarketResponse] = useState(initialMarket);
 
   function clicked() {
-    fetch(props.backendHost + "/market")
+    fetch(props.backendHost + "/recalculate")
       .then((received) => received.json())
       .then((marketResponse) => marketResponse as GetMarketResponse)
       .then((receivedState) => setMarketResponse(receivedState));

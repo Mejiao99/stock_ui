@@ -12,6 +12,7 @@ function SimpleCard({ marketResponse }) {
     </Card>
   );
 }
+
 const initialMarket: GetMarketResponse = {
   data: "hello",
 };

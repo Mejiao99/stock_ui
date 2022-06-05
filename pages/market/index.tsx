@@ -1,28 +1,35 @@
 import React, { useState } from "react";
 import { Card } from "react-bootstrap";
 
-function SimpleCard({ state }) {
+interface GetMarketResponse {
+  data: string;
+}
+
+function SimpleCard({ marketResponse }) {
   return (
     <Card className="m-3 ">
-      <Card.Header className="text-center">{state}</Card.Header>
+      <Card.Header className="text-center">{marketResponse.data}</Card.Header>
     </Card>
   );
 }
+const initialMarket: GetMarketResponse = {
+  data: "hello",
+};
 
 export default function Home(props) {
-  const [state, setState] = useState("hello");
+  const [marketResponse, setMarketResponse] = useState(initialMarket);
 
   function clicked() {
     fetch(props.backendHost + "/market")
       .then((received) => received.json())
-      .then((data) => data["data"] as string)
-      .then((receivedState) => setState(receivedState));
+      .then((marketResponse) => marketResponse as GetMarketResponse)
+      .then((receivedState) => setMarketResponse(receivedState));
   }
 
   return (
     <>
       <button onClick={clicked}>Submit</button>
-      <SimpleCard state={state} />
+      <SimpleCard marketResponse={marketResponse} />
     </>
   );
 }

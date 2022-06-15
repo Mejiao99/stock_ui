@@ -105,7 +105,8 @@ const perMonthHoldings: HoldingsPerMonth[] = [
 function CardPortfolio({ portfolio, table }) {
   const name = portfolio.name;
   const accuracy = portfolio.accuracy;
-  const money = portfolio.totalHoldings;
+  const response:GetTableResponse = table;
+  const money = response.totals.total;
 
   return (
     <Card className="m-3 ">

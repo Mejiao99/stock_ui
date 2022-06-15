@@ -62,7 +62,6 @@ interface Portfolio {
   id: string;
   name: string;
   accuracy: number;
-  totalHoldings: Money;
 }
 
 interface Account {
@@ -137,7 +136,6 @@ function CardPortfolios({ portfolios, tablePerPortfolioDefinitions }) {
 
 interface GetPortfolioResponse {
   portfolios: PortfolioDefinition[];
-  stockPrices: Map<string, Money>;
   conversionRates: Map<string, number>;
   targetCurrency: string;
   tablePerPortfolioDefinitions: Map<string, GetTableResponse>;
@@ -409,25 +407,19 @@ function calculateTotalHoldings(
 
 function convertPortfolioDefinitionToPortfolio(
   portfolioDefinition: PortfolioDefinition,
-  stockPrices: Map<string, Money>,
-  currencyRates: Map<string, number>,
   targetCurrency: string
 ): Portfolio {
   return {
     id: portfolioDefinition.id,
     name: portfolioDefinition.name,
-    accuracy: calculateTotalAccuracyInPortfolio(
-      portfolioDefinition,
-      stockPrices,
-      currencyRates,
-      targetCurrency
-    ),
-    totalHoldings: calculateTotalHoldings(
-      portfolioDefinition,
-      stockPrices,
-      currencyRates,
-      targetCurrency
-    ),
+    accuracy: 1.0,
+
+    // accuracy: calculateTotalAccuracyInPortfolio(
+    //   portfolioDefinition,
+    //   stockPrices,
+    //   currencyRates,
+    //   targetCurrency
+    // ),
   };
 }
 
@@ -437,8 +429,6 @@ function convertGetPortfolioResponseToPortfolios(
   return portfolioResponse.portfolios.map((value) =>
     convertPortfolioDefinitionToPortfolio(
       value,
-      portfolioResponse.stockPrices,
-      portfolioResponse.conversionRates,
       portfolioResponse.targetCurrency
     )
   );
